@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.*;
+
 /**
  * This class represents a <i>Staff</i> type item.
  * <p>
@@ -25,4 +27,16 @@ public class Staff extends AbstractItem {
   public Staff(final String name, final int power, final int minRange, final int maxRange) {
     super(name, power, minRange, maxRange);
   }
+
+  public void equipArcher(Archer archer){}
+
+  public void equipCleric(Cleric cleric) {
+    this.equipTo(cleric);
+  }
+
+  public void equipFighter(Fighter fighter){}
+
+  public void equipHero(Hero hero){}
+
+  public void equipSwordMaster(SwordMaster swordmaster){}
 }
