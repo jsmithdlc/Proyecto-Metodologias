@@ -92,8 +92,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   @Test
-  public void equipAxeTest() {
-    assertNull(getTestUnit().getEquippedItem());
+  public void equipFighterTest() {
     checkEquippedItem(getAxe());
   }
 
@@ -120,7 +119,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Override
   @Test
-  public void equipSwordTest() {
+  public void equipSwordMasterTest() {
     checkEquippedItem(getSword());
   }
 
@@ -134,7 +133,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Override
   @Test
-  public void equipSpearTest() {
+  public void equipHeroTest() {
     checkEquippedItem(getSpear());
   }
 
@@ -148,7 +147,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Override
   @Test
-  public void equipStaffTest() {
+  public void equipClericTest() {
     checkEquippedItem(getStaff());
   }
 
@@ -162,7 +161,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Override
   @Test
-  public void equipBowTest() {
+  public void equipArcherTest() {
     checkEquippedItem(getBow());
   }
 
