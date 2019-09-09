@@ -47,6 +47,7 @@ public interface ITestUnit {
   @Test
   void equipFighterTest();
 
+
   /**
    * Tries to equip a weapon to the alpaca and verifies that it was not equipped
    *
@@ -62,6 +63,7 @@ public interface ITestUnit {
 
   @Test
   void equipSwordMasterTest();
+
 
   /**
    * @return the test sword

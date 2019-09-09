@@ -10,6 +10,10 @@ import model.map.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Ignacio Slater Muñoz
  * @since 1.0
@@ -23,6 +27,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Sword sword;
   protected Staff staff;
   protected Spear spear;
+  protected ArrayList<IEquipableItem> weapons_list;
 
   @Override
   public void setTargetAlpaca() {
@@ -67,6 +72,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
     this.spear = new Spear("Spear", 10, 1, 2);
     this.staff = new Staff("Staff", 10, 1, 2);
     this.bow = new Bow("Bow", 10, 2, 3);
+    this.weapons_list = new ArrayList<IEquipableItem>(Arrays.asList(getAxe(),getSword(),getSpear(),getStaff(),getBow()));
   }
 
   /**
@@ -102,6 +108,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
    * @param item
    *     to be equipped
    */
+
   @Override
   public void checkEquippedItem(IEquipableItem item) {
     assertNull(getTestUnit().getEquippedItem());
