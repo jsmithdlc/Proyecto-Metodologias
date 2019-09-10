@@ -46,17 +46,6 @@ public class SwordTest extends AbstractTestItem {
     staff = new Staff("Staff",50,0,10);
   }
 
-  /**
-   * checks that attack from sword deals appropriate damage
-   */
-  @Test
-  public void swordAttackTest(){
-    assertEquals(75,sword.attack(axe));
-    assertEquals(50,sword.attack(bow));
-    assertEquals(30,sword.attack(spear));
-    assertEquals(50,sword.attack(sword));
-    assertEquals(50,sword.attack(staff));
-  }
 
 
   /**

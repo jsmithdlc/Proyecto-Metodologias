@@ -43,17 +43,6 @@ class AxeTest extends AbstractTestItem {
     staff = new Staff("Staff",50,0,10);
   }
 
-  /**
-   * checks that attack from axe deals appropriate damage
-   */
-  @Test
-  public void axeAttackTest(){
-    assertEquals(50,axe.attack(axe));
-    assertEquals(50,axe.attack(bow));
-    assertEquals(75,axe.attack(spear));
-    assertEquals(30,axe.attack(sword));
-    assertEquals(50,axe.attack(staff));
-  }
 
   /**
    * Sets up an item with wrong ranges setted.

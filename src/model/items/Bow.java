@@ -41,19 +41,19 @@ public class Bow extends AbstractItem {
 
   public void equipSwordMaster(SwordMaster swordmaster){}
 
-  public int attack(IEquipableItem item){
-    return this.getPower();
+  public void attack(IEquipableItem item){
+    item.getOwner().receiveNormalAttack(this);
   }
 
-  public int receiveAxeAttack(Axe axe){
-    return axe.getPower();
+  public void receiveAxeAttack(Axe axe){
+    this.getOwner().receiveNormalAttack(axe);
   }
 
-  public int receiveSpearAttack(Spear spear){
-    return spear.getPower();
+  public void receiveSpearAttack(Spear spear){
+    this.getOwner().receiveNormalAttack(spear);
   }
 
-  public int receiveSwordAttack(Sword sword){
-    return sword.getPower();
+  public void receiveSwordAttack(Sword sword){
+    this.getOwner().receiveNormalAttack(sword);
   }
 }

@@ -40,19 +40,19 @@ public class Spear extends AbstractItem {
 
   public void equipSwordMaster(SwordMaster swordmaster){}
 
-  public int attack(IEquipableItem item){
-    return item.receiveSpearAttack(this);
+  public void attack(IEquipableItem item){
+    item.receiveSpearAttack(this);
   }
 
-  public int receiveAxeAttack(Axe axe){
-    return (int)Math.round(axe.getPower()*1.5);
+  public void receiveAxeAttack(Axe axe){
+    this.getOwner().receiveStrongAttack(axe);
   }
 
-  public int receiveSpearAttack(Spear spear){
-    return spear.getPower();
+  public void receiveSpearAttack(Spear spear){
+    this.getOwner().receiveNormalAttack(spear);
   }
 
-  public int receiveSwordAttack(Sword sword){
-    return sword.getPower()-20;
+  public void receiveSwordAttack(Sword sword){
+    this.getOwner().receiveWeakAttack(sword);
   }
 }

@@ -56,11 +56,11 @@ public interface IEquipableItem {
 
   void equipSwordMaster(SwordMaster swordmaster);
 
-  int attack(IEquipableItem item);
+  void attack(IEquipableItem item);
 
-  int receiveAxeAttack(Axe axe);
+  void receiveAxeAttack(Axe axe);
 
-  int receiveSwordAttack(Sword sword);
+  void receiveSwordAttack(Sword sword);
 
-  int receiveSpearAttack(Spear spear);
+  void receiveSpearAttack(Spear spear);
 }

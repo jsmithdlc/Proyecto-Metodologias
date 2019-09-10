@@ -2,6 +2,7 @@ package model.units;
 
 import java.util.List;
 import model.items.IEquipableItem;
+import model.items.Staff;
 import model.map.Location;
 
 /**
@@ -27,12 +28,6 @@ public interface IUnit {
    * @return hit points of the unit
    */
   int getCurrentHitPoints();
-
-  /**
-   * @param newHitPoints
-   *    new currentHitPoints of unit
-   */
-  void setNewHitPoints(int newHitPoints);
 
   /**
    * @return the items carried by this unit
@@ -71,4 +66,51 @@ public interface IUnit {
    * If the other location is out of this unit's movement range, the unit doesn't move.
    */
   void moveTo(Location targetLocation);
+
+  /**
+   * Makes this unit receive weak attack from item
+   * @param item
+   *      item that attacks this unit
+   */
+  void receiveWeakAttack(IEquipableItem item);
+
+  /**
+   * Makes this unit receive normal attack from item
+   * @param item
+   *      item that attacks this unit
+   */
+  void receiveNormalAttack(IEquipableItem item);
+
+  /**
+   * Makes this unit receive strong attack from item
+   * @param item
+   *      item that attacks this unit
+   */
+  void receiveStrongAttack(IEquipableItem item);
+
+  /**
+   * Makes this unit receive healing from staff
+   * @param staff
+   *      staff that heals this unit
+   */
+  void healUnit(Staff staff);
+  /**
+   * implements attack from one unit to the other, modifying corresponding hitpoints
+   * @param other
+   *      The other unit being attacked
+   */
+  void attack(IUnit other);
+
+  /**
+   * implements counter-attack from one unit to the other, modifying corresponding hitpoints
+   * @param other
+   *      The other unit being counter-attacked
+   */
+  void counterAttack(IUnit other);
+
+  /**
+   *
+   * @return true if unit is alive, false otherwise
+   */
+  boolean checkAlive();
 }

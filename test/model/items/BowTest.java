@@ -46,17 +46,6 @@ public class BowTest extends AbstractTestItem {
     staff = new Staff("Staff",50,0,10);
   }
 
-  /**
-   * checks that attack from bow deals appropriate damage
-   */
-  @Test
-  public void bowAttackTest(){
-    assertEquals(50,bow.attack(axe));
-    assertEquals(50,bow.attack(bow));
-    assertEquals(50,bow.attack(spear));
-    assertEquals(50,bow.attack(sword));
-    assertEquals(50,bow.attack(staff));
-  }
 
   /**
    * Sets up an item with wrong ranges setted.

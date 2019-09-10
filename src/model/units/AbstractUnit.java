@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import model.items.IEquipableItem;
+import model.items.Staff;
 import model.map.Location;
 
 /**
@@ -25,21 +26,18 @@ public abstract class AbstractUnit implements IUnit {
   private final int movement;
   protected IEquipableItem equippedItem;
   private Location location;
+  private double epsilon = 0.000001;
 
   /**
    * Creates a new Unit.
    *
-   * @param hitPoints
-   *     the maximum amount of damage a unit can sustain
-   * @param movement
-   *     the number of panels a unit can move
-   * @param location
-   *     the current position of this unit on the map
-   * @param maxItems
-   *     maximum amount of items this unit can carry
+   * @param hitPoints the maximum amount of damage a unit can sustain
+   * @param movement  the number of panels a unit can move
+   * @param location  the current position of this unit on the map
+   * @param maxItems  maximum amount of items this unit can carry
    */
   protected AbstractUnit(final int hitPoints, final int movement,
-      final Location location, final int maxItems, final IEquipableItem... items) {
+                         final Location location, final int maxItems, final IEquipableItem... items) {
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
@@ -51,10 +49,6 @@ public abstract class AbstractUnit implements IUnit {
     return currentHitPoints;
   }
 
-  @Override
-  public void setNewHitPoints(int newHitPoints){
-    this.currentHitPoints = newHitPoints;
-  }
 
   @Override
   public List<IEquipableItem> getItems() {
@@ -89,15 +83,67 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void moveTo(final Location targetLocation) {
     if (getLocation().distanceTo(targetLocation) <= getMovement()
-        && targetLocation.getUnit() == null) {
+            && targetLocation.getUnit() == null) {
       setLocation(targetLocation);
     }
   }
 
-  public void attack(IUnit other){
-    if((this.equippedItem.getMinRange()<other.getLocation().distanceTo(this.getLocation())) &&
-            (this.equippedItem.getMaxRange()>other.getLocation().distanceTo(this.getLocation()))){
-      other.setNewHitPoints(other.getCurrentHitPoints()-this.equippedItem.attack(other.getEquippedItem()));
+  public boolean checkAlive() {
+    if ((this.getCurrentHitPoints() - 0) <= epsilon) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  public boolean inRange(IUnit other) {
+    if ((this.equippedItem.getMinRange() < other.getLocation().distanceTo(this.getLocation())) &&
+            (this.equippedItem.getMaxRange() > other.getLocation().distanceTo(this.getLocation()))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public void receiveWeakAttack(IEquipableItem item){
+    this.currentHitPoints -= item.getPower()-20;
+  }
+
+  @Override
+  public void receiveNormalAttack(IEquipableItem item){
+    this.currentHitPoints -= item.getPower();
+  }
+
+  @Override
+  public void receiveStrongAttack(IEquipableItem item){
+    this.currentHitPoints -= (int)Math.round(item.getPower()*1.5);
+  }
+
+  @Override
+  public void healUnit(Staff staff){
+    this.currentHitPoints += staff.getPower();
+  }
+
+
+  public void attack(IUnit other) {
+    if (this.checkAlive() && other.checkAlive()) {
+      if (!this.equippedItem.equals(null) && this.inRange(other)) {
+        if(!other.getEquippedItem().equals(null)){
+          this.equippedItem.attack(other.getEquippedItem());
+          other.counterAttack(this);
+        }
+        else{
+          other.receiveNormalAttack(this.equippedItem);
+        }
+      }
+    }
+  }
+
+  public void counterAttack(IUnit other){
+    if(this.checkAlive() && this.inRange(other)){
+      this.equippedItem.attack(other.getEquippedItem());
     }
   }
 }
+
