@@ -55,4 +55,12 @@ public interface IEquipableItem {
   void equipHero(Hero hero);
 
   void equipSwordMaster(SwordMaster swordmaster);
+
+  int attack(IEquipableItem item);
+
+  int receiveAxeAttack(Axe axe);
+
+  int receiveSwordAttack(Sword sword);
+
+  int receiveSpearAttack(Spear spear);
 }

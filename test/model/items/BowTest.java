@@ -1,7 +1,8 @@
 package model.items;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import model.map.Location;
 import model.units.Archer;
 import model.units.IUnit;
@@ -15,9 +16,14 @@ import org.junit.jupiter.api.Test;
  */
 public class BowTest extends AbstractTestItem {
 
-  private Bow bow;
+  private Bow bow_set;
   private Bow wrongBow;
   private Archer archer;
+  private Axe axe;
+  private Bow bow;
+  private Spear spear;
+  private Sword sword;
+  private Staff staff;
 
   /**
    * Sets which item is going to be tested
@@ -28,7 +34,28 @@ public class BowTest extends AbstractTestItem {
     expectedPower = 8;
     expectedMinRange = 2;
     expectedMaxRange = 4;
-    bow = new Bow(expectedName, expectedPower, expectedMinRange, expectedMaxRange);
+    bow_set = new Bow(expectedName, expectedPower, expectedMinRange, expectedMaxRange);
+  }
+
+  @Override
+  public void setItems(){
+    axe = new Axe("Axe",50,0,10);
+    bow = new Bow("Bow",50,2,10);
+    spear = new Spear("Spear",50,0,10);
+    sword = new Sword("Sword",50,0,10);
+    staff = new Staff("Staff",50,0,10);
+  }
+
+  /**
+   * checks that attack from bow deals appropriate damage
+   */
+  @Test
+  public void bowAttackTest(){
+    assertEquals(50,bow.attack(axe));
+    assertEquals(50,bow.attack(bow));
+    assertEquals(50,bow.attack(spear));
+    assertEquals(50,bow.attack(sword));
+    assertEquals(50,bow.attack(staff));
   }
 
   /**
@@ -67,7 +94,7 @@ public class BowTest extends AbstractTestItem {
    */
   @Override
   public IEquipableItem getTestItem() {
-    return bow;
+    return bow_set;
   }
 
   /**

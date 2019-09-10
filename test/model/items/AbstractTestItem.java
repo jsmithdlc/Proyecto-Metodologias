@@ -29,6 +29,7 @@ public abstract class AbstractTestItem {
     setTestItem();
     setWrongRangeItem();
     setTestUnit();
+    setItems();
   }
 
   /**
@@ -45,6 +46,11 @@ public abstract class AbstractTestItem {
    * Sets the unit that will be equipped with the test item
    */
   public abstract void setTestUnit();
+
+  /**
+   * Sets all items for attack tests
+   */
+  public abstract void setItems();
 
   /**
    * Checks that the tested item cannot have ranges outside of certain bounds.

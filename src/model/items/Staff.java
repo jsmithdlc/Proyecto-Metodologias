@@ -34,9 +34,25 @@ public class Staff extends AbstractItem {
     this.equipTo(cleric);
   }
 
+  public int attack(IEquipableItem item){
+    return -this.getPower();
+  }
+
   public void equipFighter(Fighter fighter){}
 
   public void equipHero(Hero hero){}
 
   public void equipSwordMaster(SwordMaster swordmaster){}
+
+  public int receiveAxeAttack(Axe axe){
+    return axe.getPower();
+  }
+
+  public int receiveSpearAttack(Spear spear){
+    return spear.getPower();
+  }
+
+  public int receiveSwordAttack(Sword sword){
+    return sword.getPower();
+  }
 }

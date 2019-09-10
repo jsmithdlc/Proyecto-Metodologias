@@ -29,6 +29,12 @@ public interface IUnit {
   int getCurrentHitPoints();
 
   /**
+   * @param newHitPoints
+   *    new currentHitPoints of unit
+   */
+  void setNewHitPoints(int newHitPoints);
+
+  /**
    * @return the items carried by this unit
    */
   List<IEquipableItem> getItems();
