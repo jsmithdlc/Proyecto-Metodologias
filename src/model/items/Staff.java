@@ -28,29 +28,38 @@ public class Staff extends AbstractItem {
     super(name, power, minRange, maxRange);
   }
 
+  @Override
   public void equipArcher(Archer archer){}
 
+  @Override
   public void equipCleric(Cleric cleric) {
     this.equipTo(cleric);
   }
-
-  public void attack(IEquipableItem item){
-  }
-
+  @Override
   public void equipFighter(Fighter fighter){}
 
+  @Override
   public void equipHero(Hero hero){}
 
+  @Override
   public void equipSwordMaster(SwordMaster swordmaster){}
 
+  @Override
+  public void attackItem(IEquipableItem item){}
+
+  @Override
+  public void counterAttack(IEquipableItem item){}
+  @Override
   public void receiveAxeAttack(Axe axe){
     this.getOwner().receiveNormalAttack(axe);
   }
 
+  @Override
   public void receiveSpearAttack(Spear spear){
     this.getOwner().receiveNormalAttack(spear);
   }
 
+  @Override
   public void receiveSwordAttack(Sword sword){
     this.getOwner().receiveNormalAttack(sword);
   }

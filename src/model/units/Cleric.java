@@ -34,4 +34,13 @@ public class Cleric extends AbstractUnit {
    */
   @Override
   public void equipItem(final IEquipableItem item) {item.equipCleric(this);}
+
+  @Override
+  public void attack(IUnit other){
+    if(this.checkAlive() && other.checkAlive() && !this.equippedItem.equals(null)){
+      if(this.inRange(other)){
+        other.healUnit(this.getEquippedItem());
+      }
+    }
+  }
 }

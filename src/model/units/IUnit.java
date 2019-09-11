@@ -90,23 +90,16 @@ public interface IUnit {
 
   /**
    * Makes this unit receive healing from staff
-   * @param staff
+   * @param item
    *      staff that heals this unit
    */
-  void healUnit(Staff staff);
+  void healUnit(IEquipableItem item);
   /**
    * implements attack from one unit to the other, modifying corresponding hitpoints
    * @param other
    *      The other unit being attacked
    */
   void attack(IUnit other);
-
-  /**
-   * implements counter-attack from one unit to the other, modifying corresponding hitpoints
-   * @param other
-   *      The other unit being counter-attacked
-   */
-  void counterAttack(IUnit other);
 
   /**
    *

@@ -24,34 +24,51 @@ public class Axe extends AbstractItem {
     super(name, power, minRange, maxRange);
   }
 
+  @Override
   public void equipArcher(Archer archer) {
 }
 
+  @Override
   public void equipCleric(Cleric cleric) {
   }
 
+  @Override
   public void equipFighter(Fighter fighter) {
     this.equipTo(fighter);
   }
 
+  @Override
   public void equipHero(Hero hero) {
   }
 
+  @Override
   public void equipSwordMaster(SwordMaster swordmaster) {
   }
 
-  public void attack(IEquipableItem item){
+  @Override
+  public void attackItem(IEquipableItem item){
     item.receiveAxeAttack(this);
+    item.counterAttack(this);
   }
 
+  @Override
+  public void counterAttack(IEquipableItem item){
+    if(this.getOwner().checkAlive()){
+      item.receiveAxeAttack(this);
+    }
+  }
+
+  @Override
   public void receiveAxeAttack(Axe axe){
     this.getOwner().receiveNormalAttack(axe);
   }
 
+  @Override
   public void receiveSpearAttack(Spear spear){
     this.getOwner().receiveWeakAttack(spear);
   }
 
+  @Override
   public void receiveSwordAttack(Sword sword){
     this.getOwner().receiveStrongAttack(sword);
   }

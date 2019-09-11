@@ -56,7 +56,9 @@ public interface IEquipableItem {
 
   void equipSwordMaster(SwordMaster swordmaster);
 
-  void attack(IEquipableItem item);
+  void attackItem(IEquipableItem item);
+
+  void counterAttack(IEquipableItem item);
 
   void receiveAxeAttack(Axe axe);
 

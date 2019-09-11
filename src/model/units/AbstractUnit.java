@@ -23,6 +23,7 @@ public abstract class AbstractUnit implements IUnit {
 
   protected final List<IEquipableItem> items = new ArrayList<>();
   private int currentHitPoints;
+  private final int maxHitPoints;
   private final int movement;
   protected IEquipableItem equippedItem;
   private Location location;
@@ -38,6 +39,7 @@ public abstract class AbstractUnit implements IUnit {
    */
   protected AbstractUnit(final int hitPoints, final int movement,
                          final Location location, final int maxItems, final IEquipableItem... items) {
+    this.maxHitPoints = hitPoints;
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
@@ -107,42 +109,50 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void receiveWeakAttack(IEquipableItem item){
-    this.currentHitPoints -= item.getPower()-20;
+    if(item.getPower()>20) {
+      this.currentHitPoints -= item.getPower() - 20;
+      if(this.currentHitPoints < 0){
+        this.currentHitPoints = 0;
+      }
+    }
   }
 
   @Override
   public void receiveNormalAttack(IEquipableItem item){
     this.currentHitPoints -= item.getPower();
+    if(this.getCurrentHitPoints() < 0){
+      this.currentHitPoints = 0;
+    }
   }
 
   @Override
   public void receiveStrongAttack(IEquipableItem item){
     this.currentHitPoints -= (int)Math.round(item.getPower()*1.5);
-  }
-
-  @Override
-  public void healUnit(Staff staff){
-    this.currentHitPoints += staff.getPower();
-  }
-
-
-  public void attack(IUnit other) {
-    if (this.checkAlive() && other.checkAlive()) {
-      if (!this.equippedItem.equals(null) && this.inRange(other)) {
-        if(!other.getEquippedItem().equals(null)){
-          this.equippedItem.attack(other.getEquippedItem());
-          other.counterAttack(this);
-        }
-        else{
-          other.receiveNormalAttack(this.equippedItem);
-        }
-      }
+    if(this.currentHitPoints < 0){
+      this.currentHitPoints = 0;
     }
   }
 
-  public void counterAttack(IUnit other){
-    if(this.checkAlive() && this.inRange(other)){
-      this.equippedItem.attack(other.getEquippedItem());
+  @Override
+  public void healUnit(IEquipableItem item){
+    this.currentHitPoints += item.getPower();
+    if(this.getCurrentHitPoints()>this.maxHitPoints){
+      this.currentHitPoints = this.maxHitPoints;
+    }
+  }
+
+
+  @Override
+  public void attack(IUnit other) {
+    if (this.checkAlive() && other.checkAlive() && !this.equippedItem.equals(null)) {
+      if (this.inRange(other)) {
+        if(!other.getEquippedItem().equals(null)){
+          this.equippedItem.attackItem(other.getEquippedItem());
+        }
+        else{
+          other.receiveNormalAttack(this.getEquippedItem());
+        }
+      }
     }
   }
 }
