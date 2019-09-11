@@ -27,7 +27,6 @@ public class Axe extends AbstractItem {
   @Override
   public void equipArcher(Archer archer) {
 }
-
   @Override
   public void equipCleric(Cleric cleric) {
   }

@@ -18,31 +18,20 @@ import org.junit.jupiter.api.Test;
 class AxeTest extends AbstractTestItem {
 
   private Axe axe_set;
+  private Axe axe_receive;
   private Axe wrongAxe;
-  private Fighter fighter;
-  private Axe axe;
-  private Bow bow;
-  private Spear spear;
-  private Sword sword;
-  private Staff staff;
+  private Fighter fighter_set;
+  private Fighter fighter_receive;
 
   @Override
-  public void setTestItem() {
+  public void setTestItems() {
     expectedName = "Common axe";
     expectedPower = 10;
     expectedMinRange = 1;
     expectedMaxRange = 2;
     axe_set = new Axe(expectedName, expectedPower, expectedMinRange, expectedMaxRange);
+    axe_receive = new Axe("Axe",50,0,10);
   }
-  @Override
-  public void setItems(){
-    axe = new Axe("Axe",50,0,10);
-    bow = new Bow("Bow",50,2,10);
-    spear = new Spear("Spear",50,0,10);
-    sword = new Sword("Sword",50,0,10);
-    staff = new Staff("Staff",50,0,10);
-  }
-
 
   /**
    * Sets up an item with wrong ranges setted.
@@ -56,9 +45,12 @@ class AxeTest extends AbstractTestItem {
    * Sets the unit that will be equipped with the test item
    */
   @Override
-  public void setTestUnit() {
-    fighter = new Fighter(10, 5, new Location(0, 0));
+  public void setTestUnits() {
+    fighter_set = new Fighter(10, 5, new Location(0, 0));
+    fighter_receive = new Fighter(100, 5, new Location(0, 0));
+    fighter_receive.equipItem(axe_receive);
   }
+
 
   @Override
   public IEquipableItem getWrongTestItem() {
@@ -75,6 +67,36 @@ class AxeTest extends AbstractTestItem {
    */
   @Override
   public IUnit getTestUnit() {
-    return fighter;
+    return fighter_set;
+  }
+
+  @Test
+  public void testReceiveAxeAttack(){
+    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100);
+    axe_receive.receiveAxeAttack(axe);
+    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100-axe.getPower());
+  }
+
+  @Test
+  public void testReceiveSpearAttack(){
+    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100);
+    axe_receive.receiveSpearAttack(spear);
+    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100-(spear.getPower()-20));
+  }
+
+  @Test
+  public void testReceiveSwordAttack(){
+    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100);
+    axe_receive.receiveSwordAttack(sword);
+    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100-((int)Math.round(sword.getPower()*1.5)));
+  }
+
+  @Test
+  public void testAxeAttack(){
+    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100);
+    assertEquals(bow.getOwner().getCurrentHitPoints(),100);
+    assertEquals(spear.getOwner().getCurrentHitPoints(),100);
+    assertEquals(staff.getOwner().getCurrentHitPoints(),100);
+    assertEquals(sword.getOwner().getCurrentHitPoints(),100);
   }
 }

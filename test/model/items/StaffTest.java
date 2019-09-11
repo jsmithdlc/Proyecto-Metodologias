@@ -17,35 +17,23 @@ import org.junit.jupiter.api.Test;
 public class StaffTest extends AbstractTestItem {
 
   private Staff staff_set;
+  private Staff staff_receive;
   private Staff wrongStaff;
-  private Cleric cleric;
-  private Staff staff;
-  private Axe axe;
-  private Bow bow;
-  private Spear spear;
-  private Sword sword;
+  private Cleric cleric_set;
+  private Cleric cleric_receive;
 
   /**
    * Sets which item is going to be tested
    */
   @Override
-  public void setTestItem() {
+  public void setTestItems() {
     expectedName = "Common staff";
     expectedPower = 5;
     expectedMinRange = 1;
     expectedMaxRange = 1;
     staff_set = new Staff(expectedName, expectedPower, expectedMinRange, expectedMaxRange);
+    staff_receive = new Staff("Staff", 50, 0, 10);
   }
-
-  @Override
-  public void setItems(){
-    axe = new Axe("Axe",50,0,10);
-    bow = new Bow("Bow",50,2,10);
-    spear = new Spear("Spear",50,0,10);
-    sword = new Sword("Sword",50,0,10);
-    staff = new Staff("Staff",50,0,10);
-  }
-
 
   /**
    * Sets up an item with wrong ranges setted.
@@ -59,8 +47,10 @@ public class StaffTest extends AbstractTestItem {
    * Sets the unit that will be equipped with the test item
    */
   @Override
-  public void setTestUnit() {
-    cleric = new Cleric(10, 5, new Location(0, 0));
+  public void setTestUnits() {
+    cleric_set = new Cleric(10, 5, new Location(0, 0));
+    cleric_receive = new Cleric(100, 10, new Location(0, 0));
+    cleric_receive.equipItem(staff_receive);
   }
 
   @Override
@@ -81,6 +71,27 @@ public class StaffTest extends AbstractTestItem {
    */
   @Override
   public IUnit getTestUnit() {
-    return cleric;
+    return cleric_set;
+  }
+
+  @Test
+  public void testReceiveAxeAttack() {
+    assertEquals(staff_receive.getOwner().getCurrentHitPoints(), 100);
+    staff_receive.receiveAxeAttack(axe);
+    assertEquals(staff_receive.getOwner().getCurrentHitPoints(), 100 - axe.getPower());
+  }
+
+  @Test
+  public void testReceiveSpearAttack() {
+    assertEquals(staff_receive.getOwner().getCurrentHitPoints(), 100);
+    staff_receive.receiveSpearAttack(spear);
+    assertEquals(staff_receive.getOwner().getCurrentHitPoints(), 100 - spear.getPower());
+  }
+
+  @Test
+  public void testReceiveSwordAttack() {
+    assertEquals(staff_receive.getOwner().getCurrentHitPoints(), 100);
+    staff_receive.receiveSwordAttack(sword);
+    assertEquals(staff_receive.getOwner().getCurrentHitPoints(), 100 - sword.getPower());
   }
 }
