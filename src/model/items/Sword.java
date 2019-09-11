@@ -48,11 +48,12 @@ public class Sword extends AbstractItem {
   @Override
   public void attackItem(IEquipableItem item){
     item.receiveSwordAttack(this);
+    item.counterAttack(this);
   }
 
   @Override
   public void counterAttack(IEquipableItem item){
-    if(this.getOwner().checkAlive()){
+    if(this.getOwner().checkAlive() && this.getOwner().inRange(item.getOwner())){
       item.receiveSwordAttack(this);
     }
   }

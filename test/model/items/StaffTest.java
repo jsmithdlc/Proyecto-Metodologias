@@ -94,4 +94,27 @@ public class StaffTest extends AbstractTestItem {
     staff_receive.receiveSwordAttack(sword);
     assertEquals(staff_receive.getOwner().getCurrentHitPoints(), 100 - sword.getPower());
   }
+
+  @Test
+  public void testStaffAttackAndCounter() {
+    staff.attackItem(bow);
+    assertEquals(bow.getOwner().getCurrentHitPoints(), 100);
+    assertEquals(staff.getOwner().getCurrentHitPoints(), 100);
+    staff.getOwner().setCurrentHitPoints(100);
+    staff.attackItem(axe);
+    assertEquals(axe.getOwner().getCurrentHitPoints(), 100);
+    assertEquals(staff.getOwner().getCurrentHitPoints(), 100);
+    staff.getOwner().setCurrentHitPoints(100);
+    staff.attackItem(spear);
+    assertEquals(spear.getOwner().getCurrentHitPoints(), 100);
+    assertEquals(staff.getOwner().getCurrentHitPoints(), 100);
+    staff.getOwner().setCurrentHitPoints(100);
+    staff.attackItem(staff_receive);
+    assertEquals(staff_receive.getOwner().getCurrentHitPoints(), 100);
+    assertEquals(staff.getOwner().getCurrentHitPoints(), 100);
+    staff.getOwner().setCurrentHitPoints(100);
+    staff.attackItem(sword);
+    assertEquals(sword.getOwner().getCurrentHitPoints(),100);
+    assertEquals(staff.getOwner().getCurrentHitPoints(),100);
+  }
 }

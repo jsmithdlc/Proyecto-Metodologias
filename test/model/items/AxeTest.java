@@ -92,11 +92,25 @@ class AxeTest extends AbstractTestItem {
   }
 
   @Test
-  public void testAxeAttack(){
-    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100);
-    assertEquals(bow.getOwner().getCurrentHitPoints(),100);
-    assertEquals(spear.getOwner().getCurrentHitPoints(),100);
-    assertEquals(staff.getOwner().getCurrentHitPoints(),100);
-    assertEquals(sword.getOwner().getCurrentHitPoints(),100);
+  public void testAxeAttackAndCounter(){
+    axe.attackItem(axe_receive);
+    assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100-axe.getPower());
+    assertEquals(axe.getOwner().getCurrentHitPoints(),100-axe_receive.getPower());
+    axe.getOwner().setCurrentHitPoints(100);
+    axe.attackItem(bow);
+    assertEquals(bow.getOwner().getCurrentHitPoints(),100-axe.getPower());
+    assertEquals(axe.getOwner().getCurrentHitPoints(),100-bow.getPower());
+    axe.getOwner().setCurrentHitPoints(100);
+    axe.attackItem(spear);
+    assertEquals(spear.getOwner().getCurrentHitPoints(),100-(int)Math.round(axe.getPower()*1.5));
+    assertEquals(axe.getOwner().getCurrentHitPoints(),100-(spear.getPower()-20));
+    axe.getOwner().setCurrentHitPoints(100);
+    axe.attackItem(staff);
+    assertEquals(staff.getOwner().getCurrentHitPoints(),100-axe.getPower());
+    assertEquals(axe.getOwner().getCurrentHitPoints(),100);
+    axe.getOwner().setCurrentHitPoints(100);
+    axe.attackItem(sword);
+    assertEquals(sword.getOwner().getCurrentHitPoints(),100-(axe.getPower()-20));
+    assertEquals(axe.getOwner().getCurrentHitPoints(),100-(int)Math.round(sword.getPower()*1.5));
   }
 }

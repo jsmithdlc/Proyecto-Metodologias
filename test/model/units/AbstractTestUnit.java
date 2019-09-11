@@ -31,7 +31,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Override
   public void setTargetAlpaca() {
-    targetAlpaca = new Alpaca(50, 2, field.getCell(1, 0));
+    targetAlpaca = new Alpaca(50, 10, field.getCell(1, 0));
   }
 
   /**
@@ -212,4 +212,19 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public Alpaca getTargetAlpaca() {
     return targetAlpaca;
   }
+
+  @Override
+  @Test
+  public void inRangeTest(){
+    Archer archer = new Archer(50,1,field.getCell(0,1));
+    archer.equipItem(new Bow("Arco",2,2,3));
+    assertEquals(true,archer.inRange(targetAlpaca));
+    targetAlpaca.moveTo(field.getCell(0,0));
+    assertEquals(false,archer.inRange(targetAlpaca));
+    targetAlpaca.moveTo(field.getCell(2,2));
+    assertEquals(true,archer.inRange(targetAlpaca));
+    archer.moveTo(field.getCell(0,0));
+    assertEquals(false,archer.inRange(targetAlpaca));
+  }
+
 }

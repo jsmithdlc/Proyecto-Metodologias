@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import model.map.Field;
 import model.map.Location;
 import model.units.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,7 @@ public abstract class AbstractTestItem {
   protected int expectedPower;
   protected short expectedMinRange;
   protected short expectedMaxRange;
-
+  protected Field field;
   /**
    * Sets up the items to be tested
    */
@@ -42,6 +43,7 @@ public abstract class AbstractTestItem {
     setWrongRangeItem();
     setTestUnits();
     setItems();
+    setField();
     setWarriors();
     equipWarriors();
   }
@@ -72,13 +74,20 @@ public abstract class AbstractTestItem {
     staff = new Staff("Staff",50,0,10);
   }
 
+  public void setField() {
+    this.field = new Field();
+    this.field.addCells(true, new Location(0, 0), new Location(0, 1), new Location(0, 2),
+            new Location(1, 0), new Location(1, 1), new Location(1, 2), new Location(2, 0),
+            new Location(2, 1), new Location(2, 2), new Location (1,3), new Location(1,4));
+  }
+
   public void setWarriors(){
-    alpaca = new Alpaca(100,5,new Location(1, 0));
-    archer = new Archer(100, 5, new Location(0, 1));
-    cleric = new Cleric(100,5, new Location(1,1));
-    fighter = new Fighter(100, 5, new Location(0, 0));
-    hero = new Hero(100,5,new Location(0,2));
-    swordMaster = new SwordMaster(100,5,new Location(2,0));
+    alpaca = new Alpaca(100,5,field.getCell(0,0));
+    archer = new Archer(100, 5, field.getCell(1,4));
+    cleric = new Cleric(100,5, field.getCell(1,1));
+    fighter = new Fighter(100, 5,field.getCell(1,2));
+    hero = new Hero(100,5,field.getCell(2,1));
+    swordMaster = new SwordMaster(100,5,field.getCell(2,0));
   }
 
   public void equipWarriors(){
@@ -88,6 +97,7 @@ public abstract class AbstractTestItem {
     hero.equipItem(spear);
     swordMaster.equipItem(sword);
   }
+
   /**
    * Checks that the tested item cannot have ranges outside of certain bounds.
    */

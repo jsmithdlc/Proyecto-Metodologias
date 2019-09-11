@@ -30,6 +30,12 @@ public interface IUnit {
   int getCurrentHitPoints();
 
   /**
+   * set currentHiiPoints of this unit
+   * @param hitPoints
+   *    hitPoints to set
+   */
+  void setCurrentHitPoints(int hitPoints);
+  /**
    * @return the items carried by this unit
    */
   List<IEquipableItem> getItems();
@@ -59,6 +65,14 @@ public interface IUnit {
    * @return the number of cells this unit can move
    */
   int getMovement();
+
+  /**
+   * checks if other Unit is in range of this attacking weapon
+   * @param other
+   *      other unit to attack
+   * @return true if other is in range, false otherwise
+   */
+  boolean inRange(IUnit other);
 
   /**
    * Moves this unit to another location.

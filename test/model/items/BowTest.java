@@ -32,8 +32,9 @@ public class BowTest extends AbstractTestItem {
     expectedMinRange = 2;
     expectedMaxRange = 4;
     bow_set = new Bow(expectedName, expectedPower, expectedMinRange, expectedMaxRange);
-    bow_receive = new Bow("Bow", 50,0,10);
+    bow_receive = new Bow("Bow", 50, 2, 10);
   }
+
   /**
    * Sets up an item with wrong ranges setted.
    */
@@ -48,7 +49,7 @@ public class BowTest extends AbstractTestItem {
   @Override
   public void setTestUnits() {
     archer_set = new Archer(10, 5, new Location(0, 0));
-    archer_receive = new Archer(100,10,new Location(0,0));
+    archer_receive = new Archer(100, 10, new Location(0, 0));
     archer_receive.equipItem(bow_receive);
   }
 
@@ -84,23 +85,47 @@ public class BowTest extends AbstractTestItem {
   }
 
   @Test
-  public void testReceiveAxeAttack(){
-    assertEquals(bow_receive.getOwner().getCurrentHitPoints(),100);
+  public void testReceiveAxeAttack() {
+    assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100);
     bow_receive.receiveAxeAttack(axe);
-    assertEquals(bow_receive.getOwner().getCurrentHitPoints(),100-axe.getPower());
+    assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100 - axe.getPower());
   }
 
   @Test
-  public void testReceiveSpearAttack(){
-    assertEquals(bow_receive.getOwner().getCurrentHitPoints(),100);
+  public void testReceiveSpearAttack() {
+    assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100);
     bow_receive.receiveSpearAttack(spear);
-    assertEquals(bow_receive.getOwner().getCurrentHitPoints(),100-spear.getPower());
+    assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100 - spear.getPower());
   }
 
   @Test
-  public void testReceiveSwordAttack(){
-    assertEquals(bow_receive.getOwner().getCurrentHitPoints(),100);
+  public void testReceiveSwordAttack() {
+    assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100);
     bow_receive.receiveSwordAttack(sword);
-    assertEquals(bow_receive.getOwner().getCurrentHitPoints(),100- sword.getPower());
+    assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100 - sword.getPower());
+  }
+
+  @Test
+  public void testBowAttackAndCounter() {
+    bow.attackItem(bow_receive);
+    assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100 - bow.getPower());
+    assertEquals(bow.getOwner().getCurrentHitPoints(), 100 - bow_receive.getPower());
+    bow.getOwner().setCurrentHitPoints(100);
+    bow.attackItem(axe);
+    assertEquals(axe.getOwner().getCurrentHitPoints(), 100 - bow.getPower());
+    assertEquals(bow.getOwner().getCurrentHitPoints(), 100 - axe.getPower());
+    bow.getOwner().setCurrentHitPoints(100);
+    bow.attackItem(spear);
+    assertEquals(spear.getOwner().getCurrentHitPoints(), 100 - bow.getPower());
+    assertEquals(bow.getOwner().getCurrentHitPoints(), 100 - spear.getPower());
+    bow.getOwner().setCurrentHitPoints(100);
+    bow.attackItem(staff);
+    assertEquals(staff.getOwner().getCurrentHitPoints(), 100 - bow.getPower());
+    assertEquals(bow.getOwner().getCurrentHitPoints(), 100);
+    bow.getOwner().setCurrentHitPoints(100);
+    bow.attackItem(sword);
+    assertEquals(sword.getOwner().getCurrentHitPoints(),100-bow.getPower());
+    assertEquals(bow.getOwner().getCurrentHitPoints(),100-sword.getPower());
   }
 }
+

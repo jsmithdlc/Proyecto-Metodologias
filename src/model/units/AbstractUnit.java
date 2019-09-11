@@ -51,6 +51,15 @@ public abstract class AbstractUnit implements IUnit {
     return currentHitPoints;
   }
 
+  @Override
+  public void setCurrentHitPoints(int hitPoints){
+    if(hitPoints >= this.maxHitPoints){
+      this.currentHitPoints = maxHitPoints;
+    }
+    else{
+      this.currentHitPoints = hitPoints;
+    }
+  }
 
   @Override
   public List<IEquipableItem> getItems() {
@@ -73,7 +82,7 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void setLocation(final Location location) {
+  public void setLocation(Location location) {
     this.location = location;
   }
 
@@ -83,7 +92,7 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void moveTo(final Location targetLocation) {
+  public void moveTo(Location targetLocation) {
     if (getLocation().distanceTo(targetLocation) <= getMovement()
             && targetLocation.getUnit() == null) {
       setLocation(targetLocation);
@@ -99,8 +108,8 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   public boolean inRange(IUnit other) {
-    if ((this.equippedItem.getMinRange() < other.getLocation().distanceTo(this.getLocation())) &&
-            (this.equippedItem.getMaxRange() > other.getLocation().distanceTo(this.getLocation()))) {
+    if ((this.equippedItem.getMinRange() <= other.getLocation().distanceTo(this.getLocation())) &&
+            (this.equippedItem.getMaxRange() >= other.getLocation().distanceTo(this.getLocation()))) {
       return true;
     } else {
       return false;

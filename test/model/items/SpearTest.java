@@ -93,4 +93,27 @@ public class SpearTest extends AbstractTestItem {
     javelin_receive.receiveSwordAttack(sword);
     assertEquals(javelin_receive.getOwner().getCurrentHitPoints(),100- (sword.getPower()-20));
   }
+
+  @Test
+  public void testSpearAttackAndCounter() {
+    spear.attackItem(bow);
+    assertEquals(bow.getOwner().getCurrentHitPoints(), 100 - spear.getPower());
+    assertEquals(spear.getOwner().getCurrentHitPoints(), 100 - bow.getPower());
+    spear.getOwner().setCurrentHitPoints(100);
+    spear.attackItem(axe);
+    assertEquals(axe.getOwner().getCurrentHitPoints(), 100 - (spear.getPower()-20));
+    assertEquals(spear.getOwner().getCurrentHitPoints(), 100 - (int)Math.round(axe.getPower()*1.5));
+    spear.getOwner().setCurrentHitPoints(100);
+    spear.attackItem(javelin_receive);
+    assertEquals(javelin_receive.getOwner().getCurrentHitPoints(), 100 - spear.getPower());
+    assertEquals(spear.getOwner().getCurrentHitPoints(), 100 - javelin_receive.getPower());
+    spear.getOwner().setCurrentHitPoints(100);
+    spear.attackItem(staff);
+    assertEquals(staff.getOwner().getCurrentHitPoints(), 100 - spear.getPower());
+    assertEquals(spear.getOwner().getCurrentHitPoints(), 100);
+    spear.getOwner().setCurrentHitPoints(100);
+    spear.attackItem(sword);
+    assertEquals(sword.getOwner().getCurrentHitPoints(),100-(int)Math.round(1.5*spear.getPower()));
+    assertEquals(spear.getOwner().getCurrentHitPoints(),100-(sword.getPower()-20));
+  }
 }

@@ -52,7 +52,7 @@ public class Axe extends AbstractItem {
 
   @Override
   public void counterAttack(IEquipableItem item){
-    if(this.getOwner().checkAlive()){
+    if(this.getOwner().checkAlive() && this.getOwner().inRange(item.getOwner())){
       item.receiveAxeAttack(this);
     }
   }

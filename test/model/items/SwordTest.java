@@ -94,4 +94,27 @@ public class SwordTest extends AbstractTestItem {
     sword_receive.receiveSwordAttack(sword);
     assertEquals(sword_receive.getOwner().getCurrentHitPoints(), 100 - sword.getPower());
   }
+
+  @Test
+  public void testSwordAttackAndCounter() {
+    sword.attackItem(bow);
+    assertEquals(bow.getOwner().getCurrentHitPoints(), 100 -sword.getPower());
+    assertEquals(sword.getOwner().getCurrentHitPoints(), 100 - bow.getPower());
+    sword.getOwner().setCurrentHitPoints(100);
+    sword.attackItem(axe);
+    assertEquals(axe.getOwner().getCurrentHitPoints(), 100 - (int)Math.round(1.5*sword.getPower()));
+    assertEquals(sword.getOwner().getCurrentHitPoints(), 100 -(axe.getPower()-20));
+    sword.getOwner().setCurrentHitPoints(100);
+    sword.attackItem(spear);
+    assertEquals(spear.getOwner().getCurrentHitPoints(), 100 -(sword.getPower()-20));
+    assertEquals(sword.getOwner().getCurrentHitPoints(), 100 - (int)Math.round(1.5*spear.getPower()));
+    sword.getOwner().setCurrentHitPoints(100);
+    sword.attackItem(staff);
+    assertEquals(staff.getOwner().getCurrentHitPoints(), 100 -sword.getPower());
+    assertEquals(sword.getOwner().getCurrentHitPoints(), 100);
+    sword.getOwner().setCurrentHitPoints(100);
+    sword.attackItem(sword_receive);
+    assertEquals(sword_receive.getOwner().getCurrentHitPoints(),100-sword.getPower());
+    assertEquals(sword.getOwner().getCurrentHitPoints(),100-sword_receive.getPower());
+  }
 }
