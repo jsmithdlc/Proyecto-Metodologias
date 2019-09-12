@@ -147,6 +147,14 @@ public abstract class AbstractTestUnit implements ITestUnit {
     assertEquals(false,getTestUnit().getItems().contains(bow));
   }
 
+  @Test
+  public void equipItemNotOwnTest(){
+    Fighter fighter = new Fighter(60,4,new Location(1,1));
+    Axe axe = new Axe("acha",10,2,5);
+    fighter.equipItem(axe);
+    assertNull(fighter.getEquippedItem());
+  }
+
   /**
    * @return the test axe
    */
@@ -249,8 +257,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   @Test
   public void inRangeTest(){
-    Archer archer = new Archer(50,1,field.getCell(0,1));
-    archer.equipItem(new Bow("Arco",2,2,3));
+    Bow bowie = new Bow("Arco",2,2,3);
+    Archer archer = new Archer(50,1,field.getCell(0,1),bowie);
+    archer.equipItem(bowie);
     assertEquals(true,archer.inRange(targetAlpaca));
     targetAlpaca.moveTo(field.getCell(0,0));
     assertEquals(false,archer.inRange(targetAlpaca));
@@ -262,11 +271,11 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Test
   public void testFatalBlow(){
-    Fighter fighter_killer = new Fighter(30,4,field.getCell(0,0));
+    Fighter fighter_killer = new Fighter(30,4,field.getCell(0,0),axe);
     fighter_killer.equipItem(axe);
-    Hero hero_weak = new Hero(5,4,field.getCell(1,1));
+    Hero hero_weak = new Hero(5,4,field.getCell(1,1),spear);
     hero_weak.equipItem(spear);
-    SwordMaster swordMaster_weak = new SwordMaster(5,4,field.getCell(0,1));
+    SwordMaster swordMaster_weak = new SwordMaster(5,4,field.getCell(0,1),sword);
     swordMaster_weak.equipItem(sword);
     fighter_killer.attack(hero_weak);
     fighter_killer.attack(swordMaster_weak);
@@ -279,9 +288,9 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Test
   public void testZeroAttack(){
-    Hero hero = new Hero(30,4,field.getCell(0,0));
+    Hero hero = new Hero(30,4,field.getCell(0,0),spear);
     hero.equipItem(spear);
-    Fighter fighter = new Fighter(30,4,field.getCell(0,1));
+    Fighter fighter = new Fighter(30,4,field.getCell(0,1),axe);
     fighter.equipItem(axe);
     hero.attack(fighter);
     assertEquals(30,fighter.getCurrentHitPoints());

@@ -48,7 +48,7 @@ public class SpearTest extends AbstractTestItem {
   @Override
   public void setTestUnits() {
     hero_set = new Hero(10, 5, new Location(0, 0));
-    hero_receive = new Hero(100,10,new Location(0,0));
+    hero_receive = new Hero(100,10,new Location(0,0),javelin_receive);
     hero_receive.equipItem(javelin_receive);
   }
 

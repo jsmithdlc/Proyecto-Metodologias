@@ -91,10 +91,15 @@ public abstract class AbstractTestItem {
   }
 
   public void equipWarriors(){
+    archer.addItem(bow);
     archer.equipItem(bow);
+    cleric.addItem(staff);
     cleric.equipItem(staff);
+    fighter.addItem(axe);
     fighter.equipItem(axe);
+    hero.addItem(spear);
     hero.equipItem(spear);
+    swordMaster.addItem(sword);
     swordMaster.equipItem(sword);
   }
 
@@ -160,6 +165,7 @@ public abstract class AbstractTestItem {
   public void equippedToTest() {
     assertNull(getTestItem().getOwner());
     IUnit unit = getTestUnit();
+    unit.addItem(getTestItem());
     getTestItem().equipTo(unit);
     assertEquals(unit, getTestItem().getOwner());
   }

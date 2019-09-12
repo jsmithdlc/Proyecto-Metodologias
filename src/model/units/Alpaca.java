@@ -41,7 +41,7 @@ public class Alpaca extends AbstractUnit {
 
   @Override
   public void addItem(IEquipableItem item) {
-    if (!(item.getPossession() == true)) {
+    if (item.getOwner() == null) {
       this.items.add(item);
     }
   }

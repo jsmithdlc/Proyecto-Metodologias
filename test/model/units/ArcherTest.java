@@ -40,6 +40,7 @@ public class ArcherTest extends AbstractTestUnit {
   @Override
   public void equipArcherTest() {
     assertNull(archer.getEquippedItem());
+    archer.addItem(bow);
     bow.equipArcher(archer);
     assertEquals(bow, archer.getEquippedItem());
   }
@@ -51,11 +52,12 @@ public class ArcherTest extends AbstractTestUnit {
       if(weapons_list.get(i).equals(bow)){
         continue;
       }
+      archer.addItem(weapons_list.get(i));
       weapons_list.get(i).equipArcher(archer);
       assertNull(archer.getEquippedItem());
+      archer.removeItem(weapons_list.get(i));
     }
   }
-
 
   @Override
   public boolean equals(Object obj) {

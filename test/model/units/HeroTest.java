@@ -33,6 +33,7 @@ public class HeroTest extends AbstractTestUnit {
   @Test
   public void equipHeroTest() {
     assertNull(hero.getEquippedItem());
+    hero.addItem(spear);
     spear.equipHero(hero);
     assertEquals(spear, hero.getEquippedItem());
   }
@@ -43,8 +44,10 @@ public class HeroTest extends AbstractTestUnit {
       if(weapons_list.get(i).equals(spear)){
         continue;
       }
+      hero.addItem(weapons_list.get(i));
       weapons_list.get(i).equipHero(hero);
       assertNull(hero.getEquippedItem());
+      hero.removeItem(weapons_list.get(i));
     }
   }
   @Override

@@ -45,7 +45,7 @@ public abstract class AbstractUnit implements IUnit {
     this.location = location;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
     for(IEquipableItem item:items){
-      item.setPossession(true);
+      item.setOwner(this);
     }
   }
 
@@ -170,17 +170,17 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void addItem(IEquipableItem item){
-    if(!(3-this.getItems().size() <= epsilon) && !(item.getPossession()==true)){
+    if(!(3-this.getItems().size() <= epsilon) && item.getOwner()==null){
+      item.setOwner(this);
       this.items.add(item);
-      item.setPossession(true);
     }
   }
 
   @Override
   public void removeItem(IEquipableItem item){
     if(this.getItems().contains(item)){
+      item.setOwner(null);
       this.items.remove(item);
-      item.setPossession(false);
     }
   }
 }

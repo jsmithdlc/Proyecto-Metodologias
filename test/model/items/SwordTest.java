@@ -49,7 +49,7 @@ public class SwordTest extends AbstractTestItem {
   @Override
   public void setTestUnits() {
     swordMaster_set = new SwordMaster(10, 5, new Location(0, 0));
-    swordMaster_receive = new SwordMaster(100,10,new Location(0,0));
+    swordMaster_receive = new SwordMaster(100,10,new Location(0,0),sword_receive);
     swordMaster_receive.equipItem(sword_receive);
   }
 

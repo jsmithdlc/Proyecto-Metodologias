@@ -33,6 +33,7 @@ public class SwordMasterTest extends AbstractTestUnit {
   @Override
   public void equipSwordMasterTest() {
     assertNull(swordMaster.getEquippedItem());
+    swordMaster.addItem(sword);
     sword.equipSwordMaster(swordMaster);
     assertEquals(sword, swordMaster.getEquippedItem());
   }
@@ -44,8 +45,10 @@ public class SwordMasterTest extends AbstractTestUnit {
       if(weapons_list.get(i).equals(sword)){
         continue;
       }
+      swordMaster.addItem(weapons_list.get(i));
       weapons_list.get(i).equipSwordMaster(swordMaster);
       assertNull(swordMaster.getEquippedItem());
+      swordMaster.removeItem(weapons_list.get(i));
     }
   }
   @Override

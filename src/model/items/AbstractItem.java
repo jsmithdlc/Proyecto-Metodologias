@@ -38,8 +38,9 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public void equipTo(final IUnit unit) {
-    unit.setEquippedItem(this);
-    owner = unit;
+    if (this.getOwner() == unit) {
+      unit.setEquippedItem(this);
+    }
   }
 
   @Override
@@ -68,11 +69,6 @@ public abstract class AbstractItem implements IEquipableItem {
   }
 
   @Override
-  public void setPossession(boolean inInventory){this.possession = true;}
-
-  @Override
-  public boolean getPossession(){
-    return this.possession;
-  }
+  public void setOwner(IUnit unit){this.owner = unit;}
 
 }

@@ -37,6 +37,7 @@ public class FighterTest extends AbstractTestUnit {
   @Override
   public void equipFighterTest() {
     assertNull(fighter.getEquippedItem());
+    fighter.addItem(axe);
     axe.equipFighter(fighter);
     assertEquals(axe, fighter.getEquippedItem());
   }
@@ -48,8 +49,10 @@ public class FighterTest extends AbstractTestUnit {
       if(weapons_list.get(i).equals(axe)){
         continue;
       }
+      fighter.addItem(weapons_list.get(i));
       weapons_list.get(i).equipFighter(fighter);
       assertNull(fighter.getEquippedItem());
+      fighter.removeItem(weapons_list.get(i));
     }
   }
   @Override

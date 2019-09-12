@@ -49,7 +49,7 @@ public class StaffTest extends AbstractTestItem {
   @Override
   public void setTestUnits() {
     cleric_set = new Cleric(10, 5, new Location(0, 0));
-    cleric_receive = new Cleric(100, 10, new Location(0, 0));
+    cleric_receive = new Cleric(100, 10, new Location(0, 0),staff_receive);
     cleric_receive.equipItem(staff_receive);
   }
 

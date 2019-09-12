@@ -35,6 +35,7 @@ public class ClericTest extends AbstractTestUnit {
   @Override
   public void equipClericTest() {
     assertNull(cleric.getEquippedItem());
+    cleric.addItem(staff);
     staff.equipCleric(cleric);
     assertEquals(staff, cleric.getEquippedItem());
   }
@@ -46,13 +47,17 @@ public class ClericTest extends AbstractTestUnit {
       if(weapons_list.get(i).equals(staff)){
         continue;
       }
+      cleric.addItem(weapons_list.get(i));
       weapons_list.get(i).equipCleric(cleric);
       assertNull(cleric.getEquippedItem());
+      cleric.removeItem(weapons_list.get(i));
     }
   }
 
+
   @Test
   public void testHealing(){
+    cleric.addItem(staff);
     cleric.equipItem(staff);
     alpaca.setCurrentHitPoints(1);
     cleric.attack(alpaca);
@@ -61,6 +66,7 @@ public class ClericTest extends AbstractTestUnit {
 
   @Test
   public void testOverHeal(){
+    cleric.addItem(staff);
     cleric.equipItem(staff);
     alpaca.setCurrentHitPoints(25);
     cleric.attack(alpaca);

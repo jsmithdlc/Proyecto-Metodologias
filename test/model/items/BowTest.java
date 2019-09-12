@@ -49,7 +49,7 @@ public class BowTest extends AbstractTestItem {
   @Override
   public void setTestUnits() {
     archer_set = new Archer(10, 5, new Location(0, 0));
-    archer_receive = new Archer(100, 10, new Location(0, 0));
+    archer_receive = new Archer(100, 10, new Location(0, 0),bow_receive);
     archer_receive.equipItem(bow_receive);
   }
 
