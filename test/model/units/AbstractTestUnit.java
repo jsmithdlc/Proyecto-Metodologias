@@ -116,6 +116,30 @@ public abstract class AbstractTestUnit implements ITestUnit {
     assertNull(getTestUnit().getEquippedItem());
   }
 
+  @Test
+  public void addItemTest(){
+    getTestUnit().addItem(bow);
+    assertEquals(true,getTestUnit().getItems().contains(bow));
+  }
+
+  @Test
+  public void removeItemTest(){
+    getTestUnit().addItem(bow);
+    assertEquals(true,getTestUnit().getItems().contains(bow));
+    getTestUnit().removeItem(bow);
+    assertEquals(false,getTestUnit().getItems().contains(bow));
+  }
+
+  @Test
+  public void addItemOverMaxTest(){
+    getTestUnit().addItem(bow);
+    getTestUnit().addItem(axe);
+    getTestUnit().addItem(staff);
+    assertEquals(3,getTestUnit().getItems().size());
+    getTestUnit().addItem(sword);
+    assertEquals(3,getTestUnit().getItems().size());
+  }
+
   /**
    * @return the test axe
    */
@@ -171,6 +195,8 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public void equipArcherTest() {
     checkEquippedItem(getBow());
   }
+
+  @Test
 
   /**
    * @return the test bow

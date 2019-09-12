@@ -55,6 +55,8 @@ public class ArcherTest extends AbstractTestUnit {
       assertNull(archer.getEquippedItem());
     }
   }
+
+
   @Override
   public boolean equals(Object obj) {
     return obj instanceof Bow && super.equals(obj);

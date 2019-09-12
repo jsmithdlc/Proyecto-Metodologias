@@ -40,6 +40,11 @@ public class Alpaca extends AbstractUnit {
   }
 
   @Override
+  public void addItem(IEquipableItem item){
+    this.items.add(item);
+  }
+
+  @Override
   public void attack(IUnit other){}
 
 }

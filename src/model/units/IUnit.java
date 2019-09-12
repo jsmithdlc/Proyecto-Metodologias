@@ -1,6 +1,8 @@
 package model.units;
 
 import java.util.List;
+
+import model.items.Bow;
 import model.items.IEquipableItem;
 import model.items.Staff;
 import model.map.Location;
@@ -120,4 +122,8 @@ public interface IUnit {
    * @return true if unit is alive, false otherwise
    */
   boolean checkAlive();
+
+  void addItem(IEquipableItem item);
+
+  void removeItem(IEquipableItem item);
 }

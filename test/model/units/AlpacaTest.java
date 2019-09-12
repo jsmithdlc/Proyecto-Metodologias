@@ -39,4 +39,7 @@ public class AlpacaTest extends AbstractTestUnit {
     alpaca.equipItem(bow);
     assertNull(alpaca.getEquippedItem());
   }
+
+  @Override
+  public void addItemOverMaxTest(){ }
 }

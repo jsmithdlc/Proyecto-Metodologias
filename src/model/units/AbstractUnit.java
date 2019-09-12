@@ -38,7 +38,7 @@ public abstract class AbstractUnit implements IUnit {
    * @param maxItems  maximum amount of items this unit can carry
    */
   protected AbstractUnit(final int hitPoints, final int movement,
-                         final Location location, final int maxItems, final IEquipableItem... items) {
+                         final Location location, final int maxItems, IEquipableItem... items) {
     this.maxHitPoints = hitPoints;
     this.currentHitPoints = hitPoints;
     this.movement = movement;
@@ -162,6 +162,20 @@ public abstract class AbstractUnit implements IUnit {
           other.receiveNormalAttack(this.getEquippedItem());
         }
       }
+    }
+  }
+
+  @Override
+  public void addItem(IEquipableItem item){
+    if(!(3-this.getItems().size() <= epsilon)){
+      this.items.add(item);
+    }
+  }
+
+  @Override
+  public void removeItem(IEquipableItem item){
+    if(this.getItems().contains(item)){
+      this.items.remove(item);
     }
   }
 }
