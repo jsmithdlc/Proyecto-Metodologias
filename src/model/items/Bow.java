@@ -46,15 +46,18 @@ public class Bow extends AbstractItem {
   public void equipSwordMaster(SwordMaster swordmaster){}
 
   @Override
+  public void equipSorcerer(Sorcerer sorcerer){}
+
+  @Override
   public void attackItem(IEquipableItem item){
-    item.getOwner().receiveNormalAttack(this);
+    item.receiveBowAttack(this);
     item.counterAttack(this);
   }
 
   @Override
   public void counterAttack(IEquipableItem item){
     if(this.getOwner().checkAlive() && this.getOwner().inRange(item.getOwner())){
-      item.getOwner().receiveNormalAttack(this);
+      item.receiveBowAttack(this);
     }
   }
 

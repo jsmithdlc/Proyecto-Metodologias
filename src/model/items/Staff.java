@@ -35,6 +35,7 @@ public class Staff extends AbstractItem {
   public void equipCleric(Cleric cleric) {
     this.equipTo(cleric);
   }
+
   @Override
   public void equipFighter(Fighter fighter){}
 
@@ -45,10 +46,14 @@ public class Staff extends AbstractItem {
   public void equipSwordMaster(SwordMaster swordmaster){}
 
   @Override
+  public void equipSorcerer(Sorcerer sorcerer){}
+
+  @Override
   public void attackItem(IEquipableItem item){}
 
   @Override
   public void counterAttack(IEquipableItem item){}
+
   @Override
   public void receiveAxeAttack(Axe axe){
     this.getOwner().receiveNormalAttack(axe);

@@ -104,9 +104,12 @@ public class BowTest extends AbstractTestItem {
     bow_receive.receiveSwordAttack(sword);
     assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100 - sword.getPower());
   }
-
   @Test
   public void testBowAttackAndCounter() {
+    bow.attackItem(spiritBook);
+    assertEquals(100 - (int)Math.round(spiritBook.getPower()*1.5),bow.getOwner().getCurrentHitPoints());
+    assertEquals(100 - (int)Math.round(bow.getPower()*1.5),spiritBook.getOwner().getCurrentHitPoints());
+    bow.getOwner().setCurrentHitPoints(100);
     bow.attackItem(bow_receive);
     assertEquals(bow_receive.getOwner().getCurrentHitPoints(), 100 - bow.getPower());
     assertEquals(bow.getOwner().getCurrentHitPoints(), 100 - bow_receive.getPower());

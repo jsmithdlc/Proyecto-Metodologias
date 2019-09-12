@@ -97,6 +97,25 @@ public interface ITestUnit {
   /**
    * Checks if the unit moves correctly
    */
+
+  @Test
+  void equipSorcererLightTest();
+
+  @Test
+  void equipSorcererDarkTest();
+
+  @Test
+  void equipSorcererSpiritTest();
+
+  LightBook getLightBook();
+
+  DarkBook getDarkBook();
+
+  SpiritBook getSpiritBook();
+
+
+
+
   @Test
   void testMovement();
 

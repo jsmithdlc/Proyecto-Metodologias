@@ -58,6 +58,8 @@ public interface IEquipableItem {
 
   void equipSwordMaster(SwordMaster swordmaster);
 
+  void equipSorcerer(Sorcerer sorcerer);
+
   void attackItem(IEquipableItem item);
 
   void counterAttack(IEquipableItem item);
@@ -67,4 +69,12 @@ public interface IEquipableItem {
   void receiveSwordAttack(Sword sword);
 
   void receiveSpearAttack(Spear spear);
+
+  void receiveBowAttack(Bow bow);
+
+  void receiveDarkBookAttack(DarkBook darkBook);
+
+  void receiveLightBookAttack(LightBook lightBook);
+
+  void receiveSpiritBookAttack(SpiritBook spiritBook);
 }

@@ -46,6 +46,9 @@ public class Spear extends AbstractItem {
   public void equipSwordMaster(SwordMaster swordmaster){}
 
   @Override
+  public void equipSorcerer(Sorcerer sorcerer){}
+
+  @Override
   public void attackItem(IEquipableItem item){
     item.receiveSpearAttack(this);
     item.counterAttack(this);

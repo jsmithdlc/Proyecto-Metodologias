@@ -34,8 +34,8 @@ public class ClericTest extends AbstractTestUnit {
   @Test
   @Override
   public void equipClericTest() {
-    assertNull(cleric.getEquippedItem());
     cleric.addItem(staff);
+    assertNull(cleric.getEquippedItem());
     staff.equipCleric(cleric);
     assertEquals(staff, cleric.getEquippedItem());
   }
@@ -51,6 +51,12 @@ public class ClericTest extends AbstractTestUnit {
       weapons_list.get(i).equipCleric(cleric);
       assertNull(cleric.getEquippedItem());
       cleric.removeItem(weapons_list.get(i));
+    }
+    for(int i = 0; i< books_list.size();i++) {
+      cleric.addItem(books_list.get(i));
+      books_list.get(i).equipCleric(cleric);
+      assertNull(cleric.getEquippedItem());
+      cleric.removeItem(books_list.get(i));
     }
   }
 

@@ -39,8 +39,8 @@ public class ArcherTest extends AbstractTestUnit {
   @Test
   @Override
   public void equipArcherTest() {
-    assertNull(archer.getEquippedItem());
     archer.addItem(bow);
+    assertNull(archer.getEquippedItem());
     bow.equipArcher(archer);
     assertEquals(bow, archer.getEquippedItem());
   }
@@ -56,6 +56,13 @@ public class ArcherTest extends AbstractTestUnit {
       weapons_list.get(i).equipArcher(archer);
       assertNull(archer.getEquippedItem());
       archer.removeItem(weapons_list.get(i));
+    }
+
+    for(int i = 0; i< books_list.size();i++) {
+      archer.addItem(books_list.get(i));
+      books_list.get(i).equipArcher(archer);
+      assertNull(archer.getEquippedItem());
+      archer.removeItem(books_list.get(i));
     }
   }
 

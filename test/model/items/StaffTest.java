@@ -97,6 +97,9 @@ public class StaffTest extends AbstractTestItem {
 
   @Test
   public void testStaffAttackAndCounter() {
+    staff.attackItem(darkBook);
+    assertEquals(100,staff.getOwner().getCurrentHitPoints());
+    assertEquals(100,darkBook.getOwner().getCurrentHitPoints());
     staff.attackItem(bow);
     assertEquals(bow.getOwner().getCurrentHitPoints(), 100);
     assertEquals(staff.getOwner().getCurrentHitPoints(), 100);

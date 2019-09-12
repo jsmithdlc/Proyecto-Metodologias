@@ -10,6 +10,9 @@ import model.units.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Defines some common methods for all the items tests
  *
@@ -23,12 +26,20 @@ public abstract class AbstractTestItem {
   protected Spear spear;
   protected Sword sword;
   protected Staff staff;
+  protected ArrayList<IEquipableItem> weapons_list;
+  protected LightBook lightBook;
+  protected DarkBook darkBook;
+  protected SpiritBook spiritBook;
+  protected ArrayList<IEquipableItem> books_list;
   protected Alpaca alpaca;
   protected Archer archer;
   protected Cleric cleric;
   protected Fighter fighter;
   protected Hero hero;
   protected SwordMaster swordMaster;
+  protected Sorcerer sorcererLight;
+  protected Sorcerer sorcererDark;
+  protected Sorcerer sorcererSpirit;
   protected String expectedName;
   protected int expectedPower;
   protected short expectedMinRange;
@@ -72,6 +83,11 @@ public abstract class AbstractTestItem {
     spear = new Spear("Spear",50,0,10);
     sword = new Sword("Sword",50,0,10);
     staff = new Staff("Staff",50,0,10);
+    this.weapons_list = new ArrayList<IEquipableItem>(Arrays.asList(axe,bow,spear,sword,staff));
+    lightBook = new LightBook("Light Book",50,0,10);
+    darkBook = new DarkBook("Dark Book",50,0,10);
+    spiritBook = new SpiritBook("Spirit Book",50,0,10);
+    this.books_list = new ArrayList<IEquipableItem>(Arrays.asList(lightBook,darkBook,spiritBook));
   }
 
   public void setField() {
@@ -88,6 +104,9 @@ public abstract class AbstractTestItem {
     fighter = new Fighter(100, 5,field.getCell(1,2));
     hero = new Hero(100,5,field.getCell(2,1));
     swordMaster = new SwordMaster(100,5,field.getCell(2,0));
+    sorcererLight = new Sorcerer(100,5,field.getCell(0,1));
+    sorcererDark = new Sorcerer(100,5,field.getCell(1,0));
+    sorcererSpirit = new Sorcerer(100,5,field.getCell(2,2));
   }
 
   public void equipWarriors(){
@@ -101,6 +120,12 @@ public abstract class AbstractTestItem {
     hero.equipItem(spear);
     swordMaster.addItem(sword);
     swordMaster.equipItem(sword);
+    sorcererLight.addItem(lightBook);
+    sorcererLight.equipItem(lightBook);
+    sorcererDark.addItem(darkBook);
+    sorcererDark.equipItem(darkBook);
+    sorcererSpirit.addItem(spiritBook);
+    sorcererSpirit.equipItem(spiritBook);
   }
 
   /**
@@ -173,5 +198,57 @@ public abstract class AbstractTestItem {
   /**
    * @return a unit that can equip the item being tested
    */
+
+  @Test
+  public void testItemReceiveLightAttack(){
+    assertEquals(axe.getOwner().getCurrentHitPoints(),100);
+    axe.receiveLightBookAttack(lightBook);
+    assertEquals(axe.getOwner().getCurrentHitPoints(),100-((int)Math.round(lightBook.getPower()*1.5)));
+  }
+
+  @Test
+  public void testItemReceiveDarkAttack(){
+    assertEquals(bow.getOwner().getCurrentHitPoints(),100);
+    bow.receiveDarkBookAttack(darkBook);
+    assertEquals(bow.getOwner().getCurrentHitPoints(),100-((int)Math.round(darkBook.getPower()*1.5)));
+  }
+
+  @Test
+  public void testItemReceiveSpiritAttack(){
+    assertEquals(sword.getOwner().getCurrentHitPoints(),100);
+    sword.receiveSpiritBookAttack(spiritBook);
+    assertEquals(sword.getOwner().getCurrentHitPoints(),100-((int)Math.round(spiritBook.getPower()*1.5)));
+  }
+
+  @Test
+  public void testBookReceiveItemAttack(){
+    assertEquals(darkBook.getOwner().getCurrentHitPoints(),100);
+    darkBook.receiveAxeAttack(axe);
+    assertEquals(darkBook.getOwner().getCurrentHitPoints(),100-(int)Math.round(axe.getPower()*1.5));
+  }
+
+  @Test
+  public void testBookReceiveSpearAttack(){
+    assertEquals(lightBook.getOwner().getCurrentHitPoints(),100);
+    lightBook.receiveSpearAttack(spear);
+    assertEquals(lightBook.getOwner().getCurrentHitPoints(),100-(int)Math.round(spear.getPower()*1.5));
+  }
+
+  @Test
+  public void testBookReceiveSwordAttack(){
+    assertEquals(spiritBook.getOwner().getCurrentHitPoints(),100);
+    spiritBook.receiveSwordAttack(sword);
+    assertEquals(spiritBook.getOwner().getCurrentHitPoints(),100-(int)Math.round(sword.getPower()*1.5));
+  }
+
+  @Test
+  public void testBookReceiveBowAttack(){
+    assertEquals(spiritBook.getOwner().getCurrentHitPoints(),100);
+    spiritBook.receiveBowAttack(bow);
+    assertEquals(spiritBook.getOwner().getCurrentHitPoints(),100-(int)Math.round(bow.getPower()*1.5));
+  }
+
+
+
   public abstract IUnit getTestUnit();
 }

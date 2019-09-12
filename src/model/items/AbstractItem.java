@@ -15,7 +15,6 @@ public abstract class AbstractItem implements IEquipableItem {
   protected int maxRange;
   protected int minRange;
   private IUnit owner;
-  private boolean possession;
 
   /**
    * Constructor for a default item without any special behaviour.
@@ -70,5 +69,24 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public void setOwner(IUnit unit){this.owner = unit;}
+
+  @Override
+  public void receiveBowAttack(Bow bow){
+    this.getOwner().receiveNormalAttack(bow);
+  }
+  @Override
+  public void receiveDarkBookAttack(DarkBook darkBook){
+    this.getOwner().receiveStrongAttack(darkBook);
+  };
+
+  @Override
+  public void receiveLightBookAttack(LightBook lightBook){
+    this.getOwner().receiveStrongAttack(lightBook);
+  };
+
+  @Override
+  public void receiveSpiritBookAttack(SpiritBook spiritBook){
+    this.getOwner().receiveStrongAttack(spiritBook);
+  };
 
 }

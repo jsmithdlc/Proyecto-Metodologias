@@ -93,6 +93,10 @@ class AxeTest extends AbstractTestItem {
 
   @Test
   public void testAxeAttackAndCounter(){
+    axe.attackItem(darkBook);
+    assertEquals(100 - (int)Math.round(darkBook.getPower()*1.5),axe.getOwner().getCurrentHitPoints());
+    assertEquals(100 - (int)Math.round(axe.getPower()*1.5),darkBook.getOwner().getCurrentHitPoints());
+    axe.getOwner().setCurrentHitPoints(100);
     axe.attackItem(axe_receive);
     assertEquals(axe_receive.getOwner().getCurrentHitPoints(),100-axe.getPower());
     assertEquals(axe.getOwner().getCurrentHitPoints(),100-axe_receive.getPower());

@@ -96,6 +96,10 @@ public class SpearTest extends AbstractTestItem {
 
   @Test
   public void testSpearAttackAndCounter() {
+    spear.attackItem(lightBook);
+    assertEquals(100 - (int)Math.round(lightBook.getPower()*1.5),spear.getOwner().getCurrentHitPoints());
+    assertEquals(100 - (int)Math.round(spear.getPower()*1.5),lightBook.getOwner().getCurrentHitPoints());
+    spear.getOwner().setCurrentHitPoints(100);
     spear.attackItem(bow);
     assertEquals(bow.getOwner().getCurrentHitPoints(), 100 - spear.getPower());
     assertEquals(spear.getOwner().getCurrentHitPoints(), 100 - bow.getPower());

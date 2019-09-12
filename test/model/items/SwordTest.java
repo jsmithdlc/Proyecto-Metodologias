@@ -97,6 +97,10 @@ public class SwordTest extends AbstractTestItem {
 
   @Test
   public void testSwordAttackAndCounter() {
+    sword.attackItem(darkBook);
+    assertEquals(100 - (int)Math.round(darkBook.getPower()*1.5),sword.getOwner().getCurrentHitPoints());
+    assertEquals(100 - (int)Math.round(sword.getPower()*1.5),darkBook.getOwner().getCurrentHitPoints());
+    sword.getOwner().setCurrentHitPoints(100);
     sword.attackItem(bow);
     assertEquals(bow.getOwner().getCurrentHitPoints(), 100 -sword.getPower());
     assertEquals(sword.getOwner().getCurrentHitPoints(), 100 - bow.getPower());

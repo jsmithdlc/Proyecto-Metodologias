@@ -46,6 +46,9 @@ public class Sword extends AbstractItem {
   }
 
   @Override
+  public void equipSorcerer(Sorcerer sorcerer){}
+
+  @Override
   public void attackItem(IEquipableItem item){
     item.receiveSwordAttack(this);
     item.counterAttack(this);
