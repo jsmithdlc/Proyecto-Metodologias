@@ -71,4 +71,7 @@ public class Axe extends AbstractItem {
   public void receiveSwordAttack(Sword sword){
     this.getOwner().receiveStrongAttack(sword);
   }
+
+  @Override
+  public boolean equals(Object obj){ return obj instanceof Axe && super.equals(obj);}
 }

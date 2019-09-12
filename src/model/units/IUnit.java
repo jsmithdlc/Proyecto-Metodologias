@@ -42,6 +42,8 @@ public interface IUnit {
    */
   List<IEquipableItem> getItems();
 
+  int getMaxItems();
+
   /**
    * @return the currently equipped item
    */

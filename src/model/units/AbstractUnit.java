@@ -22,6 +22,7 @@ import model.map.Location;
 public abstract class AbstractUnit implements IUnit {
 
   protected final List<IEquipableItem> items = new ArrayList<>();
+  private final int maxItems;
   private int currentHitPoints;
   private final int maxHitPoints;
   private final int movement;
@@ -43,6 +44,7 @@ public abstract class AbstractUnit implements IUnit {
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
+    this.maxItems = maxItems;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
     for(IEquipableItem item:items){
       item.setOwner(this);
@@ -68,6 +70,9 @@ public abstract class AbstractUnit implements IUnit {
   public List<IEquipableItem> getItems() {
     return List.copyOf(items);
   }
+
+  @Override
+  public int getMaxItems(){return maxItems;}
 
   @Override
   public IEquipableItem getEquippedItem() {
@@ -170,7 +175,7 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void addItem(IEquipableItem item){
-    if(!(3-this.getItems().size() <= epsilon) && item.getOwner()==null){
+    if(!(this.getMaxItems()-this.getItems().size() <= epsilon) && item.getOwner()==null){
       item.setOwner(this);
       this.items.add(item);
     }
@@ -179,8 +184,19 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void removeItem(IEquipableItem item){
     if(this.getItems().contains(item)){
+      if(item.equals(this.equippedItem)) {
+        this.equippedItem = null;
+      }
       item.setOwner(null);
       this.items.remove(item);
+    }
+  }
+
+  public void transferItem(IEquipableItem item, IUnit unit){
+    if(((this.location.distanceTo(unit.getLocation())-1)<=epsilon) && this.items.contains(item) &&
+            unit.getItems().size()<unit.getMaxItems()){
+      this.removeItem(item);
+      unit.addItem(item);
     }
   }
 }

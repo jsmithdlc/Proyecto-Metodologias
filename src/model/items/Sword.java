@@ -72,4 +72,7 @@ public class Sword extends AbstractItem {
   public void receiveSwordAttack(Sword sword){
     this.getOwner().receiveNormalAttack(sword);
   }
+
+  @Override
+  public boolean equals(Object obj){ return obj instanceof Sword && super.equals(obj);}
 }

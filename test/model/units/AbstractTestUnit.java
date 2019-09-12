@@ -131,6 +131,24 @@ public abstract class AbstractTestUnit implements ITestUnit {
   }
 
   @Test
+  public void removeItemEquippedTest(){
+    Fighter fighter = new Fighter(50,2,new Location(1,1),axe);
+    fighter.equipItem(axe);
+    assertTrue(fighter.getEquippedItem().equals(axe));
+    fighter.removeItem(axe);
+    assertEquals(false,fighter.getItems().contains(axe));
+    assertNull(fighter.getEquippedItem());
+  }
+
+  @Test
+  public void removeItemEquippedStillTest(){
+    Fighter fighter = new Fighter(50,2,new Location(1,1),axe,bow);
+    fighter.equipItem(axe);
+    fighter.removeItem(bow);
+    assertEquals(axe,fighter.getEquippedItem());
+  }
+
+  @Test
   public void addItemOverMaxTest(){
     getTestUnit().addItem(bow);
     getTestUnit().addItem(axe);
@@ -296,4 +314,35 @@ public abstract class AbstractTestUnit implements ITestUnit {
     assertEquals(30,fighter.getCurrentHitPoints());
   }
 
+  @Test
+  public void transferItemTest(){
+    Fighter fighter = new Fighter(30,4,field.getCell(0,0),axe,bow);
+    Archer archer = new Archer(30,4,field.getCell(0,1));
+    fighter.transferItem(bow,archer);
+    assertEquals(true,archer.getItems().contains(bow));
+  }
+
+  @Test
+  public void transferItemFullTest(){
+    Fighter fighter = new Fighter(30,4,field.getCell(0,0),axe,bow,spear);
+    Archer archer = new Archer(30,4,field.getCell(0,1),sword);
+    archer.transferItem(sword,fighter);
+    assertEquals(false,fighter.getItems().contains(sword));
+  }
+
+  @Test
+  public void transferItemAwayTest(){
+    Fighter fighter = new Fighter(30,4,field.getCell(2,0),bow);
+    Archer archer = new Archer(30,4,field.getCell(0,0),sword);
+    fighter.transferItem(bow,archer);
+    assertEquals(false,archer.getItems().contains(bow));
+  }
+
+  @Test
+  public void transferItemNoneTest(){
+    Fighter fighter = new Fighter(30,4,field.getCell(2,0),bow);
+    Archer archer = new Archer(30,4,field.getCell(0,0),sword);
+    fighter.transferItem(axe,archer);
+    assertEquals(false,archer.getItems().contains(axe));
+  }
 }
