@@ -107,6 +107,7 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
 
+  @Override
   public boolean checkAlive() {
     if ((this.getCurrentHitPoints() - 0) <= epsilon) {
       return false;
@@ -115,6 +116,7 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
 
+  @Override
   public boolean inRange(IUnit other) {
     if ((this.equippedItem.getMinRange() <= other.getLocation().distanceTo(this.getLocation())) &&
             (this.equippedItem.getMaxRange() >= other.getLocation().distanceTo(this.getLocation()))) {
@@ -192,6 +194,7 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
 
+  @Override
   public void transferItem(IEquipableItem item, IUnit unit){
     if(((this.location.distanceTo(unit.getLocation())-1)<=epsilon) && this.items.contains(item) &&
             unit.getItems().size()<unit.getMaxItems()){

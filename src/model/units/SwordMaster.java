@@ -13,6 +13,17 @@ import model.map.Location;
  */
 public class SwordMaster extends AbstractUnit {
 
+  /**
+   *  creates a new swordMaster
+   * @param hitPoints
+   *    initial and max hitpoints this unit can have
+   * @param movement
+   *    max ammount of cells this unit can move
+   * @param location
+   *    initial location of this unit
+   * @param items
+   *    items to put in inventory, if any
+   */
   public SwordMaster(int hitPoints, final int movement, final Location location,
       IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);

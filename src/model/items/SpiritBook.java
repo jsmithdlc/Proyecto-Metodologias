@@ -1,11 +1,15 @@
 package model.items;
 import model.units.*;
 
+/**
+ * This class represents a <i>SpiritBook</i> type item.
+ * <p>
+ * A spiritBook is an item that is strong against lightBooks but weak against darkBooks
+ *
+ */
 public class SpiritBook extends AbstractBook{
     /**
      * Creates a new SpiritBook.
-     * <p>
-     * spiritBook is a type of magic book
      *
      * @param name
      *     the name of the spiritBook

@@ -3,23 +3,26 @@ package model.units;
 import model.items.IEquipableItem;
 import model.items.Staff;
 import model.map.Location;
-
 /**
- * This class represents a cleric type unit. A cleric can only use staff type weapons, which means
- * that it can receive attacks but can't counter attack any of those.
+ * This class represents a <i>Cleric</i> type unit.
+ * <p>
+ * A <i>SwordMaster</i> is a unit that <b>can only use staff type weapons</b>.A cleric can only use staff type weapons, which means
+ *  * that it can receive attacks but can't counter attack any of those. It heals other units
  *
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
 public class Cleric extends AbstractUnit {
-
   /**
-   * Creates a new Unit.
-   *
+   *  creates a new cleric
    * @param hitPoints
-   *     the maximum amount of damage a unit can sustain
+   *    initial and max hitpoints this unit can have
    * @param movement
-   *     the number of panels a unit can move
+   *    max ammount of cells this unit can move
+   * @param location
+   *    initial location of this unit
+   * @param items
+   *    items to put in inventory, if any
    */
   public Cleric(int hitPoints, final int movement, final Location location,
       IEquipableItem... items) {

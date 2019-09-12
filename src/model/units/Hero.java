@@ -15,12 +15,15 @@ import model.map.Location;
 public class Hero extends AbstractUnit {
 
   /**
-   * Creates a new Unit.
-   *
+   *  creates a new hero
    * @param hitPoints
-   *     the maximum amount of damage a unit can sustain
+   *    initial and max hitpoints this unit can have
    * @param movement
-   *     the number of panels a unit can move
+   *    max ammount of cells this unit can move
+   * @param location
+   *    initial location of this unit
+   * @param items
+   *    items to put in inventory, if any
    */
   public Hero(int hitPoints, final int movement, final Location location,
       IEquipableItem... items) {

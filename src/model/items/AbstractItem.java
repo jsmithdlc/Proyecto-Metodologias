@@ -3,7 +3,7 @@ package model.items;
 import model.units.*;
 
 /**
- * Abstract class that defines some common information and behaviour between all items.
+ * Abstract class that defines some common information and behaviour between items which are not magic books.
  *
  * @author Ignacio Slater Muñoz
  * @since 1.0

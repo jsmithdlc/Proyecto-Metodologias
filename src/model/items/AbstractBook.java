@@ -1,14 +1,24 @@
 package model.items;
 
+/**
+ * Abstract class that defines some common information and behaviour between all book items.
+ *
+ * @author Ignacio Slater Muñoz
+ * @since 1.0
+ */
 public abstract class AbstractBook extends AbstractItem{
 
     /**
-     * Constructor for a default item without any special behaviour.
+     * Constructor for a book item
      *
-     * @param name     the name of the item
-     * @param power    the power of the item (this could be the amount of damage or healing the item does)
-     * @param minRange the minimum range of the item
+     * @param name
+     *     the name of the book
+     * @param power
+     *      the power of the book (this could be the amount of damage or healing the item does)
+     * @param minRange
+     *      the minimum range of the item
      * @param maxRange
+     *      the maximum range of the item
      */
     public AbstractBook(String name, int power, int minRange, int maxRange) {
         super(name, power, minRange, maxRange);

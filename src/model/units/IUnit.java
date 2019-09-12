@@ -125,7 +125,27 @@ public interface IUnit {
    */
   boolean checkAlive();
 
+  /**
+   *  adds item to list of items of this
+   * @param item
+   *    item to add
+   */
   void addItem(IEquipableItem item);
 
+  /**
+   * removes item from list of items of this
+   * @param item
+   *    item to remove
+   */
   void removeItem(IEquipableItem item);
+
+  /**
+   *  transfers an item from this unit to another
+   * @param item
+   *    item to transfer
+   * @param unit
+   *    unit which receives item
+   */
+  void transferItem(IEquipableItem item, IUnit unit);
+
 }

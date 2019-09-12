@@ -1,11 +1,15 @@
 package model.items;
 import model.units.*;
-
+/**
+ * This class represents a <i>DarkBook</i> type item.
+ * <p>
+ * A darkBook is an item that is strong against spiritBooks but weak against lightBooks
+ *
+ */
 public class DarkBook extends AbstractBook{
     /**
-     * Creates a new DarkBook.
-     * <p>
-     * darkBook is a type of magic book
+     *
+     * creates a new darkBook
      *
      * @param name
      *     the name of the darkBook
