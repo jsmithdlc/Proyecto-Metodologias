@@ -66,8 +66,4 @@ public abstract class AbstractItem implements IEquipableItem {
     return maxRange;
   }
 
-  @Override
-  public boolean equals(Object obj) {
-    return obj instanceof IEquipableItem && super.equals(obj);
-  }
 }

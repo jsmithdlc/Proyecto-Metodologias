@@ -1,5 +1,11 @@
 package model.units;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import model.items.Bow;
+import org.junit.jupiter.api.Test;
+
 /**
  * Test set for the alpaca unit
  *
@@ -18,5 +24,19 @@ public class AlpacaTest extends AbstractTestUnit {
   @Override
   public Alpaca getTestUnit() {
     return alpaca;
+  }
+
+  @Test
+  public void testAlpacaAttack(){
+    alpaca.attack(targetAlpaca);
+    assertEquals(10,targetAlpaca.getCurrentHitPoints());
+  }
+
+  @Test
+  public void testEquipAlpaca(){
+    assertNull(alpaca.getEquippedItem());
+    Bow bow = new Bow("arco",10,1,2);
+    alpaca.equipItem(bow);
+    assertNull(alpaca.getEquippedItem());
   }
 }

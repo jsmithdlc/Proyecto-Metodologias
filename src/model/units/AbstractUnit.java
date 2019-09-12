@@ -153,9 +153,9 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void attack(IUnit other) {
-    if (this.checkAlive() && other.checkAlive() && !this.equippedItem.equals(null)) {
+    if (this.checkAlive() && other.checkAlive() && !(this.equippedItem==null)) {
       if (this.inRange(other)) {
-        if(!other.getEquippedItem().equals(null)){
+        if(!(other.getEquippedItem()==null)){
           this.equippedItem.attackItem(other.getEquippedItem());
         }
         else{

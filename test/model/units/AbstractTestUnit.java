@@ -31,7 +31,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
   @Override
   public void setTargetAlpaca() {
-    targetAlpaca = new Alpaca(50, 10, field.getCell(1, 0));
+    targetAlpaca = new Alpaca(10, 10, field.getCell(1, 0));
   }
 
   /**
@@ -67,7 +67,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   public void setWeapons() {
-    this.axe = new Axe("Axe", 10, 1, 2);
+    this.axe = new Axe("Axe", 50, 1, 2);
     this.sword = new Sword("Sword", 10, 1, 2);
     this.spear = new Spear("Spear", 10, 1, 2);
     this.staff = new Staff("Staff", 10, 1, 2);
@@ -225,6 +225,33 @@ public abstract class AbstractTestUnit implements ITestUnit {
     assertEquals(true,archer.inRange(targetAlpaca));
     archer.moveTo(field.getCell(0,0));
     assertEquals(false,archer.inRange(targetAlpaca));
+  }
+
+  @Test
+  public void testFatalBlow(){
+    Fighter fighter_killer = new Fighter(30,4,field.getCell(0,0));
+    fighter_killer.equipItem(axe);
+    Hero hero_weak = new Hero(5,4,field.getCell(1,1));
+    hero_weak.equipItem(spear);
+    SwordMaster swordMaster_weak = new SwordMaster(5,4,field.getCell(0,1));
+    swordMaster_weak.equipItem(sword);
+    fighter_killer.attack(hero_weak);
+    fighter_killer.attack(swordMaster_weak);
+    fighter_killer.attack(targetAlpaca);
+    assertEquals(false, hero_weak.checkAlive());
+    assertEquals(false, swordMaster_weak.checkAlive());
+    assertEquals(false, targetAlpaca.checkAlive());
+    assertEquals(fighter_killer.getCurrentHitPoints(),30);
+  }
+
+  @Test
+  public void testZeroAttack(){
+    Hero hero = new Hero(30,4,field.getCell(0,0));
+    hero.equipItem(spear);
+    Fighter fighter = new Fighter(30,4,field.getCell(0,1));
+    fighter.equipItem(axe);
+    hero.attack(fighter);
+    assertEquals(30,fighter.getCurrentHitPoints());
   }
 
 }

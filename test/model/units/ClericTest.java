@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 public class ClericTest extends AbstractTestUnit {
 
   private Cleric cleric;
+  private Alpaca alpaca;
 
   /**
    * Set up the main unit that's going to be tested in the test set
@@ -19,6 +20,7 @@ public class ClericTest extends AbstractTestUnit {
   @Override
   public void setTestUnit() {
     cleric = new Cleric(50, 2, field.getCell(0, 0));
+    alpaca = new Alpaca(30,3,field.getCell(0,1));
   }
 
   /**
@@ -48,6 +50,31 @@ public class ClericTest extends AbstractTestUnit {
       assertNull(cleric.getEquippedItem());
     }
   }
+
+  @Test
+  public void testHealing(){
+    cleric.equipItem(staff);
+    alpaca.setCurrentHitPoints(1);
+    cleric.attack(alpaca);
+    assertEquals(1+staff.getPower(),alpaca.getCurrentHitPoints());
+  }
+
+  @Test
+  public void testOverHeal(){
+    cleric.equipItem(staff);
+    alpaca.setCurrentHitPoints(25);
+    cleric.attack(alpaca);
+    assertEquals(30,alpaca.getCurrentHitPoints());
+  }
+
+  @Test
+  public void testHealDead(){
+    cleric.equipItem(staff);
+    alpaca.setCurrentHitPoints(0);
+    cleric.attack(alpaca);
+    assertEquals(0,alpaca.getCurrentHitPoints());
+  }
+
   @Override
   public boolean equals(Object obj) {
     return obj instanceof Staff && super.equals(obj);
