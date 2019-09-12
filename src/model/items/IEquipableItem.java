@@ -46,6 +46,10 @@ public interface IEquipableItem {
    */
   int getMaxRange();
 
+  void setPossession(boolean inInventory);
+
+  boolean getPossession();
+
   void equipArcher(Archer archer);
 
   void equipCleric(Cleric cleric);

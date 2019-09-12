@@ -15,6 +15,7 @@ public abstract class AbstractItem implements IEquipableItem {
   protected int maxRange;
   protected int minRange;
   private IUnit owner;
+  private boolean possession;
 
   /**
    * Constructor for a default item without any special behaviour.
@@ -64,6 +65,14 @@ public abstract class AbstractItem implements IEquipableItem {
   @Override
   public int getMaxRange() {
     return maxRange;
+  }
+
+  @Override
+  public void setPossession(boolean inInventory){this.possession = true;}
+
+  @Override
+  public boolean getPossession(){
+    return this.possession;
   }
 
 }

@@ -140,6 +140,13 @@ public abstract class AbstractTestUnit implements ITestUnit {
     assertEquals(3,getTestUnit().getItems().size());
   }
 
+  @Test
+  public void addItemFromOtherTest(){
+    Fighter fighter = new Fighter(50,4,new Location(1,2),bow);
+    getTestUnit().addItem(bow);
+    assertEquals(false,getTestUnit().getItems().contains(bow));
+  }
+
   /**
    * @return the test axe
    */

@@ -35,8 +35,8 @@ public class AlpacaTest extends AbstractTestUnit {
   @Test
   public void testEquipAlpaca(){
     assertNull(alpaca.getEquippedItem());
-    Bow bow = new Bow("arco",10,1,2);
-    alpaca.equipItem(bow);
+    Bow bowie = new Bow("arco",10,1,2);
+    alpaca.equipItem(bowie);
     assertNull(alpaca.getEquippedItem());
   }
 
