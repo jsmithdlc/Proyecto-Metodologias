@@ -13,11 +13,11 @@ y así como a quién se equipa. En total, existen 5 items no mágicos: **Axe**, 
 **LightBook** y**SpiritBook**, los últimos a equiparse por la unidad **Sorcerer** y que implementa cada uno de ellos el tipo de magia definido en 
 el nombre.
 
-##Mapa
+## Mapa
 Es un paquete para crear el mapa de juego así como las locaciones de las unidades y algunos métodos para comparar locaciones,
 obtener celdas del mapa y añadirlas. A este paquete no se le hicieron modificaciones para esta entrega.
 
-##Units
+## Units
 La interfaz **IUnit** concierne a las unidades especifica los métodos a implementar en la clase **AbstractUnit** y las subclases de esta
 para cada unidad. Se definen en esta los métodos getters y setters, un método para mover una unidad de una locación a otra, otro 
 método para verificar si la unidad está viva (checkAlive), un método para verificar el rango de un arma con respecto a la posición 
