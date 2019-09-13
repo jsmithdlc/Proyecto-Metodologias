@@ -1,13 +1,13 @@
 package model.items;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import model.map.Location;
 import model.units.Fighter;
 import model.units.IUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Test set for Axes
@@ -117,4 +117,5 @@ class AxeTest extends AbstractTestItem {
     assertEquals(sword.getOwner().getCurrentHitPoints(),100-(axe.getPower()-20));
     assertEquals(axe.getOwner().getCurrentHitPoints(),100-(int)Math.round(sword.getPower()*1.5));
   }
+
 }

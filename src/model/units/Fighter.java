@@ -40,4 +40,7 @@ public class Fighter extends AbstractUnit {
   public void equipItem(final IEquipableItem item) {
     item.equipFighter(this);
   }
+
+  @Override
+  public boolean equals(Object obj){ return obj instanceof Fighter && super.equals(obj);}
 }

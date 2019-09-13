@@ -30,4 +30,7 @@ public class Sorcerer extends AbstractUnit {
     public void equipItem(final IEquipableItem item) {
         item.equipSorcerer(this);
     }
+
+    @Override
+    public boolean equals(Object obj){ return obj instanceof Sorcerer && super.equals(obj);}
 }

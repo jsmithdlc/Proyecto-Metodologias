@@ -249,6 +249,5 @@ public abstract class AbstractTestItem {
   }
 
 
-
   public abstract IUnit getTestUnit();
 }

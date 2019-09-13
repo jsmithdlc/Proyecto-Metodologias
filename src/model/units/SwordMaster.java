@@ -39,4 +39,7 @@ public class SwordMaster extends AbstractUnit {
   public void equipItem(final IEquipableItem item) {
     item.equipSwordMaster(this);
   }
+
+  @Override
+  public boolean equals(Object obj){ return obj instanceof SwordMaster && super.equals(obj);}
 }

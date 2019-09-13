@@ -46,4 +46,7 @@ public class Cleric extends AbstractUnit {
       }
     }
   }
+
+  @Override
+  public boolean equals(Object obj){ return obj instanceof Cleric && super.equals(obj);}
 }

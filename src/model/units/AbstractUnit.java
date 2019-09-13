@@ -21,7 +21,7 @@ import model.map.Location;
  */
 public abstract class AbstractUnit implements IUnit {
 
-  protected final List<IEquipableItem> items = new ArrayList<>();
+  protected List<IEquipableItem> items = new ArrayList<>();
   private final int maxItems;
   private int currentHitPoints;
   private final int maxHitPoints;
@@ -201,6 +201,15 @@ public abstract class AbstractUnit implements IUnit {
       this.removeItem(item);
       unit.addItem(item);
     }
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof IUnit && ((IUnit) obj).getItems().equals(items)
+            && ((IUnit) obj).getCurrentHitPoints()==currentHitPoints
+            && ((IUnit) obj).getLocation() == location
+            && ((IUnit) obj).getMaxItems() == maxItems
+            && ((IUnit) obj).getMovement() == movement;
   }
 }
 

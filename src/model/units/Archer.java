@@ -43,4 +43,7 @@ public class Archer extends AbstractUnit {
   public void equipItem(final IEquipableItem item) {
     item.equipArcher(this);
   }
+
+  @Override
+  public boolean equals(Object obj){ return obj instanceof Archer && super.equals(obj);}
 }

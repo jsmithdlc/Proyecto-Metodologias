@@ -128,7 +128,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Test
   public void addItemTest(){
     getTestUnit().addItem(bow);
-    assertEquals(true,getTestUnit().getItems().contains(bow));
+    assertTrue(getTestUnit().getItems().contains(bow));
   }
 
   @Test
@@ -153,8 +153,8 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public void removeItemEquippedStillTest(){
     Fighter fighter = new Fighter(50,2,new Location(1,1),axe,bow);
     fighter.equipItem(axe);
-    fighter.removeItem(bow);
-    assertEquals(axe,fighter.getEquippedItem());
+    fighter.removeItem(axe);
+    assertNull(fighter.getEquippedItem());
   }
 
   @Test
@@ -370,6 +370,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
     assertEquals(false,fighter.getItems().contains(sword));
   }
 
+
   @Test
   public void transferItemAwayTest(){
     Fighter fighter = new Fighter(30,4,field.getCell(2,0),bow);
@@ -385,4 +386,5 @@ public abstract class AbstractTestUnit implements ITestUnit {
     fighter.transferItem(axe,archer);
     assertEquals(false,archer.getItems().contains(axe));
   }
+
 }

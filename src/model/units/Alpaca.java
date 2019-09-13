@@ -49,4 +49,7 @@ public class Alpaca extends AbstractUnit {
   @Override
   public void attack(IUnit other){}
 
+  @Override
+  public boolean equals(Object obj){ return obj instanceof Alpaca && super.equals(obj);}
+
 }

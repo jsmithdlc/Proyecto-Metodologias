@@ -40,4 +40,7 @@ public class Hero extends AbstractUnit {
   public void equipItem(final IEquipableItem item) {
     item.equipHero(this);
   }
+
+  @Override
+  public boolean equals(Object obj){ return obj instanceof Hero && super.equals(obj);}
 }
