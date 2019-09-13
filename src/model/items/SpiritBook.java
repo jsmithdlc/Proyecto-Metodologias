@@ -5,6 +5,7 @@ import model.units.*;
  * This class represents a <i>SpiritBook</i> type item.
  * <p>
  * A spiritBook is an item that is strong against lightBooks but weak against darkBooks
+ * @author Javier Smith
  *
  */
 public class SpiritBook extends AbstractBook{

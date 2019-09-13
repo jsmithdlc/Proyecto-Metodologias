@@ -4,6 +4,7 @@ import model.units.*;
  * This class represents a <i>DarkBook</i> type item.
  * <p>
  * A darkBook is an item that is strong against spiritBooks but weak against lightBooks
+ * @author Javier Smith
  *
  */
 public class DarkBook extends AbstractBook{

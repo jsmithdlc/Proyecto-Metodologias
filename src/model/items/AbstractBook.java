@@ -3,7 +3,7 @@ package model.items;
 /**
  * Abstract class that defines some common information and behaviour between all book items.
  *
- * @author Ignacio Slater Muñoz
+ * @author Javier Smith
  * @since 1.0
  */
 public abstract class AbstractBook extends AbstractItem{
