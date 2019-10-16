@@ -117,5 +117,4 @@ class AxeTest extends AbstractTestItem {
     assertEquals(sword.getOwner().getCurrentHitPoints(),100-(axe.getPower()-20));
     assertEquals(axe.getOwner().getCurrentHitPoints(),100-(int)Math.round(sword.getPower()*1.5));
   }
-
 }
