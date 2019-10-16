@@ -117,4 +117,10 @@ class FieldTest {
     assertTrue(map.checkConnection(cell00, cell10));
     assertFalse(map.checkConnection(cell01, cell10));
   }
+
+  @Test
+  public void getSizeTest(){
+    assertFalse(2==map.getSize());
+    assertEquals(3,map.getSize());
+  }
 }

@@ -140,4 +140,12 @@ public class Field {
   public boolean checkConnection(final Location cell1, final Location cell2) {
     return cell1.isNeighbour(cell2);
   }
+
+  public int getSize(){
+    int size = 0;
+    for(Location loc : map.values()){
+      size = ((loc.getRow() > size) ? loc.getRow() : size);
+    }
+    return size+1;
+  }
 }
