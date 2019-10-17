@@ -113,9 +113,6 @@ public interface ITestUnit {
 
   SpiritBook getSpiritBook();
 
-
-
-
   @Test
   void testMovement();
 

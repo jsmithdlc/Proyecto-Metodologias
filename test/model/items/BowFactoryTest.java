@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BowFactoryTest extends AbstractTestItemFactory{
 
-    private DarkBowFactory bowFactory;
+    private BowFactory bowFactory;
 
     @Override
     public void setTestItemFactory(){
-        this.bowFactory = new DarkBowFactory();
+        this.bowFactory = new BowFactory();
     }
 
     @Override

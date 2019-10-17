@@ -46,4 +46,7 @@ public class Archer extends AbstractUnit {
 
   @Override
   public boolean equals(Object obj){ return obj instanceof Archer && super.equals(obj);}
+
+  @Override
+  public boolean ownerEquals(Object obj){ return obj instanceof Archer && super.ownerEquals(obj);}
 }

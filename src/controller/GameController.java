@@ -16,6 +16,9 @@ import model.units.IUnit;
  */
 public class GameController {
 
+    private int numberOfPlayers;
+    private int mapSize;
+
     /**
      * Creates the controller for a new game.
      *

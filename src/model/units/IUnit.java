@@ -148,4 +148,5 @@ public interface IUnit {
    */
   void transferItem(IEquipableItem item, IUnit unit);
 
+  boolean ownerEquals(Object obj);
 }

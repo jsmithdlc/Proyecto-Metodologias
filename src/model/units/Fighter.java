@@ -43,4 +43,7 @@ public class Fighter extends AbstractUnit {
 
   @Override
   public boolean equals(Object obj){ return obj instanceof Fighter && super.equals(obj);}
+
+  @Override
+  public boolean ownerEquals(Object obj){ return obj instanceof Fighter && super.ownerEquals(obj);}
 }
