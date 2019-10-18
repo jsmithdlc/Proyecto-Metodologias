@@ -33,4 +33,17 @@ public class SorcererFactoryTest extends AbstractTestUnitFactory{
                 new Bow("arco", 10,3,6),
                 new Axe("hacha",10,1,2)),sorcerer);
     }
+
+    @Test
+    public void createNormalUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Sorcerer(200,2,null),sorcererFactory.createNormalUnit());
+    }
+
+    @Test
+    public void createStrongUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Sorcerer(400,4,null),sorcererFactory.createStrongUnit());
+
+    }
 }

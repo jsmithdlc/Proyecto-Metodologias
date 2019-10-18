@@ -33,4 +33,17 @@ public class HeroFactoryTest extends AbstractTestUnitFactory{
                 new Bow("arco", 10,3,6),
                 new Axe("hacha",10,1,2)),hero);
     }
+
+    @Test
+    public void createNormalUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Hero(1000,1,null),heroFactory.createNormalUnit());
+    }
+
+    @Test
+    public void createStrongUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Hero(1500,2,null),heroFactory.createStrongUnit());
+
+    }
 }

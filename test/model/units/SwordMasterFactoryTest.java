@@ -33,4 +33,17 @@ public class SwordMasterFactoryTest extends AbstractTestUnitFactory{
                 new Bow("arco", 10,3,6),
                 new Axe("hacha",10,1,2)),swordMaster);
     }
+
+    @Test
+    public void createNormalUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new SwordMaster(400,1,null),swordMasterFactory.createNormalUnit());
+    }
+
+    @Test
+    public void createStrongUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new SwordMaster(600,3,null),swordMasterFactory.createStrongUnit());
+
+    }
 }

@@ -33,4 +33,17 @@ public class ArcherFactoryTest extends AbstractTestUnitFactory{
                 new Bow("arco", 10,3,6),
                 new Axe("hacha",10,1,2)),archer);
     }
+
+    @Test
+    public void createNormalUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Archer(300,2,null),archerFactory.createNormalUnit());
+    }
+
+    @Test
+    public void createStrongUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Archer(500,3,null),archerFactory.createStrongUnit());
+
+    }
 }

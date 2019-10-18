@@ -33,4 +33,19 @@ public class AlpacaFactoryTest extends AbstractTestUnitFactory{
                 new Bow("arco", 10,3,6),
                 new Axe("hacha",10,1,2)),alpaca);
     }
+
+    @Test
+    public void createNormalUnitTest(){
+        setTestUnitFactory();
+        Alpaca alpaca = alpacaFactory.createNormalUnit();
+        assertEquals(new Alpaca(500,3,null),alpaca);
+    }
+
+    @Test
+    public void createStrongUnitTest(){
+        setTestUnitFactory();
+        Alpaca alpaca = alpacaFactory.createStrongUnit();
+        assertEquals(new Alpaca(750,5,null),alpaca);
+
+    }
 }

@@ -10,8 +10,6 @@ public class AbstractUnitFactory implements UnitFactory {
     private int maxHitPoints;
     private int movement;
     private Location location;
-    private int maxItems;
-    protected IEquipableItem[] items;
 
     protected AbstractUnitFactory(){};
 
@@ -47,6 +45,16 @@ public class AbstractUnitFactory implements UnitFactory {
 
     @Override
     public IUnit createUnit(IEquipableItem... items){
+        return null;
+    }
+
+    @Override
+    public IUnit createNormalUnit(IEquipableItem... items){
+        return null;
+    }
+
+    @Override
+    public IUnit createStrongUnit(IEquipableItem... items){
         return null;
     }
 }

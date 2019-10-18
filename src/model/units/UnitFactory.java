@@ -20,4 +20,8 @@ public interface UnitFactory {
     Location getLocation();
 
     IUnit createUnit(IEquipableItem... items);
+
+    IUnit createNormalUnit(IEquipableItem... items);
+
+    IUnit createStrongUnit(IEquipableItem... items);
 }

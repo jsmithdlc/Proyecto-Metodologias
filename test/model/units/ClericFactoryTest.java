@@ -33,4 +33,17 @@ public class ClericFactoryTest extends AbstractTestUnitFactory{
                 new Bow("arco", 10,3,6),
                 new Axe("hacha",10,1,2)),cleric);
     }
+
+    @Test
+    public void createNormalUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Cleric(250,2,null),clericFactory.createNormalUnit());
+    }
+
+    @Test
+    public void createStrongUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Cleric(400,4,null),clericFactory.createStrongUnit());
+
+    }
 }

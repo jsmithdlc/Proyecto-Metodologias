@@ -222,11 +222,23 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public boolean equals(Object obj) {
-    return obj instanceof IUnit && ((IUnit) obj).getItems().equals(items)
+    boolean cond1= obj instanceof IUnit && ((IUnit) obj).getItems().equals(items)
             && ((IUnit) obj).getCurrentHitPoints()==currentHitPoints
-            && ((IUnit) obj).getLocation().equals(location)
             && ((IUnit) obj).getMaxItems() == maxItems
             && ((IUnit) obj).getMovement() == movement;
+    boolean cond2;
+    if(cond1){
+      if(((IUnit)obj).getLocation()==null){
+        cond2 = this.location == null;
+      }
+      else{
+        cond2 = ((IUnit)obj).getLocation().equals(this.location);
+      }
+      return cond1 && cond2;
+    }
+    else{
+      return false;
+    }
   }
 
   @Override

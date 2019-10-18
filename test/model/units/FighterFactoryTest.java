@@ -33,4 +33,17 @@ public class FighterFactoryTest extends AbstractTestUnitFactory{
                 new Bow("arco", 10,3,6),
                 new Axe("hacha",10,1,2)),fighter);
     }
+
+    @Test
+    public void createNormalUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Fighter(400,2,null),fighterFactory.createNormalUnit());
+    }
+
+    @Test
+    public void createStrongUnitTest(){
+        setTestUnitFactory();
+        assertEquals(new Fighter(700,3,null),fighterFactory.createStrongUnit());
+
+    }
 }
