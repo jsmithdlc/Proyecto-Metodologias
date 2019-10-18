@@ -38,6 +38,10 @@ public class Field {
     }
   }
 
+  public void setSeed(long seed){
+    this.random.setSeed(seed);
+  }
+
   /**
    * Adds a cell to the map
    *

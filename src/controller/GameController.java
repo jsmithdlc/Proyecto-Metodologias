@@ -18,6 +18,7 @@ public class GameController {
 
     private int numberOfPlayers;
     private int mapSize;
+    private Field map;
 
     /**
      * Creates the controller for a new game.

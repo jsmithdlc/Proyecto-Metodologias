@@ -2,6 +2,7 @@ package model.units;
 
 import java.util.List;
 
+import model.Tactician;
 import model.items.Bow;
 import model.items.IEquipableItem;
 import model.items.Staff;
@@ -147,6 +148,19 @@ public interface IUnit {
    *    unit which receives item
    */
   void transferItem(IEquipableItem item, IUnit unit);
+
+  /**
+   * sets tactician to unit
+   * @param tactician
+   *    tactician to be set to unit
+   */
+  void setTactician(Tactician tactician);
+
+  /**
+   * returns the tactician of this unit
+   * @return tactician of the unit
+   */
+  Tactician getTactician();
 
   boolean ownerEquals(Object obj);
 }

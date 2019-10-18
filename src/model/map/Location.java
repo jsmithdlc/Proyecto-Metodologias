@@ -111,6 +111,9 @@ public class Location {
     this.unit = unit;
   }
 
+  public void removeUnit(){
+    this.unit = null;
+  }
   /**
    * Removes a reighbour from this location.
    *

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import model.Tactician;
 import model.items.*;
 import model.map.Field;
 import model.map.Location;
@@ -319,12 +320,12 @@ public abstract class AbstractTestUnit implements ITestUnit {
     Archer archer = new Archer(50,1,field.getCell(0,1),bowie);
     archer.equipItem(bowie);
     assertEquals(true,archer.inRange(targetAlpaca));
-    targetAlpaca.moveTo(field.getCell(0,0));
+    assertNull(field.getCell(1,1).getUnit());
+    targetAlpaca.moveTo(field.getCell(1,1));
+    assertEquals(targetAlpaca,field.getCell(1,1).getUnit());
     assertEquals(false,archer.inRange(targetAlpaca));
     targetAlpaca.moveTo(field.getCell(2,2));
     assertEquals(true,archer.inRange(targetAlpaca));
-    archer.moveTo(field.getCell(0,0));
-    assertEquals(false,archer.inRange(targetAlpaca));
   }
 
   @Test
@@ -386,5 +387,14 @@ public abstract class AbstractTestUnit implements ITestUnit {
     fighter.transferItem(axe,archer);
     assertEquals(false,archer.getItems().contains(axe));
   }
+
+  @Test
+  public void setTacticianTest(){
+    assertNull(getTestUnit().getTactician());
+    Tactician tactician = new Tactician("Alfredo");
+    getTestUnit().setTactician(tactician);
+    assertEquals(tactician, getTestUnit().getTactician());
+  }
+
 
 }

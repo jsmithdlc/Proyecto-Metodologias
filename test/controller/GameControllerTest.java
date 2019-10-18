@@ -46,15 +46,17 @@ class GameControllerTest {
         Field gameMap = controller.getGameMap();
         assertEquals(7, gameMap.getSize()); // getSize deben definirlo
         assertTrue(controller.getGameMap().isConnected());
-        Random testRandom = new Random(randomSeed);
         // Para testear funcionalidades que dependen de valores aleatorios se hacen 2 cosas:
         //  - Comprobar las invariantes de las estructuras que se crean (en este caso que el mapa tenga
         //    las dimensiones definidas y que sea conexo.
+        Random testRandom = new Random(randomSeed);
         //  - Setear una semilla para el generador de números aleatorios. Hacer esto hace que la
         //    secuencia de números generada sea siempre la misma, así pueden predecir los
         //    resultados que van a obtener.
         //    Hay 2 formas de hacer esto en Java, le pueden pasar el seed al constructor de Random, o
         //    usar el método setSeed de Random.
+        Field map = new Field();
+        map.setSeed(randomSeed);
         //  ESTO ÚLTIMO NO ESTÁ IMPLEMENTADO EN EL MAPA, ASÍ QUE DEBEN AGREGARLO (!)
     }
 

@@ -5,6 +5,8 @@ import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import model.Tactician;
 import model.items.IEquipableItem;
 import model.items.Staff;
 import model.map.Location;
@@ -28,6 +30,7 @@ public abstract class AbstractUnit implements IUnit {
   private final int movement;
   protected IEquipableItem equippedItem;
   private Location location;
+  private Tactician tactician;
   private double epsilon = 0.000001;
 
   /**
@@ -92,6 +95,7 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void setLocation(Location location) {
     this.location = location;
+    this.location.setUnit(this);
   }
 
   @Override
@@ -103,6 +107,7 @@ public abstract class AbstractUnit implements IUnit {
   public void moveTo(Location targetLocation) {
     if (getLocation().distanceTo(targetLocation) <= getMovement()
             && targetLocation.getUnit() == null) {
+      this.location.removeUnit();
       setLocation(targetLocation);
     }
   }
@@ -202,6 +207,18 @@ public abstract class AbstractUnit implements IUnit {
       unit.addItem(item);
     }
   }
+
+  @Override
+  public void setTactician(Tactician tactician){
+    this.tactician = tactician;
+  }
+
+  @Override
+  public Tactician getTactician(){
+    return this.tactician;
+  }
+
+
 
   @Override
   public boolean equals(Object obj) {
