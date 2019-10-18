@@ -23,9 +23,10 @@ public class Tactician {
         return this.name;
     }
 
-    public void addUnit(IUnit unit){
-        this.units.add(unit);
+    public void addUnit(IUnit unit, int x, int y){
+        unit.setLocation(map.getCell(x,y));
         unit.setTactician(this);
+        this.units.add(unit);
     }
 
     public List<IUnit> getUnits(){
@@ -60,10 +61,11 @@ public class Tactician {
         this.selectedUnit.moveTo(map.getCell(x,y));
     }
 
-    public void placeUnit(int x, int y){
-        this.selectedUnit.setLocation(map.getCell(x,y));
+    public void useItemOn(int x, int y){
+        if(this.selectedItem.equals(this.selectedUnit.getEquippedItem())){
+            selectedUnit.attack(map.getCell(x,y).getUnit());
+        }
     }
-
 
     public void transferTo(int x, int y){
         if(!(map.getCell(x,y).getUnit()==null)){

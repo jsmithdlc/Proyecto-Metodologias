@@ -73,19 +73,19 @@ public class TactiticanTest {
 
     @Test
     public void addUnitTest(){
-        heroFactory.setLocation(map.getCell(0,0));
         Hero hero = heroFactory.createUnit();
         assertEquals(new ArrayList<IUnit>(),tactician.getUnits());
-        tactician.addUnit(hero);
+        tactician.setMap(this.map);
+        tactician.addUnit(hero,0,0);
         assertEquals(hero,tactician.getUnits().get(0));
+        assertEquals(hero,tactician.getMap().getCell(0,0).getUnit());
     }
 
     @Test
     public void selectUnitInTest(){
         Hero hero = heroFactory.createUnit();
-        hero.setLocation(map.getCell(0,0));
-        tactician.addUnit(hero);
         tactician.setMap(map);
+        tactician.addUnit(hero,0,0);
         assertEquals(null,tactician.getSelectedUnit());
         tactician.selectUnitIn(0,0);
         assertEquals(hero,tactician.getSelectedUnit());
@@ -104,10 +104,9 @@ public class TactiticanTest {
         Sword sword = swordFactory.createItem();
         Hero hero = heroFactory.createUnit(sword);
         Fighter fighter = fighterFactory.createUnit();
-        hero.setLocation(map.getCell(0,0));
         fighter.setLocation(map.getCell(1,0));
-        tactician.addUnit(hero);
         tactician.setMap(map);
+        tactician.addUnit(hero,0,0);
         tactician.selectUnitIn(0,0);
         tactician.selectItem(0);
         assertEquals(new ArrayList<IEquipableItem>(), fighter.getItems());
@@ -121,10 +120,9 @@ public class TactiticanTest {
         spearFactory.setName("Lanza");
         Spear spear = spearFactory.createItem();
         Hero hero = heroFactory.createUnit(spear);
-        hero.setLocation(map.getCell(0,0));
-        tactician.addUnit(hero);
         assertNull(hero.getEquippedItem());
         tactician.setMap(map);
+        tactician.addUnit(hero,0,0);
         tactician.selectUnitIn(0,0);
         tactician.equipItem(0);
         assertEquals(spear,tactician.getSelectedUnit().getEquippedItem());
@@ -133,12 +131,12 @@ public class TactiticanTest {
     @Test
     public void moveSelectedUnitTest(){
         Hero hero = heroFactory.createUnit();
-        hero.setLocation(map.getCell(0,0));
-        tactician.addUnit(hero);
         tactician.setMap(map);
+        tactician.addUnit(hero,0,0);
         tactician.selectUnitIn(0,0);
         assertEquals(hero,tactician.getMap().getCell(0,0).getUnit());
         tactician.moveSelectedUnit(1,0);
+        assertNull(tactician.getMap().getCell(0,0).getUnit());
         assertEquals(hero,tactician.getMap().getCell(1,0).getUnit());
     }
 
