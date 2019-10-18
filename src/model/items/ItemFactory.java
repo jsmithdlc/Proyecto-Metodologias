@@ -21,4 +21,8 @@ public interface ItemFactory {
     int getMaxRange();
 
     IEquipableItem createItem();
+
+    IEquipableItem createNormalItem(String name);
+
+    IEquipableItem createStrongItem(String name);
 }

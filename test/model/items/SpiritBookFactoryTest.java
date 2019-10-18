@@ -26,4 +26,16 @@ public class SpiritBookFactoryTest extends AbstractTestItemFactory{
         spiritBookFactory.setMaxRange(10);
         assertEquals(new SpiritBook("Libro Espíritu",200,2,10),spiritBookFactory.createItem());
     }
+
+    @Test
+    public void createNormalItemTest(){
+        setTestItemFactory();
+        assertEquals(new SpiritBook("Libro",100,1,1),spiritBookFactory.createNormalItem("Libro"));
+    }
+
+    @Test
+    public void createStrongItemTest(){
+        setTestItemFactory();
+        assertEquals(new SpiritBook("Libro",150,1,2),spiritBookFactory.createStrongItem("Libro"));
+    }
 }

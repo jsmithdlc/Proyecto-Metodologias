@@ -26,4 +26,16 @@ public class StaffFactoryTest extends AbstractTestItemFactory{
         staffFactory.setMaxRange(10);
         assertEquals(new Staff("Bastón",200,2,10),staffFactory.createItem());
     }
+
+    @Test
+    public void createNormalItemTest(){
+        setTestItemFactory();
+        assertEquals(new Staff("Bastón",50,1,1),staffFactory.createNormalItem("Bastón"));
+    }
+
+    @Test
+    public void createStrongItemTest(){
+        setTestItemFactory();
+        assertEquals(new Staff("Bastón",100,1,2),staffFactory.createStrongItem("Bastón"));
+    }
 }

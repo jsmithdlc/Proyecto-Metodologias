@@ -26,4 +26,16 @@ public class SwordFactoryTest extends AbstractTestItemFactory{
         swordFactory.setMaxRange(10);
         assertEquals(new Sword("Espada",200,2,10),swordFactory.createItem());
     }
+
+    @Test
+    public void createNormalItemTest(){
+        setTestItemFactory();
+        assertEquals(new Sword("Espada",75,1,2),swordFactory.createNormalItem("Espada"));
+    }
+
+    @Test
+    public void createStrongItemTest(){
+        setTestItemFactory();
+        assertEquals(new Sword("Espada",100,1,2),swordFactory.createStrongItem("Espada"));
+    }
 }

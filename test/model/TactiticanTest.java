@@ -130,6 +130,18 @@ public class TactiticanTest {
         assertEquals(spear,tactician.getSelectedUnit().getEquippedItem());
     }
 
+    @Test
+    public void moveSelectedUnitTest(){
+        Hero hero = heroFactory.createUnit();
+        hero.setLocation(map.getCell(0,0));
+        tactician.addUnit(hero);
+        tactician.setMap(map);
+        tactician.selectUnitIn(0,0);
+        assertEquals(hero,tactician.getMap().getCell(0,0).getUnit());
+        tactician.moveSelectedUnit(1,0);
+        assertEquals(hero,tactician.getMap().getCell(1,0).getUnit());
+    }
+
 
 
 

@@ -64,6 +64,7 @@ public class Tactician {
         this.selectedUnit.setLocation(map.getCell(x,y));
     }
 
+
     public void transferTo(int x, int y){
         if(!(map.getCell(x,y).getUnit()==null)){
             this.selectedUnit.transferItem(this.selectedItem,map.getCell(x,y).getUnit());

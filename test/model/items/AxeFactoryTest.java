@@ -28,4 +28,16 @@ public class AxeFactoryTest extends AbstractTestItemFactory{
         assertEquals(new Axe("Hacha",200,1,4),axeFactory.createItem());
     }
 
+    @Test
+    public void createNormalItemTest(){
+        setTestItemFactory();
+        assertEquals(new Axe("Hacha",50,1,1),axeFactory.createNormalItem("Hacha"));
+    }
+
+    @Test
+    public void createStrongItemTest(){
+        setTestItemFactory();
+        assertEquals(new Axe("Hacha",100,1,2),axeFactory.createStrongItem("Hacha"));
+    }
+
 }

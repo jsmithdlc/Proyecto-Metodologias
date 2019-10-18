@@ -52,7 +52,5 @@ public abstract class AbstractItemFactory implements ItemFactory{
         return this.maxRange;
     }
 
-    @Override
-    public IEquipableItem createItem(){return null;}
 
 }

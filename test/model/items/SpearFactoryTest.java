@@ -26,4 +26,16 @@ public class SpearFactoryTest extends AbstractTestItemFactory{
         spearFactory.setMaxRange(10);
         assertEquals(new Spear("Libro Luz",200,2,10),spearFactory.createItem());
     }
+
+    @Test
+    public void createNormalItemTest(){
+        setTestItemFactory();
+        assertEquals(new Spear("Lanza",100,1,3),spearFactory.createNormalItem("Lanza"));
+    }
+
+    @Test
+    public void createStrongItemTest(){
+        setTestItemFactory();
+        assertEquals(new Spear("Lanza",175,1,4),spearFactory.createStrongItem("Lanza"));
+    }
 }

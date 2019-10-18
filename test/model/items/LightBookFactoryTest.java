@@ -26,4 +26,16 @@ public class LightBookFactoryTest extends AbstractTestItemFactory{
         lightBookFactory.setMaxRange(10);
         assertEquals(new LightBook("Libro Luz",200,2,10),lightBookFactory.createItem());
     }
+
+    @Test
+    public void createNormalItemTest(){
+        setTestItemFactory();
+        assertEquals(new LightBook("Libro",100,1,1),lightBookFactory.createNormalItem("Libro"));
+    }
+
+    @Test
+    public void createStrongItemTest(){
+        setTestItemFactory();
+        assertEquals(new LightBook("Libro",150,1,2),lightBookFactory.createStrongItem("Libro"));
+    }
 }
