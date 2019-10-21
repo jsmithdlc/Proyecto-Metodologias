@@ -72,11 +72,14 @@ public class TactiticanTest {
     }
 
     @Test
-    public void addUnitTest(){
+    void addSelectPlaceUnitTest(){
         Hero hero = heroFactory.createUnit();
         assertEquals(new ArrayList<IUnit>(),tactician.getUnits());
         tactician.setMap(this.map);
-        tactician.addUnit(hero,0,0);
+        tactician.addUnit(hero);
+        tactician.selectMyUnit(0);
+        assertEquals(hero,tactician.getSelectedUnit());
+        tactician.placeUnit(0,0);
         assertEquals(hero,tactician.getUnits().get(0));
         assertEquals(hero,tactician.getMap().getCell(0,0).getUnit());
     }
@@ -85,7 +88,9 @@ public class TactiticanTest {
     public void selectUnitInTest(){
         Hero hero = heroFactory.createUnit();
         tactician.setMap(map);
-        tactician.addUnit(hero,0,0);
+        tactician.addUnit(hero);
+        tactician.selectMyUnit(0);
+        tactician.placeUnit(0,0);
         assertEquals(null,tactician.getSelectedUnit());
         tactician.selectUnitIn(0,0);
         assertEquals(hero,tactician.getSelectedUnit());
@@ -106,7 +111,9 @@ public class TactiticanTest {
         Fighter fighter = fighterFactory.createUnit();
         fighter.setLocation(map.getCell(1,0));
         tactician.setMap(map);
-        tactician.addUnit(hero,0,0);
+        tactician.addUnit(hero);
+        tactician.selectMyUnit(0);
+        tactician.placeUnit(0,0);
         tactician.selectUnitIn(0,0);
         tactician.selectItem(0);
         assertEquals(new ArrayList<IEquipableItem>(), fighter.getItems());
@@ -122,7 +129,9 @@ public class TactiticanTest {
         Hero hero = heroFactory.createUnit(spear);
         assertNull(hero.getEquippedItem());
         tactician.setMap(map);
-        tactician.addUnit(hero,0,0);
+        tactician.addUnit(hero);
+        tactician.selectMyUnit(0);
+        tactician.placeUnit(0,0);
         tactician.selectUnitIn(0,0);
         tactician.equipItem(0);
         assertEquals(spear,tactician.getSelectedUnit().getEquippedItem());
@@ -132,7 +141,9 @@ public class TactiticanTest {
     public void moveSelectedUnitTest(){
         Hero hero = heroFactory.createUnit();
         tactician.setMap(map);
-        tactician.addUnit(hero,0,0);
+        tactician.addUnit(hero);
+        tactician.selectMyUnit(0);
+        tactician.placeUnit(0,0);
         tactician.selectUnitIn(0,0);
         assertEquals(hero,tactician.getMap().getCell(0,0).getUnit());
         tactician.moveSelectedUnit(1,0);
@@ -140,8 +151,32 @@ public class TactiticanTest {
         assertEquals(hero,tactician.getMap().getCell(1,0).getUnit());
     }
 
+    @Test
+    public void useItemOnTest(){
+        Axe axe = axeFactory.createNormalItem("hacha");
+        Fighter fighter = fighterFactory.createStrongUnit(axe);
+        tactician.setMap(map);
+        tactician.addUnit(fighter);
+        tactician.selectMyUnit(0);
+        tactician.equipItem(0);
+        tactician.placeUnit(0,0);
+        Field map1 = tactician.getMap();
 
+        Tactician tactician2 = new Tactician("Juan");
+        Hero hero = heroFactory.createStrongUnit();
+        tactician2.setMap(map);
+        tactician2.addUnit(hero);
+        tactician2.selectMyUnit(0);
+        tactician2.placeUnit(1,0);
+        Field map2 = tactician2.getMap();
+        assertEquals(1500,map2.getCell(1,0).getUnit().getCurrentHitPoints());
 
+        tactician.setMap(map2);
+        tactician.selectUnitIn(0,0);
+        tactician.useItemOn(1,0);
+        Field mapFinal = tactician.getMap();
 
+        assertEquals(1450,mapFinal.getCell(1,0).getUnit().getCurrentHitPoints());
+    }
 
 }

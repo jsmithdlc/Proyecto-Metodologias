@@ -27,11 +27,8 @@ public class SorcererFactoryTest extends AbstractTestUnitFactory{
         sorcererFactory.setMaxHitPoints(200);
         sorcererFactory.setMovement(2);
         sorcererFactory.setLocation(new Location(0,0));
-        Sorcerer sorcerer = sorcererFactory.createUnit(new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2));
-        assertEquals(new Sorcerer(200,2,new Location(0,0),
-                new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2)),sorcerer);
+        Sorcerer sorcerer = sorcererFactory.createUnit();
+        assertEquals(new Sorcerer(200,2,new Location(0,0)),sorcerer);
     }
 
     @Test

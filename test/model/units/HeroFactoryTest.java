@@ -27,11 +27,8 @@ public class HeroFactoryTest extends AbstractTestUnitFactory{
         heroFactory.setMaxHitPoints(200);
         heroFactory.setMovement(2);
         heroFactory.setLocation(new Location(0,0));
-        Hero hero = heroFactory.createUnit(new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2));
-        assertEquals(new Hero(200,2,new Location(0,0),
-                new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2)),hero);
+        Hero hero = heroFactory.createUnit();
+        assertEquals(new Hero(200,2,new Location(0,0)),hero);
     }
 
     @Test

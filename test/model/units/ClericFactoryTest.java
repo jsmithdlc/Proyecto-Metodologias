@@ -27,11 +27,8 @@ public class ClericFactoryTest extends AbstractTestUnitFactory{
         clericFactory.setMaxHitPoints(200);
         clericFactory.setMovement(2);
         clericFactory.setLocation(new Location(0,0));
-        Cleric cleric = clericFactory.createUnit(new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2));
-        assertEquals(new Cleric(200,2,new Location(0,0),
-                new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2)),cleric);
+        Cleric cleric = clericFactory.createUnit();
+        assertEquals(new Cleric(200,2,new Location(0,0)),cleric);
     }
 
     @Test

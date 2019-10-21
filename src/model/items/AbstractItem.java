@@ -91,17 +91,10 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public boolean equals(Object obj) {
-    boolean cond1 = obj instanceof IEquipableItem && ((IEquipableItem) obj).getName().equals(name)
+    return obj instanceof IEquipableItem && ((IEquipableItem) obj).getName().equals(name)
+            && ((IEquipableItem) obj).getOwner() == owner
             && ((IEquipableItem) obj).getPower() == power
             && ((IEquipableItem) obj).getMaxRange() == maxRange
             && ((IEquipableItem) obj).getMinRange() == minRange;
-    boolean cond2;
-    if(((IEquipableItem) obj).getOwner() == null){
-      cond2 = owner == null;
-    }
-    else{
-      cond2 = ((IEquipableItem) obj).getOwner().ownerEquals(owner);
-    }
-    return cond1 && cond2;
   }
 }

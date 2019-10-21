@@ -27,11 +27,8 @@ public class SwordMasterFactoryTest extends AbstractTestUnitFactory{
         swordMasterFactory.setMaxHitPoints(200);
         swordMasterFactory.setMovement(2);
         swordMasterFactory.setLocation(new Location(0,0));
-        SwordMaster swordMaster = swordMasterFactory.createUnit(new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2));
-        assertEquals(new SwordMaster(200,2,new Location(0,0),
-                new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2)),swordMaster);
+        SwordMaster swordMaster = swordMasterFactory.createUnit();
+        assertEquals(new SwordMaster(200,2,new Location(0,0)),swordMaster);
     }
 
     @Test

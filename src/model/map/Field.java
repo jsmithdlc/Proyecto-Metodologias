@@ -152,4 +152,10 @@ public class Field {
     }
     return size+1;
   }
+
+  @Override
+  public boolean equals(Object obj){
+    return obj instanceof Field &&
+            ((Field) obj).getMap().equals(this.map);
+  }
 }

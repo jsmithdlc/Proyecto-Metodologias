@@ -52,8 +52,4 @@ public class Alpaca extends AbstractUnit {
   @Override
   public boolean equals(Object obj){ return obj instanceof Alpaca && super.equals(obj);}
 
-  @Override
-  public boolean ownerEquals(Object obj){
-    return obj instanceof Alpaca && super.ownerEquals(obj);}
-
 }

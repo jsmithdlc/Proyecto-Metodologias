@@ -162,5 +162,4 @@ public interface IUnit {
    */
   Tactician getTactician();
 
-  boolean ownerEquals(Object obj);
 }

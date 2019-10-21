@@ -27,11 +27,8 @@ public class FighterFactoryTest extends AbstractTestUnitFactory{
         fighterFactory.setMaxHitPoints(200);
         fighterFactory.setMovement(2);
         fighterFactory.setLocation(new Location(0,0));
-        Fighter fighter = fighterFactory.createUnit(new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2));
-        assertEquals(new Fighter(200,2,new Location(0,0),
-                new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2)),fighter);
+        Fighter fighter = fighterFactory.createUnit();
+        assertEquals(new Fighter(200,2,new Location(0,0)),fighter);
     }
 
     @Test

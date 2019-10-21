@@ -240,16 +240,5 @@ public abstract class AbstractUnit implements IUnit {
       return false;
     }
   }
-
-  @Override
-  public boolean ownerEquals(Object obj){
-    if(this == null && obj == null){
-      return true;
-    }
-    return obj instanceof IUnit && ((IUnit) obj).getCurrentHitPoints() == currentHitPoints
-            && ((IUnit) obj).getLocation().equals(location)
-            && ((IUnit) obj).getMaxItems() == maxItems
-            && ((IUnit) obj).getMovement() == movement;
-  }
 }
 

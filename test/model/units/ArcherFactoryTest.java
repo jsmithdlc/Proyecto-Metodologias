@@ -27,11 +27,8 @@ public class ArcherFactoryTest extends AbstractTestUnitFactory{
         archerFactory.setMaxHitPoints(200);
         archerFactory.setMovement(2);
         archerFactory.setLocation(new Location(0,0));
-        Archer archer = archerFactory.createUnit(new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2));
-        assertEquals(new Archer(200,2,new Location(0,0),
-                new Bow("arco", 10,3,6),
-                new Axe("hacha",10,1,2)),archer);
+        Archer archer = archerFactory.createUnit();
+        assertEquals(new Archer(200,2,new Location(0,0)),archer);
     }
 
     @Test

@@ -1,18 +1,20 @@
 package controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 import model.Tactician;
+import model.items.*;
 import model.map.Field;
+import model.map.FieldFactory;
+import model.units.Fighter;
+import model.units.FighterFactory;
+import model.units.Hero;
+import model.units.HeroFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -23,12 +25,19 @@ class GameControllerTest {
     private GameController controller;
     private long randomSeed;
     private List<String> testTacticians;
+    private HeroFactory heroFactory = new HeroFactory();
+    private FighterFactory fighterFactory = new FighterFactory();
+    private SpearFactory spearFactory = new SpearFactory();
+    private AxeFactory axeFactory = new AxeFactory();
 
     @BeforeEach
     void setUp() {
         // Se define la semilla como un número aleatorio para generar variedad en los tests
         randomSeed = new Random().nextLong();
         controller = new GameController(4, 7);
+        controller.setSeed(randomSeed);
+        controller.generateGameMap();
+        controller.setInitTurns();
         testTacticians = List.of("Player 0", "Player 1", "Player 2", "Player 3");
     }
 
@@ -55,13 +64,22 @@ class GameControllerTest {
         //    resultados que van a obtener.
         //    Hay 2 formas de hacer esto en Java, le pueden pasar el seed al constructor de Random, o
         //    usar el método setSeed de Random.
-        Field map = new Field();
-        map.setSeed(randomSeed);
+        FieldFactory fieldFactory = new FieldFactory();
+        fieldFactory.setSeed(randomSeed);
+        Field map = fieldFactory.createMap(7);
+        assertEquals(map, controller.getGameMap());
         //  ESTO ÚLTIMO NO ESTÁ IMPLEMENTADO EN EL MAPA, ASÍ QUE DEBEN AGREGARLO (!)
     }
-
     @Test
     void getTurnOwner() {
+        Map<String,Tactician> tacticians = new HashMap<>();
+        tacticians.put("Player 0", new Tactician("Player 0"));
+        tacticians.put("Player 1", new Tactician("Player 1"));
+        tacticians.put("Player 2", new Tactician("Player 2"));
+        tacticians.put("Player 3", new Tactician("Player 3"));
+        List<String> tacticians_shuffled = new ArrayList<>(testTacticians);
+        Collections.shuffle(tacticians_shuffled,new Random(this.randomSeed));
+        assertEquals(tacticians.get(tacticians_shuffled.get(0)),controller.getTurnOwner());
         //  En este caso deben hacer lo mismo que para el mapa
     }
 
@@ -92,11 +110,13 @@ class GameControllerTest {
     @Test
     void endTurn() {
         Tactician firstPlayer = controller.getTurnOwner();
+        System.out.println(firstPlayer.getName());
         // Nuevamente, para determinar el orden de los jugadores se debe usar una semilla
-        Tactician secondPlayer = new Tactician("Manolo"); // <- Deben cambiar esto (!)
+        Tactician secondPlayer = controller.getNextTurnOwner();
+        System.out.println(secondPlayer.getName());
         assertNotEquals(secondPlayer.getName(), firstPlayer.getName());
-
         controller.endTurn();
+        System.out.println(controller.getTurnOwner().getName());
         assertNotEquals(firstPlayer.getName(), controller.getTurnOwner().getName());
         assertEquals(secondPlayer.getName(), controller.getTurnOwner().getName());
     }
@@ -139,6 +159,7 @@ class GameControllerTest {
 
         controller.initEndlessGame();
         for (int i = 0; i < 3; i++) {
+            System.out.println(controller.getTacticians().size());
             assertNull(controller.getWinners());
             controller.removeTactician("Player " + i);
         }
@@ -148,26 +169,80 @@ class GameControllerTest {
     // Desde aquí en adelante, los tests deben definirlos completamente ustedes
     @Test
     void getSelectedUnit() {
+        Hero hero = heroFactory.createNormalUnit(spearFactory.createNormalItem("Lanza"));
+        controller.addUnit(hero);
+        controller.selectMyUnit(0);
+        assertEquals(hero,controller.getSelectedUnit());
+        controller.getTurnOwner().setMap(controller.getGameMap());
+        controller.placeUnit(0,0);
+        assertNull(controller.getSelectedUnit());
+        controller.selectUnitIn(0,0);
+        assertEquals(hero,controller.getSelectedUnit());
+    }
+
+    @Test
+    void placeUnitTest(){
+        Hero hero = heroFactory.createNormalUnit();
+        controller.getTurnOwner().setMap(controller.getGameMap());
+        controller.addUnit(hero);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+        assertNull(controller.getSelectedUnit());
+        assertEquals(hero,controller.getTurnOwner().getMap().getCell(0,0).getUnit());
     }
 
     @Test
     void selectUnitIn() {
+        Fighter fighter = fighterFactory.createNormalUnit();
+        controller.getTurnOwner().setMap(controller.getGameMap());
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+        assertNull(controller.getSelectedUnit());
+        controller.selectUnitIn(0,0);
+        assertEquals(fighter,controller.getSelectedUnit());
     }
 
     @Test
     void getItems() {
+        Axe axe = axeFactory.createNormalItem("hacha");
+        Spear spear = spearFactory.createStrongItem("lanza");
+        Fighter fighter = fighterFactory.createStrongUnit(axe,spear);
+        List<IEquipableItem> realItems = new ArrayList<>();
+        realItems.add(axe);
+        realItems.add(spear);
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        List<IEquipableItem> items = controller.getItems();
+        assertEquals(realItems,items);
     }
 
     @Test
     void equipItem() {
-    }
-
-    @Test
-    void useItemOn() {
+        Axe axe = axeFactory.createNormalItem("hacha");
+        Spear spear = spearFactory.createStrongItem("lanza");
+        Fighter fighter = fighterFactory.createStrongUnit(axe,spear);
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        controller.equipItem(0);
+        assertEquals(axe,controller.getSelectedUnit().getEquippedItem());
+        controller.equipItem(1);
+        assertEquals(axe,controller.getSelectedUnit().getEquippedItem());
     }
 
     @Test
     void selectItem() {
+        Axe axe = axeFactory.createStrongItem("hacha");
+        Fighter fighter = fighterFactory.createStrongUnit(axe);
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        assertNull(controller.getTurnOwner().getSelectedItem());
+        controller.selectItem(0);
+        assertEquals(axe,controller.getTurnOwner().getSelectedItem());
+    }
+
+    @Test
+    void useItemOn() {
     }
 
     @Test
