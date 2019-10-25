@@ -204,6 +204,33 @@ class GameControllerTest {
     }
 
     @Test
+    void selectWrongUnitTest(){
+        Fighter fighter = fighterFactory.createNormalUnit();
+        controller.getTurnOwner().setMap(controller.getGameMap());
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+        controller.setGameMap(controller.getTurnOwner().getMap());
+
+        Hero hero = heroFactory.createNormalUnit();
+        Tactician player2 = controller.getNextTurnOwner();
+        player2.setMap(controller.getGameMap());
+        player2.addUnit(hero);
+        player2.selectMyUnit(0);
+        player2.placeUnit(1,0);
+        controller.setGameMap(controller.getNextTurnOwner().getMap());
+
+        controller.getTurnOwner().setMap(controller.getGameMap());
+        controller.selectUnitIn(1,0);
+        assertNull(controller.getSelectedUnit());
+
+        controller.endTurn();
+        assertEquals(player2,controller.getTurnOwner());
+        controller.selectUnitIn(1,0);
+        assertEquals(hero,controller.getSelectedUnit());
+    }
+
+    @Test
     void getItems() {
         Axe axe = axeFactory.createNormalItem("hacha");
         Spear spear = spearFactory.createStrongItem("lanza");
@@ -243,9 +270,49 @@ class GameControllerTest {
 
     @Test
     void useItemOn() {
+        Tactician player1 = controller.getTurnOwner();
+        Tactician player2 = controller.getNextTurnOwner();
+
+        Axe axe = axeFactory.createNormalItem("hacha");
+        Fighter fighter = fighterFactory.createStrongUnit(axe);
+        player1.setMap(controller.getGameMap());
+        player1.addUnit(fighter);
+        player1.selectMyUnit(0);
+        player1.equipItem(0);
+        player1.placeUnit(0,0);
+        controller.setGameMap(player1.getMap());
+
+        Hero hero = heroFactory.createStrongUnit();
+        player2.setMap(controller.getGameMap());
+        player2.addUnit(hero);
+        player2.selectMyUnit(0);
+        player2.placeUnit(1,0);
+        controller.setGameMap(player2.getMap());
+        assertEquals(1500,controller.getGameMap().getCell(1,0).getUnit().getCurrentHitPoints());
+
+        controller.selectUnitIn(0,0);
+        controller.useItemOn(1,0);
+        assertEquals(1450,controller.getGameMap().getCell(1,0).getUnit().getCurrentHitPoints());
     }
 
     @Test
     void giveItemTo() {
+        spearFactory.setName("Espada cambio");
+        Spear spear = spearFactory.createItem();
+        Hero hero = heroFactory.createUnit(spear);
+        Fighter fighter = fighterFactory.createUnit();
+        controller.getTurnOwner().setMap(controller.getGameMap());
+        controller.addUnit(hero);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+        controller.addUnit(fighter);
+        controller.selectMyUnit(1);
+        controller.placeUnit(1,0);
+        controller.selectUnitIn(0,0);
+        controller.selectItem(0);
+        controller.giveItemTo(1,0);
+        controller.selectUnitIn(1,0);
+        controller.selectItem(0);
+        assertEquals(spear,controller.getTurnOwner().getSelectedItem());
     }
 }

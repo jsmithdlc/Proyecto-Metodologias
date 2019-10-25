@@ -72,7 +72,9 @@ public class Tactician {
      *      vertical coordinate of game map
      */
     public void selectUnitIn(int x, int y){
-        this.selectedUnit = map.getCell(x,y).getUnit();
+        if(map.getCell(x,y).getUnit().getTactician().equals(this)){
+            this.selectedUnit = map.getCell(x,y).getUnit();
+        }
     }
 
     /**

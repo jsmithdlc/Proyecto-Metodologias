@@ -87,6 +87,10 @@ public class GameController {
         return new ArrayList<>(sorted.values());
     }
 
+    public void setGameMap(Field map){
+        this.map = map;
+    }
+
     /**
      * @return the map of the current game
      */
@@ -311,5 +315,6 @@ public class GameController {
      *     vertical position of the target
      */
     public void giveItemTo(int x, int y) {
+        this.getTurnOwner().transferTo(x,y);
     }
 }
