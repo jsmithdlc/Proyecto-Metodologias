@@ -179,4 +179,18 @@ public class TactiticanTest {
         assertEquals(1450,mapFinal.getCell(1,0).getUnit().getCurrentHitPoints());
     }
 
+    @Test
+    public void moveToTest(){
+        Fighter fighter = fighterFactory.createStrongUnit();
+        tactician.setMap(map);
+        tactician.addUnit(fighter);
+        tactician.selectMyUnit(0);
+        tactician.placeUnit(0,0);
+        assertEquals(fighter,tactician.getMap().getCell(0,0).getUnit());
+        tactician.selectUnitIn(0,0);
+        tactician.moveUnitTo(1,0);
+        assertNull(tactician.getMap().getCell(0,0).getUnit());
+        assertEquals(fighter,tactician.getMap().getCell(1,0).getUnit());
+    }
+
 }

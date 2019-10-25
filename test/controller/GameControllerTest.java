@@ -315,4 +315,19 @@ class GameControllerTest {
         controller.selectItem(0);
         assertEquals(spear,controller.getTurnOwner().getSelectedItem());
     }
+
+    @Test
+    public void moveUnitToTest(){
+        Fighter fighter = fighterFactory.createNormalUnit();
+        controller.getTurnOwner().setMap(controller.getGameMap());
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+        assertEquals(fighter,controller.getTurnOwner().getMap().getCell(0,0).getUnit());
+        controller.selectUnitIn(0,0);
+        controller.moveUnitTo(1,0);
+        controller.setGameMap(controller.getTurnOwner().getMap());
+        assertNull(controller.getGameMap().getCell(0,0).getUnit());
+        assertEquals(fighter,controller.getGameMap().getCell(1,0).getUnit());
+    }
 }

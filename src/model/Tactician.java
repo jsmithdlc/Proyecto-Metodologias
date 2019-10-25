@@ -186,6 +186,17 @@ public class Tactician {
             this.selectedUnit.transferItem(this.selectedItem,map.getCell(x,y).getUnit());
         }
     }
+
+    /**
+     *  moves selected unit to coordinates (x,y) of game's map
+     * @param x
+     *      horizontal coordinate of game map
+     * @param y
+     *      vertical coordinate of game map
+     */
+    public void moveUnitTo(int x, int y){
+        this.selectedUnit.moveTo(map.getCell(x,y));
+    }
     @Override
     public boolean equals(Object obj){
         return obj instanceof Tactician

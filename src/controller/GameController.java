@@ -317,4 +317,15 @@ public class GameController {
     public void giveItemTo(int x, int y) {
         this.getTurnOwner().transferTo(x,y);
     }
+
+    /**
+     * moves selected unit to coordinates (x,y) of game map
+     * @param x
+     *      horizontal coordinate of map
+     * @param y
+     *      vertical coordinate of map
+     */
+    public void moveUnitTo(int x, int y){
+        this.getTurnOwner().moveUnitTo(x,y);
+    }
 }
