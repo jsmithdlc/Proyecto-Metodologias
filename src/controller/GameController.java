@@ -1,7 +1,10 @@
 package controller;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
+import observer.MapHandler;
 import model.Tactician;
 import model.items.IEquipableItem;
 import model.items.ItemFactory;
@@ -35,12 +38,9 @@ public class GameController {
     private Tactician currentTactician;
     private int roundNumber;
 
-    private HeroFactory heroFactory = new HeroFactory();
-    private SwordMasterFactory swordMasterFactory = new SwordMasterFactory();
-    private ArcherFactory archerFactory = new ArcherFactory();
-    private FighterFactory fighterFactory = new FighterFactory();
-    private SorcererFactory sorcererFactory = new SorcererFactory();
-    private ClericFactory clericFactory = new ClericFactory();
+    private PropertyChangeSupport
+        mapChanges = new PropertyChangeSupport(this),
+        playersChanges = new PropertyChangeSupport(this);
 
     /**
      * Creates the controller for a new game.
@@ -54,20 +54,24 @@ public class GameController {
         this.mapSize = mapSize;
         this.numberOfPlayers = numberOfPlayers;
         this.initPlayers = numberOfPlayers;
+        fieldFactory.setSeed(new Random().nextLong());
+        map = fieldFactory.createMap(mapSize);
+        initMap=map;
+        currentTurnIdx = 0;
         StringBuilder sb;
         for(int i=0;i<numberOfPlayers;i++) {
             sb = new StringBuilder("Player ");
             sb.append(i);
             turns.add(sb.toString());
-            tacticians.put(sb.toString(), new Tactician(sb.toString()));
+            Tactician tactician = new Tactician(sb.toString());
+            MapHandler mapHandler = new MapHandler(tactician);
+            mapChanges.addPropertyChangeListener(mapHandler);
+            tacticians.put(sb.toString(), tactician);
         }
         initTacticians = deepCopyTacticians(tacticians);
-        fieldFactory.setSeed(new Random().nextLong());
-        map = fieldFactory.createMap(mapSize);
-        initMap=map;
-        currentTurnIdx = 0;
         Collections.shuffle(this.turns,new Random());
         this.currentTactician = this.tacticians.get(turns.get(0));
+        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Map initialized",null,this.map));
     }
 
     public Map<String,Tactician> deepCopyTacticians( Map<String, Tactician> original){
@@ -121,6 +125,7 @@ public class GameController {
     public void generateGameMap(){
         fieldFactory.setSeed(this.seed);
         this.map = fieldFactory.createMap(this.mapSize);
+        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Map initialized",null,this.map));
     }
 
     public Tactician getNextTurnOwner(){
@@ -264,6 +269,8 @@ public class GameController {
     public void placeUnit(int x, int y){
         this.getTurnOwner().setMap(this.map);
         this.getTurnOwner().placeUnit(x,y);
+        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Unit Placed",this.map,getTurnOwner().getMap()));
+        this.map = getTurnOwner().getMap();
     }
 
     /**
@@ -281,6 +288,8 @@ public class GameController {
      */
     public void equipItem(int index) {
         this.currentTactician.equipItem(index);
+        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Unit equipped",this.map,getTurnOwner().getMap()));
+        this.map = getTurnOwner().getMap();
     }
 
     /**
@@ -293,6 +302,8 @@ public class GameController {
      */
     public void useItemOn(int x, int y) {
         this.currentTactician.useItemOn(x,y);
+        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Item used between units",this.map,getTurnOwner().getMap()));
+        this.map = getTurnOwner().getMap();
     }
 
     /**
@@ -316,6 +327,8 @@ public class GameController {
      */
     public void giveItemTo(int x, int y) {
         this.getTurnOwner().transferTo(x,y);
+        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Item transfered",this.map,getTurnOwner().getMap()));
+        this.map = getTurnOwner().getMap();
     }
 
     /**
@@ -327,5 +340,7 @@ public class GameController {
      */
     public void moveUnitTo(int x, int y){
         this.getTurnOwner().moveUnitTo(x,y);
+        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Unit moved",this.map,getTurnOwner().getMap()));
+        this.map = getTurnOwner().getMap();
     }
 }

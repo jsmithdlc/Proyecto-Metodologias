@@ -183,18 +183,17 @@ class GameControllerTest {
     @Test
     void placeUnitTest(){
         Hero hero = heroFactory.createNormalUnit();
-        controller.getTurnOwner().setMap(controller.getGameMap());
         controller.addUnit(hero);
         controller.selectMyUnit(0);
         controller.placeUnit(0,0);
         assertNull(controller.getSelectedUnit());
         assertEquals(hero,controller.getTurnOwner().getMap().getCell(0,0).getUnit());
+        assertEquals(hero,controller.getNextTurnOwner().getMap().getCell(0,0).getUnit());
     }
 
     @Test
     void selectUnitIn() {
         Fighter fighter = fighterFactory.createNormalUnit();
-        controller.getTurnOwner().setMap(controller.getGameMap());
         controller.addUnit(fighter);
         controller.selectMyUnit(0);
         controller.placeUnit(0,0);
@@ -206,21 +205,16 @@ class GameControllerTest {
     @Test
     void selectWrongUnitTest(){
         Fighter fighter = fighterFactory.createNormalUnit();
-        controller.getTurnOwner().setMap(controller.getGameMap());
         controller.addUnit(fighter);
         controller.selectMyUnit(0);
         controller.placeUnit(0,0);
-        controller.setGameMap(controller.getTurnOwner().getMap());
 
         Hero hero = heroFactory.createNormalUnit();
         Tactician player2 = controller.getNextTurnOwner();
-        player2.setMap(controller.getGameMap());
         player2.addUnit(hero);
         player2.selectMyUnit(0);
         player2.placeUnit(1,0);
-        controller.setGameMap(controller.getNextTurnOwner().getMap());
 
-        controller.getTurnOwner().setMap(controller.getGameMap());
         controller.selectUnitIn(1,0);
         assertNull(controller.getSelectedUnit());
 
@@ -275,19 +269,15 @@ class GameControllerTest {
 
         Axe axe = axeFactory.createNormalItem("hacha");
         Fighter fighter = fighterFactory.createStrongUnit(axe);
-        player1.setMap(controller.getGameMap());
         player1.addUnit(fighter);
         player1.selectMyUnit(0);
         player1.equipItem(0);
         player1.placeUnit(0,0);
-        controller.setGameMap(player1.getMap());
 
         Hero hero = heroFactory.createStrongUnit();
-        player2.setMap(controller.getGameMap());
         player2.addUnit(hero);
         player2.selectMyUnit(0);
         player2.placeUnit(1,0);
-        controller.setGameMap(player2.getMap());
         assertEquals(1500,controller.getGameMap().getCell(1,0).getUnit().getCurrentHitPoints());
 
         controller.selectUnitIn(0,0);
@@ -301,7 +291,6 @@ class GameControllerTest {
         Spear spear = spearFactory.createItem();
         Hero hero = heroFactory.createUnit(spear);
         Fighter fighter = fighterFactory.createUnit();
-        controller.getTurnOwner().setMap(controller.getGameMap());
         controller.addUnit(hero);
         controller.selectMyUnit(0);
         controller.placeUnit(0,0);
@@ -319,14 +308,12 @@ class GameControllerTest {
     @Test
     public void moveUnitToTest(){
         Fighter fighter = fighterFactory.createNormalUnit();
-        controller.getTurnOwner().setMap(controller.getGameMap());
         controller.addUnit(fighter);
         controller.selectMyUnit(0);
         controller.placeUnit(0,0);
         assertEquals(fighter,controller.getTurnOwner().getMap().getCell(0,0).getUnit());
         controller.selectUnitIn(0,0);
         controller.moveUnitTo(1,0);
-        controller.setGameMap(controller.getTurnOwner().getMap());
         assertNull(controller.getGameMap().getCell(0,0).getUnit());
         assertEquals(fighter,controller.getGameMap().getCell(1,0).getUnit());
     }
