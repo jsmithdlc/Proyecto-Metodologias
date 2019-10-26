@@ -156,6 +156,7 @@ public abstract class AbstractUnit implements IUnit {
     notifyIfDead();
   }
 
+  @Override
   public void notifyIfDead(){
     if((this.currentHitPoints-0) <= epsilon){
       this.currentHitPoints = 0;

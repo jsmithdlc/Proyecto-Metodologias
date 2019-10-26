@@ -129,7 +129,7 @@ public interface IUnit {
   /**
    * Notifies tactician if this unit is dead and adjusts currentHitPoints
    */
-  //void notifyIfDead();
+  void notifyIfDead();
 
   /**
    *  adds item to list of items of this
