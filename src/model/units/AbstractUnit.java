@@ -65,6 +65,11 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
+  public int getMaxHitPoints(){
+    return maxHitPoints;
+  }
+
+  @Override
   public void setCurrentHitPoints(int hitPoints){
     if(hitPoints >= this.maxHitPoints){
       this.currentHitPoints = maxHitPoints;

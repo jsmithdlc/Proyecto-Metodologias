@@ -91,9 +91,6 @@ public class GameController {
         return new ArrayList<>(sorted.values());
     }
 
-    public void setGameMap(Field map){
-        this.map = map;
-    }
 
     /**
      * @return the map of the current game
@@ -342,5 +339,54 @@ public class GameController {
         this.getTurnOwner().moveUnitTo(x,y);
         mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Unit moved",this.map,getTurnOwner().getMap()));
         this.map = getTurnOwner().getMap();
+    }
+
+    /**
+     * @return selected item name
+     */
+    public String getItemName(){
+        return currentTactician.getSelectedItem().getName();
+    }
+
+    /**
+     * @return selecte item power
+     */
+    public int getItemPower(){
+        return currentTactician.getSelectedItem().getPower();
+    }
+
+    /**
+     * @return selected item maximum range
+     */
+    public int getItemMaxRange(){
+        return currentTactician.getSelectedItem().getMaxRange();
+    }
+
+    /**
+     * @return selected item minimum range
+     */
+    public int getItemMinRange(){
+        return currentTactician.getSelectedItem().getMinRange();
+    }
+
+    /**
+     * @return selected unit current hitPoints
+     */
+    public int getUnitCurrentHitPoints(){
+        return currentTactician.getSelectedUnit().getCurrentHitPoints();
+    }
+
+    /**
+     * @return selected unit maximum hitPoints
+     */
+    public int getUnitMaxHitPoints(){
+        return currentTactician.getSelectedUnit().getMaxHitPoints();
+    }
+
+    /**
+     * @return selected unit movement
+     */
+    public int getUnitMovement(){
+        return currentTactician.getSelectedUnit().getMovement();
     }
 }

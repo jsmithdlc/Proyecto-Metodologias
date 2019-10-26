@@ -36,7 +36,7 @@ class GameControllerTest {
     void setUp() {
         // Se define la semilla como un número aleatorio para generar variedad en los tests
         randomSeed = new Random().nextLong();
-        controller = new GameController(4, 7);
+        controller = new GameController(4, 2);
         controller.setSeed(randomSeed);
         controller.generateGameMap();
         controller.setInitTurns();
@@ -55,7 +55,7 @@ class GameControllerTest {
     @Test
     void getGameMap() {
         Field gameMap = controller.getGameMap();
-        assertEquals(7, gameMap.getSize()); // getSize deben definirlo
+        assertEquals(2, gameMap.getSize()); // getSize deben definirlo
         assertTrue(controller.getGameMap().isConnected());
         // Para testear funcionalidades que dependen de valores aleatorios se hacen 2 cosas:
         //  - Comprobar las invariantes de las estructuras que se crean (en este caso que el mapa tenga
@@ -68,7 +68,7 @@ class GameControllerTest {
         //    usar el método setSeed de Random.
         FieldFactory fieldFactory = new FieldFactory();
         fieldFactory.setSeed(randomSeed);
-        Field map = fieldFactory.createMap(7);
+        Field map = fieldFactory.createMap(2);
         assertEquals(map, controller.getGameMap());
         //  ESTO ÚLTIMO NO ESTÁ IMPLEMENTADO EN EL MAPA, ASÍ QUE DEBEN AGREGARLO (!)
     }
@@ -388,6 +388,30 @@ class GameControllerTest {
         assertEquals(3,controller.getTacticians().size());
         assertFalse(controller.getTacticians().contains(playerDefeated));
         assertNull(controller.getGameMap().getCell(0,1).getUnit());
+    }
+
+    @Test
+    public void unitAndItemParamsGetterMethodsTest(){
+        fighterFactory.setMaxHitPoints(100);
+        fighterFactory.setMovement(3);
+        axeFactory.setName("Hacha");
+        axeFactory.setPower(200);
+        axeFactory.setMinRange(1);
+        axeFactory.setMaxRange(2);
+        Fighter fighter = fighterFactory.createUnit(axeFactory.createItem());
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+
+        controller.selectUnitIn(0,0);
+        controller.selectItem(0);
+        assertEquals(100,controller.getUnitMaxHitPoints());
+        assertEquals(100,controller.getUnitCurrentHitPoints());
+        assertEquals(3,controller.getUnitMovement());
+        assertEquals("Hacha",controller.getItemName());
+        assertEquals(200,controller.getItemPower());
+        assertEquals(1,controller.getItemMinRange());
+        assertEquals(2,controller.getItemMaxRange());
     }
 
 

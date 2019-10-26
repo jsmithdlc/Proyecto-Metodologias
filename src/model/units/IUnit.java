@@ -33,6 +33,12 @@ public interface IUnit {
   int getCurrentHitPoints();
 
   /**
+   *
+   * @return maximum hitpoints of this unit
+   */
+  int getMaxHitPoints();
+
+  /**
    * set currentHiiPoints of this unit
    * @param hitPoints
    *    hitPoints to set
