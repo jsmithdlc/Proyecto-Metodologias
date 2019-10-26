@@ -127,6 +127,11 @@ public interface IUnit {
   boolean checkAlive();
 
   /**
+   * Notifies tactician if this unit is dead and adjusts currentHitPoints
+   */
+  //void notifyIfDead();
+
+  /**
    *  adds item to list of items of this
    * @param item
    *    item to add

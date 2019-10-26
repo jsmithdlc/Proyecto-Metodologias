@@ -1,8 +1,14 @@
 package model.units;
 
+import model.Tactician;
 import model.items.IEquipableItem;
 import model.items.Spear;
 import model.map.Location;
+import observer.HeroHandler;
+import observer.UnitHandler;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 
 /**
  * A <i>Hero</i> is a special kind of unit, the player that defeats this unit wins the game.
@@ -13,6 +19,8 @@ import model.map.Location;
  * @since 1.0
  */
 public class Hero extends AbstractUnit {
+
+  private PropertyChangeSupport heroDeath = new PropertyChangeSupport(this);
 
   /**
    *  creates a new hero
@@ -42,6 +50,22 @@ public class Hero extends AbstractUnit {
   }
 
   @Override
+  public void setTactician(Tactician tactician){
+    HeroHandler heroHandler = new HeroHandler(this.getTactician());
+    heroDeath.addPropertyChangeListener(heroHandler);
+    this.tactician = tactician;
+  }
+
+  @Override
+  public void notifyIfDead(){
+      if((this.getCurrentHitPoints()-0) <= 0.000000001){
+        this.setCurrentHitPoints(0);
+        heroDeath.firePropertyChange(new PropertyChangeEvent(this,"Hero death",null,this));
+      }
+  }
+
+  @Override
   public boolean equals(Object obj){ return obj instanceof Hero && super.equals(obj);}
+
 
 }

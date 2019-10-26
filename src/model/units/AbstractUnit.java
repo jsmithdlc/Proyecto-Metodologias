@@ -2,6 +2,8 @@ package model.units;
 
 import static java.lang.Math.min;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +12,7 @@ import model.Tactician;
 import model.items.IEquipableItem;
 import model.items.Staff;
 import model.map.Location;
+import observer.UnitHandler;
 
 /**
  * This class represents an abstract unit.
@@ -30,8 +33,9 @@ public abstract class AbstractUnit implements IUnit {
   private final int movement;
   protected IEquipableItem equippedItem;
   private Location location;
-  private Tactician tactician;
-  private double epsilon = 0.000001;
+  protected Tactician tactician;
+  protected double epsilon = 0.000001;
+  private PropertyChangeSupport unitDeath = new PropertyChangeSupport(this);
 
   /**
    * Creates a new Unit.
@@ -52,6 +56,7 @@ public abstract class AbstractUnit implements IUnit {
     for(IEquipableItem item:items){
       item.setOwner(this);
     }
+
   }
 
   @Override
@@ -135,25 +140,26 @@ public abstract class AbstractUnit implements IUnit {
   public void receiveWeakAttack(IEquipableItem item){
     if(item.getPower()>20) {
       this.currentHitPoints -= item.getPower() - 20;
-      if(this.currentHitPoints < 0){
-        this.currentHitPoints = 0;
-      }
+      notifyIfDead();
     }
   }
 
   @Override
   public void receiveNormalAttack(IEquipableItem item){
     this.currentHitPoints -= item.getPower();
-    if(this.getCurrentHitPoints() < 0){
-      this.currentHitPoints = 0;
-    }
+    notifyIfDead();
   }
 
   @Override
   public void receiveStrongAttack(IEquipableItem item){
     this.currentHitPoints -= (int)Math.round(item.getPower()*1.5);
-    if(this.currentHitPoints < 0){
+    notifyIfDead();
+  }
+
+  public void notifyIfDead(){
+    if((this.currentHitPoints-0) <= epsilon){
       this.currentHitPoints = 0;
+      unitDeath.firePropertyChange(new PropertyChangeEvent(this,"Unit death",null,this));
     }
   }
 
@@ -210,6 +216,8 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void setTactician(Tactician tactician){
+    UnitHandler unitHandler = new UnitHandler(tactician);
+    unitDeath.addPropertyChangeListener(unitHandler);
     this.tactician = tactician;
   }
 

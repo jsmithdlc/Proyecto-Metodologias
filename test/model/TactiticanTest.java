@@ -193,4 +193,34 @@ public class TactiticanTest {
         assertEquals(fighter,tactician.getMap().getCell(1,0).getUnit());
     }
 
+    @Test
+    public void removeUnitTest(){
+        fighterFactory.setMaxHitPoints(40);
+        Hero hero = heroFactory.createStrongUnit(spearFactory.createNormalItem("Lanza"));
+        Fighter fighter = fighterFactory.createUnit();
+        Fighter fighter2 = fighterFactory.createStrongUnit();
+        tactician.setMap(map);
+        tactician.addUnit(hero);
+        tactician.selectMyUnit(0);
+        tactician.placeUnit(0,0);
+
+        Tactician otherPlayer = new Tactician("Juan");
+        otherPlayer.setMap(tactician.getMap());
+        otherPlayer.addUnit(fighter);
+        otherPlayer.addUnit(fighter2);
+        otherPlayer.selectMyUnit(0);
+        otherPlayer.placeUnit(0,1);
+
+        tactician.setMap(otherPlayer.getMap());
+        assertEquals(fighter,tactician.getMap().getCell(0,1).getUnit());
+        tactician.selectUnitIn(0,0);
+        tactician.equipItem(0);
+        assertEquals(2,otherPlayer.getUnits().size());
+        assertEquals(fighter,tactician.getMap().getCell(0,1).getUnit());
+        tactician.useItemOn(0,1);
+        assertEquals(1,otherPlayer.getUnits().size());
+        assertEquals(null,tactician.getMap().getCell(0,1).getUnit());
+
+    }
+
 }

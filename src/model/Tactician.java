@@ -197,6 +197,12 @@ public class Tactician {
     public void moveUnitTo(int x, int y){
         this.selectedUnit.moveTo(map.getCell(x,y));
     }
+
+    public void removeUnit(IUnit unit){
+        unit.getLocation().removeUnit();
+        this.units.remove(unit);
+    }
+
     @Override
     public boolean equals(Object obj){
         return obj instanceof Tactician
