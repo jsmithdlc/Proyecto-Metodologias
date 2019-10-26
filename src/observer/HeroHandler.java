@@ -17,5 +17,6 @@ public class HeroHandler implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         tactician.removeUnit((Hero) evt.getNewValue());
+        tactician.endPlayer();
     }
 }

@@ -1,4 +1,6 @@
-package model.items;
+package model.itemsFactory;
+
+import model.items.DarkBook;
 
 public class DarkBookFactory extends AbstractItemFactory {
 

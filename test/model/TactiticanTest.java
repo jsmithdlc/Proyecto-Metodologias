@@ -5,9 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import model.items.*;
+import model.itemsFactory.AxeFactory;
+import model.itemsFactory.SpearFactory;
+import model.itemsFactory.SwordFactory;
 import model.map.Field;
 import model.map.Location;
 import model.units.*;
+import model.unitsFactory.FighterFactory;
+import model.unitsFactory.HeroFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -220,7 +225,6 @@ public class TactiticanTest {
         tactician.useItemOn(0,1);
         assertEquals(1,otherPlayer.getUnits().size());
         assertEquals(null,tactician.getMap().getCell(0,1).getUnit());
-
     }
 
 }

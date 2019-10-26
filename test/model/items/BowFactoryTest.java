@@ -1,5 +1,7 @@
 package model.items;
 
+import model.itemsFactory.BowFactory;
+import model.itemsFactory.ItemFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -51,9 +51,9 @@ public class Hero extends AbstractUnit {
 
   @Override
   public void setTactician(Tactician tactician){
-    HeroHandler heroHandler = new HeroHandler(this.getTactician());
-    heroDeath.addPropertyChangeListener(heroHandler);
     this.tactician = tactician;
+    HeroHandler heroHandler = new HeroHandler(tactician);
+    heroDeath.addPropertyChangeListener(heroHandler);
   }
 
   @Override

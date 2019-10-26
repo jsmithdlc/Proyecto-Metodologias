@@ -1,8 +1,8 @@
 package model.units;
 
-import model.items.Axe;
-import model.items.Bow;
 import model.map.Location;
+import model.unitsFactory.ArcherFactory;
+import model.unitsFactory.UnitFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

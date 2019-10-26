@@ -1,10 +1,8 @@
-package model.units;
+package model.unitsFactory;
 
 import model.items.IEquipableItem;
 import model.map.Location;
-
-import java.util.ArrayList;
-import java.util.List;
+import model.units.IUnit;
 
 public class AbstractUnitFactory implements UnitFactory {
     private int maxHitPoints;

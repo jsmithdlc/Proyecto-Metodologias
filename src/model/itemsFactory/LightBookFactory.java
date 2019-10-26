@@ -1,4 +1,6 @@
-package model.items;
+package model.itemsFactory;
+
+import model.items.LightBook;
 
 public class LightBookFactory extends AbstractItemFactory {
     @Override

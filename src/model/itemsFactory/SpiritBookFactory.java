@@ -1,4 +1,6 @@
-package model.items;
+package model.itemsFactory;
+
+import model.items.SpiritBook;
 
 public class SpiritBookFactory extends AbstractItemFactory {
     @Override

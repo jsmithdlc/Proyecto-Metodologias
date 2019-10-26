@@ -1,10 +1,14 @@
 package model;
 
+import controller.GameController;
 import model.items.IEquipableItem;
 import model.map.Field;
 import model.map.Location;
 import model.units.IUnit;
+import observer.PlayerHandler;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,8 @@ public class Tactician {
     private Field map;
     private IUnit selectedUnit;
     private IEquipableItem selectedItem;
+    private GameController controller;
+    private PropertyChangeSupport playerChanges = new PropertyChangeSupport(this);
 
     /**
      * Creates a player for the game
@@ -31,6 +37,12 @@ public class Tactician {
      */
     public Tactician(String name){
         this.name = name;
+    }
+
+    public void setController(GameController controller){
+        this.controller = controller;
+        PlayerHandler playerHandler = new PlayerHandler(controller);
+        playerChanges.addPropertyChangeListener(playerHandler);
     }
 
     /**
@@ -198,9 +210,30 @@ public class Tactician {
         this.selectedUnit.moveTo(map.getCell(x,y));
     }
 
+    /**
+     * removes unit from map and from list of units of player
+     * @param unit
+     *      unit to be removed
+     */
     public void removeUnit(IUnit unit){
         unit.getLocation().removeUnit();
         this.units.remove(unit);
+        if(units.size() == 0){
+            endPlayer();
+        }
+    }
+
+    /**
+     * ends this player's participation in the game
+     */
+    public void endPlayer(){
+        for(IUnit unit : units){
+            if(unit.getLocation()!=null){
+                unit.getLocation().removeUnit();
+            }
+        }
+        units.clear();
+        playerChanges.firePropertyChange(new PropertyChangeEvent(this,"Player out of game",null,this.name));
     }
 
     @Override

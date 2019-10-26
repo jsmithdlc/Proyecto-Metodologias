@@ -1,6 +1,7 @@
-package model.units;
+package model.unitsFactory;
 
 import model.items.IEquipableItem;
+import model.units.Fighter;
 
 public class FighterFactory extends AbstractUnitFactory{
     @Override

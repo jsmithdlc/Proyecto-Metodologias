@@ -1,4 +1,6 @@
-package model.items;
+package model.itemsFactory;
+
+import model.items.Sword;
 
 public class SwordFactory extends AbstractItemFactory {
     @Override

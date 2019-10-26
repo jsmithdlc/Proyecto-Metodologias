@@ -4,12 +4,14 @@ import java.util.*;
 import java.util.stream.IntStream;
 import model.Tactician;
 import model.items.*;
+import model.itemsFactory.AxeFactory;
+import model.itemsFactory.SpearFactory;
 import model.map.Field;
 import model.map.FieldFactory;
 import model.units.Fighter;
-import model.units.FighterFactory;
+import model.unitsFactory.FighterFactory;
 import model.units.Hero;
-import model.units.HeroFactory;
+import model.unitsFactory.HeroFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -317,4 +319,76 @@ class GameControllerTest {
         assertNull(controller.getGameMap().getCell(0,0).getUnit());
         assertEquals(fighter,controller.getGameMap().getCell(1,0).getUnit());
     }
+
+    @Test
+    public void defeatByHeroDeath(){
+        Tactician playerDefeated = controller.getTurnOwner();
+        Fighter fighter = fighterFactory.createStrongUnit(axeFactory.createStrongItem("Hacha"));
+        heroFactory.setMaxHitPoints(50);
+        heroFactory.setMovement(1);
+        Hero hero = heroFactory.createUnit();
+        Fighter fighter2 = fighterFactory.createNormalUnit();
+
+        controller.addUnit(hero);
+        controller.addUnit(fighter2);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+        controller.selectMyUnit(1);
+        controller.placeUnit(0,1);
+        controller.endTurn();
+
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        controller.placeUnit(1,0);
+        controller.selectUnitIn(1,0);
+        controller.equipItem(0);
+        assertEquals(hero,controller.getGameMap().getCell(0,0).getUnit());
+        assertEquals(4,controller.getTacticians().size());
+        assertTrue(controller.getTacticians().contains(playerDefeated));
+        assertEquals(fighter2,controller.getGameMap().getCell(0,1).getUnit());
+
+        controller.useItemOn(0,0);
+        assertNull(controller.getGameMap().getCell(0,0).getUnit());
+        assertEquals(3,controller.getTacticians().size());
+        assertFalse(controller.getTacticians().contains(playerDefeated));
+        assertNull(controller.getGameMap().getCell(0,1).getUnit());
+    }
+
+    @Test
+    public void defeatByNoRemainingUnits(){
+        Tactician playerDefeated = controller.getTurnOwner();
+        Fighter fighterWinner = fighterFactory.createStrongUnit(axeFactory.createStrongItem("Hacha"));
+        fighterFactory.setMaxHitPoints(50);
+        fighterFactory.setMovement(1);
+        Fighter fighter1 = fighterFactory.createUnit();
+        fighterFactory.setMaxHitPoints(20);
+        Fighter fighter2 = fighterFactory.createUnit();
+
+        controller.addUnit(fighter1);
+        controller.addUnit(fighter2);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+        controller.selectMyUnit(1);
+        controller.placeUnit(0,1);
+        controller.endTurn();
+
+        controller.addUnit(fighterWinner);
+        controller.selectMyUnit(0);
+        controller.placeUnit(1,0);
+        controller.selectUnitIn(1,0);
+        controller.equipItem(0);
+        assertEquals(fighter1,controller.getGameMap().getCell(0,0).getUnit());
+        assertEquals(4,controller.getTacticians().size());
+        assertTrue(controller.getTacticians().contains(playerDefeated));
+        assertEquals(fighter2,controller.getGameMap().getCell(0,1).getUnit());
+
+        controller.useItemOn(0,0);
+        controller.useItemOn(0,1);
+        assertNull(controller.getGameMap().getCell(0,0).getUnit());
+        assertEquals(3,controller.getTacticians().size());
+        assertFalse(controller.getTacticians().contains(playerDefeated));
+        assertNull(controller.getGameMap().getCell(0,1).getUnit());
+    }
+
+
 }

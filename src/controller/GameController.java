@@ -7,7 +7,6 @@ import java.util.*;
 import observer.MapHandler;
 import model.Tactician;
 import model.items.IEquipableItem;
-import model.items.ItemFactory;
 import model.map.Field;
 import model.map.FieldFactory;
 import model.units.*;
@@ -66,6 +65,7 @@ public class GameController {
             Tactician tactician = new Tactician(sb.toString());
             MapHandler mapHandler = new MapHandler(tactician);
             mapChanges.addPropertyChangeListener(mapHandler);
+            tactician.setController(this);
             tacticians.put(sb.toString(), tactician);
         }
         initTacticians = deepCopyTacticians(tacticians);

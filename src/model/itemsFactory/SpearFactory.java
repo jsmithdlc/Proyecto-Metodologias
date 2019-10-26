@@ -1,4 +1,6 @@
-package model.items;
+package model.itemsFactory;
+
+import model.items.Spear;
 
 public class SpearFactory extends AbstractItemFactory {
     @Override

@@ -1,7 +1,8 @@
-package model.units;
+package model.unitsFactory;
 
 import model.items.IEquipableItem;
 import model.map.Location;
+import model.units.IUnit;
 
 import java.util.List;
 
