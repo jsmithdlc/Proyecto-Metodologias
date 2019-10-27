@@ -225,6 +225,7 @@ public class Tactician {
      * ends this player's participation in the game
      */
     public void endPlayer(){
+        controller.endTurn();
         for(IUnit unit : units){
             if(unit.getLocation()!=null){
                 unit.getLocation().removeUnit();
