@@ -383,6 +383,7 @@ class GameControllerTest {
         assertEquals(fighter2,controller.getGameMap().getCell(0,1).getUnit());
 
         controller.useItemOn(0,0);
+        controller.getSelectedUnit().setUnitUsed(false);
         controller.useItemOn(0,1);
         assertNull(controller.getGameMap().getCell(0,0).getUnit());
         assertEquals(3,controller.getTacticians().size());
@@ -412,6 +413,55 @@ class GameControllerTest {
         assertEquals(200,controller.getItemPower());
         assertEquals(1,controller.getItemMinRange());
         assertEquals(2,controller.getItemMaxRange());
+    }
+
+    @Test
+    public void actionRestrictionTest(){
+        Axe axe = axeFactory.createNormalItem("Hacha");
+        Spear spear = spearFactory.createStrongItem("lanza");
+        Fighter fighter = fighterFactory.createNormalUnit(axe,spear);
+        controller.addUnit(fighter);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,0);
+        controller.selectUnitIn(0,0);
+        controller.moveUnitTo(1,0);
+        controller.moveUnitTo(0,0);
+        assertNull(controller.getGameMap().getCell(0,0).getUnit());
+        assertEquals(fighter,controller.getGameMap().getCell(1,0).getUnit());
+
+        Spear spear2 = spearFactory.createNormalItem("lanza");
+        Hero hero = heroFactory.createNormalUnit(spear2);
+        controller.addUnit(hero);
+        controller.selectMyUnit(1);
+        controller.placeUnit(1,1);
+        controller.selectUnitIn(1,1);
+        controller.selectItem(0);
+        assertTrue(controller.getItems().contains(spear2));
+        controller.giveItemTo(1,0);
+        assertFalse(controller.getItems().contains(spear2));
+        controller.selectUnitIn(1,0);
+        assertTrue(controller.getItems().contains(spear2));
+        controller.selectUnitIn(1,0);
+        controller.selectItem(0);
+        controller.giveItemTo(1,1);
+        assertTrue(controller.getItems().contains(spear));
+        controller.selectUnitIn(1,1);
+        assertFalse(controller.getItems().contains(spear));
+
+        controller.endTurn();
+        Axe axe2 = axeFactory.createStrongItem("Hacha Asesina");
+        Fighter fighter2 = fighterFactory.createStrongUnit(axe2);
+        controller.addUnit(fighter2);
+        controller.selectMyUnit(0);
+        controller.placeUnit(0,1);
+        controller.selectUnitIn(0,1);
+        controller.equipItem(0);
+        controller.useItemOn(1,0);
+        assertEquals(300,controller.getGameMap().getCell(1,0).getUnit().getCurrentHitPoints());
+        controller.useItemOn(0,0);
+        assertEquals(300,controller.getGameMap().getCell(1,0).getUnit().getCurrentHitPoints());
+        controller.useItemOn(1,1);
+        assertEquals(1000,controller.getGameMap().getCell(1,1).getUnit().getCurrentHitPoints());
     }
 
 

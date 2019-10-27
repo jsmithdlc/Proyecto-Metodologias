@@ -154,6 +154,7 @@ public class GameController {
      * Finishes the current player's turn.
      */
     public void endTurn() {
+        this.currentTactician.resetMoves();
         if(roundNumber == maxRounds && roundNumber!=0){
             TreeMap<String,Tactician> sorted = new TreeMap<>();
             sorted.putAll(this.tacticians);

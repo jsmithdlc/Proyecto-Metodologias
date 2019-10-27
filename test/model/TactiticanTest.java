@@ -1,9 +1,5 @@
 package model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import model.items.*;
 import model.itemsFactory.AxeFactory;
 import model.itemsFactory.SpearFactory;
@@ -17,6 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TactiticanTest {
@@ -142,19 +140,6 @@ public class TactiticanTest {
         assertEquals(spear,tactician.getSelectedUnit().getEquippedItem());
     }
 
-    @Test
-    public void moveSelectedUnitTest(){
-        Hero hero = heroFactory.createUnit();
-        tactician.setMap(map);
-        tactician.addUnit(hero);
-        tactician.selectMyUnit(0);
-        tactician.placeUnit(0,0);
-        tactician.selectUnitIn(0,0);
-        assertEquals(hero,tactician.getMap().getCell(0,0).getUnit());
-        tactician.moveSelectedUnit(1,0);
-        assertNull(tactician.getMap().getCell(0,0).getUnit());
-        assertEquals(hero,tactician.getMap().getCell(1,0).getUnit());
-    }
 
     @Test
     public void useItemOnTest(){
@@ -225,6 +210,24 @@ public class TactiticanTest {
         tactician.useItemOn(0,1);
         assertEquals(1,otherPlayer.getUnits().size());
         assertEquals(null,tactician.getMap().getCell(0,1).getUnit());
+    }
+
+    @Test
+    public void resetMovesTest(){
+        Fighter fighter1 = fighterFactory.createNormalUnit();
+        Fighter fighter2 = fighterFactory.createStrongUnit();
+        Hero hero = heroFactory.createNormalUnit();
+        tactician.addUnit(fighter1);
+        tactician.addUnit(fighter2);
+        tactician.addUnit(hero);
+        for(IUnit unit: tactician.getUnits()){
+            unit.setUnitUsed(true);
+            assertTrue(unit.getUnitUsed());
+        }
+        tactician.resetMoves();
+        for(IUnit unit: tactician.getUnits()){
+            assertFalse(unit.getUnitUsed());
+        }
     }
 
 }

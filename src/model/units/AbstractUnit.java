@@ -34,6 +34,7 @@ public abstract class AbstractUnit implements IUnit {
   protected IEquipableItem equippedItem;
   private Location location;
   protected Tactician tactician;
+  private boolean used;
   protected double epsilon = 0.000001;
   private PropertyChangeSupport unitDeath = new PropertyChangeSupport(this);
 
@@ -56,6 +57,7 @@ public abstract class AbstractUnit implements IUnit {
     for(IEquipableItem item:items){
       item.setOwner(this);
     }
+    this.used = false;
 
   }
 
@@ -225,6 +227,16 @@ public abstract class AbstractUnit implements IUnit {
     UnitHandler unitHandler = new UnitHandler(tactician);
     unitDeath.addPropertyChangeListener(unitHandler);
     this.tactician = tactician;
+  }
+
+  @Override
+  public void setUnitUsed(boolean used){
+    this.used = used;
+  }
+
+  @Override
+  public boolean getUnitUsed(){
+    return this.used;
   }
 
   @Override

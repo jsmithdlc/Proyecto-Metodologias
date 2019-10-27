@@ -72,8 +72,10 @@ public class Tactician {
      *      vertical coordinate of game map
      */
     public void placeUnit(int x, int y){
-        this.selectedUnit.setLocation(map.getCell(x,y));
-        this.selectedUnit = null;
+        if(this.selectedUnit.getLocation() == null){
+            this.selectedUnit.setLocation(map.getCell(x,y));
+            this.selectedUnit = null;
+        }
     }
 
     /**
@@ -165,17 +167,6 @@ public class Tactician {
     }
 
     /**
-     * Moves selectedUnit to coordinates (x,y) from game map
-     * @param x
-     *      horizontal coordinate of game map
-     * @param y
-     *      vertical coordinate of game map
-     */
-    public void moveSelectedUnit(int x, int y){
-        this.selectedUnit.moveTo(map.getCell(x,y));
-    }
-
-    /**
      * uses equipped item from players selected unit on unit on coordinates (x,y) of game map
      * @param x
      *      horizontal coordinate of game map
@@ -183,7 +174,10 @@ public class Tactician {
      *      vertical coordinate of game map
      */
     public void useItemOn(int x, int y){
-        selectedUnit.attack(map.getCell(x, y).getUnit());
+        if(!selectedUnit.getUnitUsed()) {
+            selectedUnit.attack(map.getCell(x, y).getUnit());
+            selectedUnit.setUnitUsed(true);
+        }
     }
 
     /**
@@ -194,8 +188,9 @@ public class Tactician {
      *      vertical coordiante of game map
      */
     public void transferTo(int x, int y){
-        if(!(map.getCell(x,y).getUnit()==null)){
+        if(!(map.getCell(x,y).getUnit()==null) && !selectedUnit.getUnitUsed()){
             this.selectedUnit.transferItem(this.selectedItem,map.getCell(x,y).getUnit());
+            selectedUnit.setUnitUsed(true);
         }
     }
 
@@ -207,7 +202,10 @@ public class Tactician {
      *      vertical coordinate of game map
      */
     public void moveUnitTo(int x, int y){
-        this.selectedUnit.moveTo(map.getCell(x,y));
+        if(!selectedUnit.getUnitUsed()) {
+            selectedUnit.moveTo(map.getCell(x, y));
+            selectedUnit.setUnitUsed(true);
+        }
     }
 
     /**
@@ -234,6 +232,12 @@ public class Tactician {
         }
         units.clear();
         playerChanges.firePropertyChange(new PropertyChangeEvent(this,"Player out of game",null,this.name));
+    }
+
+    public void resetMoves(){
+        for(IUnit unit: units){
+            unit.setUnitUsed(false);
+        }
     }
 
     @Override

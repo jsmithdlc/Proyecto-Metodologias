@@ -173,4 +173,8 @@ public interface IUnit {
    */
   Tactician getTactician();
 
+  void setUnitUsed(boolean used);
+
+  boolean getUnitUsed();
+
 }
