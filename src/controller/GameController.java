@@ -155,18 +155,19 @@ public class GameController {
      */
     public void endTurn() {
         this.currentTactician.resetMoves();
-        if(roundNumber == maxRounds && roundNumber!=0){
-            TreeMap<String,Tactician> sorted = new TreeMap<>();
-            sorted.putAll(this.tacticians);
-            winners = new ArrayList<>(sorted.keySet());
-        }
-        else if((this.currentTurnIdx+1)%this.numberOfPlayers==0){
-            this.currentTurnIdx = 0;
+        if((this.currentTurnIdx+1)%this.numberOfPlayers==0){
             this.roundNumber++;
-            while(currentTactician.equals(tacticians.get(turns.get(0)))){
-                Collections.shuffle(turns,new Random());
+            if(roundNumber==maxRounds && roundNumber!=0){
+                winners = this.produceWinners();
             }
-            this.currentTactician = tacticians.get(turns.get(0));
+            else {
+                this.currentTurnIdx = 0;
+
+                while (currentTactician.equals(tacticians.get(turns.get(0)))) {
+                    Collections.shuffle(turns, new Random());
+                }
+                this.currentTactician = tacticians.get(turns.get(0));
+            }
         }
         else{
             this.currentTurnIdx++;
@@ -200,7 +201,8 @@ public class GameController {
         map = initMap;
         this.setInitTurns();
         this.maxRounds = maxTurns;
-        this.roundNumber = 1;
+        this.currentTurnIdx = 0;
+        this.roundNumber = 0;
         this.winners = null;
     }
 
@@ -213,7 +215,8 @@ public class GameController {
         map = initMap;
         this.setInitTurns();
         this.maxRounds = -1;
-        this.roundNumber = 1;
+        this.currentTurnIdx = 0;
+        this.roundNumber = 0;
         this.winners = null;
     }
 
@@ -389,5 +392,24 @@ public class GameController {
      */
     public int getUnitMovement(){
         return currentTactician.getSelectedUnit().getMovement();
+    }
+
+    /**
+     * @return list with names of winners if match is ended by reaching maximum ammount of rounds
+     */
+    public ArrayList<String> produceWinners(){
+        int maxUnits = 0;
+        for(String key: tacticians.keySet()){
+            if(tacticians.get(key).getUnits().size() > maxUnits){
+                maxUnits = tacticians.get(key).getUnits().size();
+            }
+        }
+        TreeMap<String,Tactician> sortedWinners = new TreeMap<>();
+        for(String key: tacticians.keySet()){
+            if(tacticians.get(key).getUnits().size()==maxUnits){
+                sortedWinners.put(key,tacticians.get(key));
+            }
+        }
+        return new ArrayList<>(sortedWinners.keySet());
     }
 }

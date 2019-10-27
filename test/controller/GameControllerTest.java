@@ -88,7 +88,7 @@ class GameControllerTest {
     @Test
     void getRoundNumber() {
         controller.initGame(10);
-        for (int i = 1; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             assertEquals(i, controller.getRoundNumber());
             for (int j = 0; j < 4; j++) {
                 controller.endTurn();
@@ -101,9 +101,7 @@ class GameControllerTest {
         Random randomTurnSequence = new Random();
         IntStream.range(0, 50).map(i -> randomTurnSequence.nextInt() & Integer.MAX_VALUE).forEach(nextInt -> {
             controller.initGame(nextInt);
-            System.out.println(nextInt);
             assertEquals(nextInt, controller.getMaxRounds());
-            System.out.println(nextInt);
         });
         controller.initEndlessGame();
         assertEquals(-1, controller.getMaxRounds());
@@ -112,13 +110,10 @@ class GameControllerTest {
     @Test
     void endTurn() {
         Tactician firstPlayer = controller.getTurnOwner();
-        System.out.println(firstPlayer.getName());
         // Nuevamente, para determinar el orden de los jugadores se debe usar una semilla
         Tactician secondPlayer = controller.getNextTurnOwner();
-        System.out.println(secondPlayer.getName());
         assertNotEquals(secondPlayer.getName(), firstPlayer.getName());
         controller.endTurn();
-        System.out.println(controller.getTurnOwner().getName());
         assertNotEquals(firstPlayer.getName(), controller.getTurnOwner().getName());
         assertEquals(secondPlayer.getName(), controller.getTurnOwner().getName());
     }
@@ -161,7 +156,6 @@ class GameControllerTest {
 
         controller.initEndlessGame();
         for (int i = 0; i < 3; i++) {
-            System.out.println(controller.getTacticians().size());
             assertNull(controller.getWinners());
             controller.removeTactician("Player " + i);
         }
@@ -462,6 +456,43 @@ class GameControllerTest {
         assertEquals(300,controller.getGameMap().getCell(1,0).getUnit().getCurrentHitPoints());
         controller.useItemOn(1,1);
         assertEquals(1000,controller.getGameMap().getCell(1,1).getUnit().getCurrentHitPoints());
+    }
+
+    @Test
+    public void gameEndedByRoundLimitTest(){
+        Fighter fighter1 = fighterFactory.createNormalUnit();
+        Hero hero1 = heroFactory.createNormalUnit();
+        Tactician playerWinner1 = controller.getTurnOwner();
+        controller.addUnit(fighter1);
+        controller.addUnit(hero1);
+        controller.endTurn();
+
+        Fighter fighter2 = fighterFactory.createNormalUnit();
+        Hero hero2 = heroFactory.createStrongUnit();
+        Tactician playerWinner2 = controller.getTurnOwner();
+        controller.addUnit(fighter2);
+        controller.addUnit(hero2);
+        controller.endTurn();
+
+        Fighter fighter3 = fighterFactory.createStrongUnit();
+        Tactician playerLoser1 = controller.getTurnOwner();
+        controller.addUnit(fighter3);
+        controller.endTurn();
+
+        Hero hero3 = heroFactory.createStrongUnit();
+        Tactician playerLoser2 = controller.getTurnOwner();
+        controller.addUnit(hero3);
+        controller.endTurn();
+
+        controller.initGame(1);
+        for(int i = 0; i< controller.getTacticians().size();i++){
+            controller.endTurn();
+        }
+        assertTrue(controller.getWinners().contains(playerWinner1.getName()));
+        assertTrue(controller.getWinners().contains(playerWinner2.getName()));
+        assertFalse(controller.getWinners().contains(playerLoser1.getName()));
+        assertFalse(controller.getWinners().contains(playerLoser2.getName()));
+
     }
 
 
