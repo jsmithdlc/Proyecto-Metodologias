@@ -105,6 +105,7 @@ public class GameController {
         List<String> tacticianNames = new ArrayList<>(sorted.keySet());
         Collections.shuffle(tacticianNames,new Random(seed));
         turns = tacticianNames;
+        initTacticians = deepCopyTacticians(tacticians);
         this.currentTactician = this.tacticians.get(turns.get(0));
     }
 
@@ -122,6 +123,7 @@ public class GameController {
     public void generateGameMap(){
         fieldFactory.setSeed(this.seed);
         this.map = fieldFactory.createMap(this.mapSize);
+        initMap = map;
         mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Map initialized",null,this.map));
     }
 

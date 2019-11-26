@@ -60,7 +60,6 @@ class GameControllerTest {
         // Para testear funcionalidades que dependen de valores aleatorios se hacen 2 cosas:
         //  - Comprobar las invariantes de las estructuras que se crean (en este caso que el mapa tenga
         //    las dimensiones definidas y que sea conexo.
-        Random testRandom = new Random(randomSeed);
         //  - Setear una semilla para el generador de números aleatorios. Hacer esto hace que la
         //    secuencia de números generada sea siempre la misma, así pueden predecir los
         //    resultados que van a obtener.
