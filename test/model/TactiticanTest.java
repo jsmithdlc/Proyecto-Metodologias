@@ -143,7 +143,7 @@ public class TactiticanTest {
 
     @Test
     public void useItemOnTest(){
-        Axe axe = axeFactory.createNormalItem("hacha");
+        Axe axe = axeFactory.createNormalItem();
         Fighter fighter = fighterFactory.createStrongUnit(axe);
         tactician.setMap(map);
         tactician.addUnit(fighter);
@@ -186,7 +186,7 @@ public class TactiticanTest {
     @Test
     public void removeUnitTest(){
         fighterFactory.setMaxHitPoints(40);
-        Hero hero = heroFactory.createStrongUnit(spearFactory.createNormalItem("Lanza"));
+        Hero hero = heroFactory.createStrongUnit(spearFactory.createNormalItem());
         Fighter fighter = fighterFactory.createUnit();
         Fighter fighter2 = fighterFactory.createStrongUnit();
         tactician.setMap(map);

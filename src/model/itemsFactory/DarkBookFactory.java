@@ -10,20 +10,20 @@ public class DarkBookFactory extends AbstractItemFactory {
     }
 
     @Override
-    public DarkBook createNormalItem(String name){
+    public DarkBook createNormalItem(){
         this.setMinRange(1);
         this.setMaxRange(1);
         this.setPower(100);
-        this.setName(name);
+        this.setName("Normal DarkBook");
         return this.createItem();
     }
 
     @Override
-    public DarkBook createStrongItem(String name){
+    public DarkBook createStrongItem(){
         this.setMinRange(1);
         this.setMaxRange(3);
         this.setPower(150);
-        this.setName(name);
+        this.setName("Strong DarkBook");
         return this.createItem();
     }
 

@@ -9,20 +9,20 @@ public class StaffFactory extends AbstractItemFactory {
     }
 
     @Override
-    public Staff createNormalItem(String name){
+    public Staff createNormalItem(){
         this.setMinRange(1);
         this.setMaxRange(1);
         this.setPower(50);
-        this.setName(name);
+        this.setName("Normal Staff");
         return this.createItem();
     }
 
     @Override
-    public Staff createStrongItem(String name){
+    public Staff createStrongItem(){
         this.setMinRange(1);
         this.setMaxRange(2);
         this.setPower(100);
-        this.setName(name);
+        this.setName("Strong Staff");
         return this.createItem();
     }
 }

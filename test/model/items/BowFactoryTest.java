@@ -32,12 +32,12 @@ public class BowFactoryTest extends AbstractTestItemFactory{
     @Test
     public void createNormalItemTest(){
         setTestItemFactory();
-        assertEquals(new Bow("Arco",75,2,4),bowFactory.createNormalItem("Arco"));
+        assertEquals(new Bow("Normal Bow",75,2,4),bowFactory.createNormalItem());
     }
 
     @Test
     public void createStrongItemTest(){
         setTestItemFactory();
-        assertEquals(new Bow("Arco",150,2,6),bowFactory.createStrongItem("Arco"));
+        assertEquals(new Bow("Strong Bow",150,2,6),bowFactory.createStrongItem());
     }
 }

@@ -32,12 +32,12 @@ public class SwordFactoryTest extends AbstractTestItemFactory{
     @Test
     public void createNormalItemTest(){
         setTestItemFactory();
-        assertEquals(new Sword("Espada",75,1,2),swordFactory.createNormalItem("Espada"));
+        assertEquals(new Sword("Normal Sword",75,1,2),swordFactory.createNormalItem());
     }
 
     @Test
     public void createStrongItemTest(){
         setTestItemFactory();
-        assertEquals(new Sword("Espada",100,1,2),swordFactory.createStrongItem("Espada"));
+        assertEquals(new Sword("Strong Sword",100,1,2),swordFactory.createStrongItem());
     }
 }

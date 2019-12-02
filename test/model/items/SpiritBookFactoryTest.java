@@ -32,12 +32,12 @@ public class SpiritBookFactoryTest extends AbstractTestItemFactory{
     @Test
     public void createNormalItemTest(){
         setTestItemFactory();
-        assertEquals(new SpiritBook("Libro",100,1,1),spiritBookFactory.createNormalItem("Libro"));
+        assertEquals(new SpiritBook("Normal SpiritBook",100,1,1),spiritBookFactory.createNormalItem());
     }
 
     @Test
     public void createStrongItemTest(){
         setTestItemFactory();
-        assertEquals(new SpiritBook("Libro",150,1,2),spiritBookFactory.createStrongItem("Libro"));
+        assertEquals(new SpiritBook("Strong SpiritBook",150,1,2),spiritBookFactory.createStrongItem());
     }
 }

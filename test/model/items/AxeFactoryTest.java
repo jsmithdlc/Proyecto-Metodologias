@@ -33,13 +33,13 @@ public class AxeFactoryTest extends AbstractTestItemFactory{
     @Test
     public void createNormalItemTest(){
         setTestItemFactory();
-        assertEquals(new Axe("Hacha",50,1,1),axeFactory.createNormalItem("Hacha"));
+        assertEquals(new Axe("Normal Axe",50,1,1),axeFactory.createNormalItem());
     }
 
     @Test
     public void createStrongItemTest(){
         setTestItemFactory();
-        assertEquals(new Axe("Hacha",100,1,2),axeFactory.createStrongItem("Hacha"));
+        assertEquals(new Axe("Strong Axe",100,1,2),axeFactory.createStrongItem());
     }
 
 }

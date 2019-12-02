@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
 
+import model.itemsFactory.*;
+import model.unitsFactory.*;
 import observer.MapHandler;
 import model.Tactician;
 import model.items.IEquipableItem;
@@ -24,10 +26,8 @@ public class GameController {
     private int numberOfPlayers;
     private int initPlayers;
     private int mapSize;
-    private Field map = new Field();
-    private Field initMap;
+    private Field map;
     private Map<String,Tactician> tacticians = new HashMap<>();
-    private Map<String,Tactician> initTacticians;
     private List<String> turns = new ArrayList<>();
     private List<String> winners;
     public int currentTurnIdx;
@@ -36,10 +36,16 @@ public class GameController {
     private FieldFactory fieldFactory = new FieldFactory();
     private Tactician currentTactician;
     private int roundNumber;
+    private IUnit unit2Create;
+    private List<String> unit2CreateParams = new ArrayList<>();
 
     private PropertyChangeSupport
-        mapChanges = new PropertyChangeSupport(this),
-        playersChanges = new PropertyChangeSupport(this);
+        mapChanges = new PropertyChangeSupport(this);
+
+    private Map<String, UnitFactory> unitFactories = new HashMap<>();
+    private Map<String, ItemFactory> itemFactories = new HashMap<>();
+    private Map<Integer, List<String>> initUnits = new TreeMap<>();
+    private int nInitUnits = 0;
 
     /**
      * Creates the controller for a new game.
@@ -55,31 +61,104 @@ public class GameController {
         this.initPlayers = numberOfPlayers;
         fieldFactory.setSeed(new Random().nextLong());
         map = fieldFactory.createMap(mapSize);
-        initMap=map;
         currentTurnIdx = 0;
-        StringBuilder sb;
-        for(int i=0;i<numberOfPlayers;i++) {
-            sb = new StringBuilder("Player ");
-            sb.append(i);
-            turns.add(sb.toString());
-            Tactician tactician = new Tactician(sb.toString());
-            MapHandler mapHandler = new MapHandler(tactician);
-            mapChanges.addPropertyChangeListener(mapHandler);
-            tactician.setController(this);
-            tacticians.put(sb.toString(), tactician);
-        }
-        initTacticians = deepCopyTacticians(tacticians);
+        generateTacticians();
         Collections.shuffle(this.turns,new Random());
         this.currentTactician = this.tacticians.get(turns.get(0));
         mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Map initialized",null,this.map));
+        createUnitFactories();
+        createItemFactories();
     }
 
-    public Map<String,Tactician> deepCopyTacticians( Map<String, Tactician> original){
-        Map<String,Tactician> copy =  new HashMap<String,Tactician>();
-        for(Map.Entry<String,Tactician> entry : original.entrySet()){
-            copy.put(entry.getKey(), entry.getValue());
+    /**
+     * creates factories of units to facilitate their creation
+     */
+    private void createUnitFactories(){
+        unitFactories.put("Hero", new HeroFactory());
+        unitFactories.put("Fighter", new FighterFactory());
+        unitFactories.put("Alpaca", new AlpacaFactory());
+        unitFactories.put("Cleric", new ClericFactory());
+        unitFactories.put("Sorcerer", new SorcererFactory());
+        unitFactories.put("SwordMaster", new SwordMasterFactory());
+        unitFactories.put("Archer", new ArcherFactory());
+    }
+
+    /**
+     * creates factories of items to facilitate their creation
+     */
+    private void createItemFactories(){
+        itemFactories.put("Axe", new AxeFactory());
+        itemFactories.put("Bow", new BowFactory());
+        itemFactories.put("Spear", new SpearFactory());
+        itemFactories.put("Staff", new StaffFactory());
+        itemFactories.put("Sword", new SwordFactory());
+        itemFactories.put("DarkBook", new DarkBookFactory());
+        itemFactories.put("LightBook", new LightBookFactory());
+        itemFactories.put("SpiritBook", new SpiritBookFactory());
+    }
+
+    /**
+     * creates a normal unit and sets the parameter unit2Create to this unit
+     * @param unit
+     *      type (class) of unit to be created
+     */
+    public void createNormalUnit(String unit){
+        unit2CreateParams.clear();
+        unit2CreateParams.add("N"+unit);
+        unit2CreateParams.add(this.currentTactician.getName());
+        unit2Create = unitFactories.get(unit).createNormalUnit();
+    }
+
+    /**
+     * creates a strong unit and sets the parameter unit2Create to this unit
+     * @param unit
+     *      type (class) of unit to be created
+     */
+    public void createStrongUnit(String unit){
+        unit2CreateParams.clear();
+        unit2CreateParams.add("S"+unit);
+        unit2CreateParams.add(this.currentTactician.getName());
+        unit2Create = unitFactories.get(unit).createStrongUnit();
+    }
+
+    /**
+     * creates and assigns a normal type item to unit2Create
+     * @param item
+     *      type (class) of item to be assigned
+     */
+    public void assignNormalItem(String item){
+        unit2CreateParams.add("N"+item);
+        unit2Create.addItem(itemFactories.get(item).createNormalItem());
+    }
+
+    /**
+     * creates and assigns a strong type item to unit2Create
+     * @param item
+     *      type (class) of item to be assigned
+     */
+    public void assignStrongItem(String item){
+        unit2CreateParams.add("S"+item);
+        unit2Create.addItem(itemFactories.get(item).createStrongItem());
+    }
+
+    /**
+     * places the unit unit2Create on the coordinates (x,y) of gameMap. Additionally, stores the characteristics
+     * of this unit in the map initUnits for possible later reconstruction
+     * @param x
+     *      horizontal coordinate of game map where unit is set to be placed
+     * @param y
+     *      vertical coordinate of game map where unit is set to be placed
+     */
+    public void placeCreatedUnit(int x, int y){
+        addUnit(unit2Create);
+        selectMyUnit(currentTactician.getUnits().size()-1);
+        placeUnit(x,y);
+        if(map.getCell(x,y).getUnit().equals(unit2Create)){
+            unit2CreateParams.add(Integer.toString(x));
+            unit2CreateParams.add(Integer.toString(y));
+            initUnits.put(nInitUnits, List.copyOf(unit2CreateParams));
+            nInitUnits+=1;
         }
-        return copy;
     }
 
     /**
@@ -99,13 +178,15 @@ public class GameController {
         return this.map;
     }
 
+    /**
+     * sets an initial order of turns for the game's tacticians according to the seed of Random
+     */
     public void setInitTurns(){
         TreeMap<String,Tactician> sorted = new TreeMap<>();
         sorted.putAll(this.tacticians);
         List<String> tacticianNames = new ArrayList<>(sorted.keySet());
         Collections.shuffle(tacticianNames,new Random(seed));
         turns = tacticianNames;
-        initTacticians = deepCopyTacticians(tacticians);
         this.currentTactician = this.tacticians.get(turns.get(0));
     }
 
@@ -123,10 +204,30 @@ public class GameController {
     public void generateGameMap(){
         fieldFactory.setSeed(this.seed);
         this.map = fieldFactory.createMap(this.mapSize);
-        initMap = map;
         mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Map initialized",null,this.map));
     }
 
+    /**
+     * generates the initial tacticians of the game, adding the corresponding observers to map changes associated
+     * with each one of them
+     */
+    public void generateTacticians(){
+        StringBuilder sb;
+        for(int i=0;i<numberOfPlayers;i++) {
+            sb = new StringBuilder("Player ");
+            sb.append(i);
+            turns.add(sb.toString());
+            Tactician tactician = new Tactician(sb.toString());
+            MapHandler mapHandler = new MapHandler(tactician);
+            mapChanges.addPropertyChangeListener(mapHandler);
+            tactician.setController(this);
+            tacticians.put(sb.toString(), tactician);
+        }
+    }
+
+    /**
+     * @return the tactician that will play in the next turn
+     */
     public Tactician getNextTurnOwner(){
         return this.tacticians.get(this.turns.get(currentTurnIdx+1));
     }
@@ -164,7 +265,6 @@ public class GameController {
             }
             else {
                 this.currentTurnIdx = 0;
-
                 while (currentTactician.equals(tacticians.get(turns.get(0)))) {
                     Collections.shuffle(turns, new Random());
                 }
@@ -184,6 +284,9 @@ public class GameController {
      *     the player to be removed
      */
     public void removeTactician(String tactician) {
+        if(currentTurnIdx+1==numberOfPlayers){
+            currentTurnIdx--;
+        }
         numberOfPlayers--;
         tacticians.remove(tactician);
         turns.remove(tactician);
@@ -198,28 +301,65 @@ public class GameController {
      *  the maximum number of turns the game can last
      */
     public void initGame(final int maxTurns) {
-        numberOfPlayers = initPlayers;
-        tacticians = deepCopyTacticians(initTacticians);
-        map = initMap;
-        this.setInitTurns();
         this.maxRounds = maxTurns;
-        this.currentTurnIdx = 0;
-        this.roundNumber = 0;
-        this.winners = null;
+        regenerateStart();
     }
 
     /**
      * Starts a game without a limit of turns.
      */
     public void initEndlessGame() {
-        numberOfPlayers = initPlayers;
-        tacticians = deepCopyTacticians(initTacticians);
-        map = initMap;
-        this.setInitTurns();
         this.maxRounds = -1;
-        this.currentTurnIdx = 0;
+        regenerateStart();
+    }
+
+    /**
+     * regenerates tacticians, maps and units according to the information specified and stored in several indicators
+     * such as the ammount of initial players (initPlayers), the size of the map (mapSize) and the characteristics of
+     * units stored in initUnits.
+     */
+    public void regenerateStart(){
+        numberOfPlayers = initPlayers;
         this.roundNumber = 0;
         this.winners = null;
+        map = fieldFactory.createMap(this.mapSize);
+        currentTurnIdx = 0;
+        mapChanges = new PropertyChangeSupport(this);
+        turns.clear();
+        tacticians.clear();
+        generateTacticians();
+        setInitTurns();
+        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Map initialized",null,this.map));
+        resetUnits();
+    }
+
+    /**
+     * recreates initial units according to the characteristics stored in initUnits, placing them in their respective
+     * initial positions and setting their tacticians accordingly
+     */
+    private void resetUnits(){
+        for(Map.Entry<Integer,List<String>> entry : initUnits.entrySet()){
+            List<String> tempList = entry.getValue();
+            if(tempList.get(0).charAt(0)=='N'){
+                createNormalUnit(tempList.get(0).substring(1));
+            }
+            else{
+                createStrongUnit(tempList.get(0).substring(1));
+            }
+            Tactician owner = tacticians.get(tempList.get(1));
+            for(int i=2;i<tempList.size()-2;i++){
+                if(tempList.get(i).charAt(0)=='N'){
+                    assignNormalItem(tempList.get(i).substring(1));
+                }
+                else{
+                    assignStrongItem(tempList.get(i).substring(1));
+                }
+            }
+            owner.addUnit(unit2Create);
+            owner.selectMyUnit(owner.getUnits().size()-1);
+            owner.placeUnit(Integer.parseInt(tempList.get(tempList.size()-2)),
+                    Integer.parseInt(tempList.get(tempList.size()-1)));
+        }
     }
 
     /**

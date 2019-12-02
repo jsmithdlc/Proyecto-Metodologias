@@ -23,7 +23,7 @@ public interface ItemFactory {
 
     IEquipableItem createItem();
 
-    IEquipableItem createNormalItem(String name);
+    IEquipableItem createNormalItem();
 
-    IEquipableItem createStrongItem(String name);
+    IEquipableItem createStrongItem();
 }

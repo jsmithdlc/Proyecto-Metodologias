@@ -32,12 +32,12 @@ public class SpearFactoryTest extends AbstractTestItemFactory{
     @Test
     public void createNormalItemTest(){
         setTestItemFactory();
-        assertEquals(new Spear("Lanza",100,1,3),spearFactory.createNormalItem("Lanza"));
+        assertEquals(new Spear("Normal Spear",100,1,3),spearFactory.createNormalItem());
     }
 
     @Test
     public void createStrongItemTest(){
         setTestItemFactory();
-        assertEquals(new Spear("Lanza",175,1,4),spearFactory.createStrongItem("Lanza"));
+        assertEquals(new Spear("Strong Spear",175,1,4),spearFactory.createStrongItem());
     }
 }

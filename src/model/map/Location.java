@@ -90,7 +90,7 @@ public class Location {
    *     the cell to be checked
    * @return <code>true</code> if the two locations are adjacent; <code>false</code> otherwise
    */
-  boolean isNeighbour(final Location otherLocation) {
+  public boolean isNeighbour(final Location otherLocation) {
     return neighbours.contains(otherLocation);
   }
 

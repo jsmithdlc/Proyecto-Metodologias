@@ -32,12 +32,12 @@ public class DarkBookFactoryTest extends AbstractTestItemFactory{
     @Test
     public void createNormalItemTest(){
         setTestItemFactory();
-        assertEquals(new DarkBook("Libro Negro",100,1,1),darkBookFactory.createNormalItem("Libro Negro"));
+        assertEquals(new DarkBook("Normal DarkBook",100,1,1),darkBookFactory.createNormalItem());
     }
 
     @Test
     public void createStrongItemTest(){
         setTestItemFactory();
-        assertEquals(new DarkBook("Libro Negro",150,1,3),darkBookFactory.createStrongItem("Libro Negro"));
+        assertEquals(new DarkBook("Strong DarkBook",150,1,3),darkBookFactory.createStrongItem());
     }
 }

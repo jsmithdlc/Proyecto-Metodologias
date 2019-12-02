@@ -8,7 +8,9 @@ import model.itemsFactory.AxeFactory;
 import model.itemsFactory.SpearFactory;
 import model.map.Field;
 import model.map.FieldFactory;
+import model.map.Location;
 import model.units.Fighter;
+import model.units.IUnit;
 import model.unitsFactory.FighterFactory;
 import model.units.Hero;
 import model.unitsFactory.HeroFactory;
@@ -164,7 +166,7 @@ class GameControllerTest {
     // Desde aquí en adelante, los tests deben definirlos completamente ustedes
     @Test
     void getSelectedUnit() {
-        Hero hero = heroFactory.createNormalUnit(spearFactory.createNormalItem("Lanza"));
+        Hero hero = heroFactory.createNormalUnit(spearFactory.createNormalItem());
         controller.addUnit(hero);
         controller.selectMyUnit(0);
         assertEquals(hero,controller.getSelectedUnit());
@@ -221,8 +223,8 @@ class GameControllerTest {
 
     @Test
     void getItems() {
-        Axe axe = axeFactory.createNormalItem("hacha");
-        Spear spear = spearFactory.createStrongItem("lanza");
+        Axe axe = axeFactory.createNormalItem();
+        Spear spear = spearFactory.createStrongItem();
         Fighter fighter = fighterFactory.createStrongUnit(axe,spear);
         List<IEquipableItem> realItems = new ArrayList<>();
         realItems.add(axe);
@@ -235,8 +237,8 @@ class GameControllerTest {
 
     @Test
     void equipItem() {
-        Axe axe = axeFactory.createNormalItem("hacha");
-        Spear spear = spearFactory.createStrongItem("lanza");
+        Axe axe = axeFactory.createNormalItem();
+        Spear spear = spearFactory.createStrongItem();
         Fighter fighter = fighterFactory.createStrongUnit(axe,spear);
         controller.addUnit(fighter);
         controller.selectMyUnit(0);
@@ -248,7 +250,7 @@ class GameControllerTest {
 
     @Test
     void selectItem() {
-        Axe axe = axeFactory.createStrongItem("hacha");
+        Axe axe = axeFactory.createStrongItem();
         Fighter fighter = fighterFactory.createStrongUnit(axe);
         controller.addUnit(fighter);
         controller.selectMyUnit(0);
@@ -262,7 +264,7 @@ class GameControllerTest {
         Tactician player1 = controller.getTurnOwner();
         Tactician player2 = controller.getNextTurnOwner();
 
-        Axe axe = axeFactory.createNormalItem("hacha");
+        Axe axe = axeFactory.createNormalItem();
         Fighter fighter = fighterFactory.createStrongUnit(axe);
         player1.addUnit(fighter);
         player1.selectMyUnit(0);
@@ -316,7 +318,7 @@ class GameControllerTest {
     @Test
     public void defeatByHeroDeath(){
         Tactician playerDefeated = controller.getTurnOwner();
-        Fighter fighter = fighterFactory.createStrongUnit(axeFactory.createStrongItem("Hacha"));
+        Fighter fighter = fighterFactory.createStrongUnit(axeFactory.createStrongItem());
         heroFactory.setMaxHitPoints(50);
         heroFactory.setMovement(1);
         Hero hero = heroFactory.createUnit();
@@ -350,7 +352,7 @@ class GameControllerTest {
     @Test
     public void defeatByNoRemainingUnits(){
         Tactician playerDefeated = controller.getTurnOwner();
-        Fighter fighterWinner = fighterFactory.createStrongUnit(axeFactory.createStrongItem("Hacha"));
+        Fighter fighterWinner = fighterFactory.createStrongUnit(axeFactory.createStrongItem());
         fighterFactory.setMaxHitPoints(50);
         fighterFactory.setMovement(1);
         Fighter fighter1 = fighterFactory.createUnit();
@@ -410,8 +412,8 @@ class GameControllerTest {
 
     @Test
     public void actionRestrictionTest(){
-        Axe axe = axeFactory.createNormalItem("Hacha");
-        Spear spear = spearFactory.createStrongItem("lanza");
+        Axe axe = axeFactory.createNormalItem();
+        Spear spear = spearFactory.createStrongItem();
         Fighter fighter = fighterFactory.createNormalUnit(axe,spear);
         controller.addUnit(fighter);
         controller.selectMyUnit(0);
@@ -422,7 +424,7 @@ class GameControllerTest {
         assertNull(controller.getGameMap().getCell(0,0).getUnit());
         assertEquals(fighter,controller.getGameMap().getCell(1,0).getUnit());
 
-        Spear spear2 = spearFactory.createNormalItem("lanza");
+        Spear spear2 = spearFactory.createNormalItem();
         Hero hero = heroFactory.createNormalUnit(spear2);
         controller.addUnit(hero);
         controller.selectMyUnit(1);
@@ -442,7 +444,7 @@ class GameControllerTest {
         assertFalse(controller.getItems().contains(spear));
 
         controller.endTurn();
-        Axe axe2 = axeFactory.createStrongItem("Hacha Asesina");
+        Axe axe2 = axeFactory.createStrongItem();
         Fighter fighter2 = fighterFactory.createStrongUnit(axe2);
         controller.addUnit(fighter2);
         controller.selectMyUnit(0);
@@ -459,39 +461,111 @@ class GameControllerTest {
 
     @Test
     public void gameEndedByRoundLimitTest(){
-        Fighter fighter1 = fighterFactory.createNormalUnit();
-        Hero hero1 = heroFactory.createNormalUnit();
+
         Tactician playerWinner1 = controller.getTurnOwner();
-        controller.addUnit(fighter1);
-        controller.addUnit(hero1);
+        controller.createStrongUnit("Hero");
+        controller.placeCreatedUnit(0,0);
         controller.endTurn();
 
-        Fighter fighter2 = fighterFactory.createNormalUnit();
-        Hero hero2 = heroFactory.createStrongUnit();
         Tactician playerWinner2 = controller.getTurnOwner();
-        controller.addUnit(fighter2);
-        controller.addUnit(hero2);
+        controller.createNormalUnit("Hero");
+        controller.placeCreatedUnit(0,1);
         controller.endTurn();
 
-        Fighter fighter3 = fighterFactory.createStrongUnit();
         Tactician playerLoser1 = controller.getTurnOwner();
-        controller.addUnit(fighter3);
         controller.endTurn();
 
-        Hero hero3 = heroFactory.createStrongUnit();
         Tactician playerLoser2 = controller.getTurnOwner();
-        controller.addUnit(hero3);
         controller.endTurn();
 
         controller.initGame(1);
         for(int i = 0; i< controller.getTacticians().size();i++){
             controller.endTurn();
         }
+        assertEquals(2,controller.getWinners().size());
         assertTrue(controller.getWinners().contains(playerWinner1.getName()));
         assertTrue(controller.getWinners().contains(playerWinner2.getName()));
         assertFalse(controller.getWinners().contains(playerLoser1.getName()));
         assertFalse(controller.getWinners().contains(playerLoser2.getName()));
+    }
 
+    @Test
+    public void UnitCreationTest(){
+        controller.createNormalUnit("Hero");
+        controller.assignNormalItem("Spear");
+        controller.assignStrongItem("Axe");
+        controller.placeCreatedUnit(0,0);
+        Hero hero = heroFactory.createNormalUnit(spearFactory.createNormalItem(),axeFactory.createStrongItem());
+        hero.getItems().get(0).setOwner(controller.getGameMap().getCell(0,0).getUnit());
+        hero.getItems().get(1).setOwner(controller.getGameMap().getCell(0,0).getUnit());
+        hero.setTactician(controller.getTurnOwner());
+        hero.setLocation(new Location(0,0));
+        assertEquals(hero,controller.getGameMap().getCell(0,0).getUnit());
+    }
+
+    @Test
+    public void gameReinitializationTest(){
+        Tactician player1 = controller.getTurnOwner();
+        controller.createNormalUnit("Hero");
+        controller.assignNormalItem("Spear");
+        controller.assignStrongItem("Axe");
+        controller.placeCreatedUnit(0,0);
+        controller.endTurn();
+
+        Tactician player2 = controller.getTurnOwner();
+        controller.createStrongUnit("Fighter");
+        controller.placeCreatedUnit(0,1);
+        controller.endTurn();
+
+        controller.endTurn();
+        controller.endTurn();
+        controller.initGame(10);
+
+        for(int i = 0; i<6;i+=1){
+            if(!controller.getTurnOwner().equals(player1) && !controller.getTurnOwner().equals(player2)){
+                controller.removeTactician(controller.getTurnOwner().getName());
+                controller.endTurn();
+            }
+            else{
+                controller.endTurn();
+            }
+        }
+        assertEquals(2,controller.getTacticians().size());
+
+        if(controller.getTurnOwner().equals(player1)){
+            controller.selectUnitIn(0,0);
+            controller.moveUnitTo(1,0);
+        }
+        else{
+            controller.endTurn();
+            controller.selectUnitIn(0,0);
+            controller.moveUnitTo(1,0);
+        }
+        controller.endTurn();
+
+        controller.selectUnitIn(0,1);
+        controller.moveUnitTo(0,0);
+        controller.endTurn();
+
+        controller.selectUnitIn(1,0);
+        controller.selectItem(0);
+        controller.equipItem(0);
+        controller.useItemOn(0,0);
+        controller.endTurn();
+
+        controller.endTurn();
+
+        controller.selectUnitIn(1,0);
+        controller.selectItem(0);
+        controller.giveItemTo(0,0);
+
+        controller.initGame(10);
+        assertEquals(4, controller.getTacticians().size());
+        assertTrue(controller.getGameMap().getCell(0,0).getUnit() instanceof Hero);
+        assertTrue(controller.getGameMap().getCell(0,1).getUnit() instanceof Fighter);
+        assertEquals(2,controller.getGameMap().getCell(0,0).getUnit().getItems().size());
+        assertEquals(700,controller.getGameMap().getCell(0,1).getUnit().getCurrentHitPoints());
+        assertNull(controller.getGameMap().getCell(0,0).getUnit().getEquippedItem());
     }
 
 

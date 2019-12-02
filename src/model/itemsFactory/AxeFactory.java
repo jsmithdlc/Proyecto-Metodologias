@@ -9,20 +9,20 @@ public class AxeFactory extends AbstractItemFactory {
     }
 
     @Override
-    public Axe createNormalItem(String name){
+    public Axe createNormalItem(){
         this.setMinRange(1);
         this.setMaxRange(1);
         this.setPower(50);
-        this.setName(name);
+        this.setName("Normal Axe");
         return this.createItem();
     }
 
     @Override
-    public Axe createStrongItem(String name){
+    public Axe createStrongItem(){
         this.setMinRange(1);
         this.setMaxRange(2);
         this.setPower(100);
-        this.setName(name);
+        this.setName("Strong Axe");
         return this.createItem();
     }
 }

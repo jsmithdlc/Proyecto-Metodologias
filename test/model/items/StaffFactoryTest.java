@@ -32,12 +32,12 @@ public class StaffFactoryTest extends AbstractTestItemFactory{
     @Test
     public void createNormalItemTest(){
         setTestItemFactory();
-        assertEquals(new Staff("Bastón",50,1,1),staffFactory.createNormalItem("Bastón"));
+        assertEquals(new Staff("Normal Staff",50,1,1),staffFactory.createNormalItem());
     }
 
     @Test
     public void createStrongItemTest(){
         setTestItemFactory();
-        assertEquals(new Staff("Bastón",100,1,2),staffFactory.createStrongItem("Bastón"));
+        assertEquals(new Staff("Strong Staff",100,1,2),staffFactory.createStrongItem());
     }
 }

@@ -9,20 +9,20 @@ public class BowFactory extends AbstractItemFactory{
     }
 
     @Override
-    public Bow createNormalItem(String name){
+    public Bow createNormalItem(){
         this.setMinRange(2);
         this.setMaxRange(4);
         this.setPower(75);
-        this.setName(name);
+        this.setName("Normal Bow");
         return this.createItem();
     }
 
     @Override
-    public Bow createStrongItem(String name){
+    public Bow createStrongItem(){
         this.setMinRange(2);
         this.setMaxRange(6);
         this.setPower(150);
-        this.setName(name);
+        this.setName("Strong Bow");
         return this.createItem();
     }
 }

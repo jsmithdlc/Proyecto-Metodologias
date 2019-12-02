@@ -104,6 +104,9 @@ public class Field {
     return Map.copyOf(map);
   }
 
+  public void setMap(Map<String,Location> map){
+    this.map = map;
+  }
   /**
    * Checks if the map is connected using BFS.
    *

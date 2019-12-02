@@ -34,7 +34,7 @@ public abstract class AbstractUnit implements IUnit {
   protected IEquipableItem equippedItem;
   private Location location;
   protected Tactician tactician;
-  private boolean used;
+  private boolean used = false;
   protected double epsilon = 0.000001;
   private PropertyChangeSupport unitDeath = new PropertyChangeSupport(this);
 

@@ -9,20 +9,20 @@ public class SpearFactory extends AbstractItemFactory {
     }
 
     @Override
-    public Spear createNormalItem(String name){
+    public Spear createNormalItem(){
         this.setMinRange(1);
         this.setMaxRange(3);
         this.setPower(100);
-        this.setName(name);
+        this.setName("Normal Spear");
         return this.createItem();
     }
 
     @Override
-    public Spear createStrongItem(String name){
+    public Spear createStrongItem(){
         this.setMinRange(1);
         this.setMaxRange(4);
         this.setPower(175);
-        this.setName(name);
+        this.setName("Strong Spear");
         return this.createItem();
     }
 }

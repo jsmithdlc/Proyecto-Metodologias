@@ -32,12 +32,12 @@ public class LightBookFactoryTest extends AbstractTestItemFactory{
     @Test
     public void createNormalItemTest(){
         setTestItemFactory();
-        assertEquals(new LightBook("Libro",100,1,1),lightBookFactory.createNormalItem("Libro"));
+        assertEquals(new LightBook("Normal LightBook",100,1,1),lightBookFactory.createNormalItem());
     }
 
     @Test
     public void createStrongItemTest(){
         setTestItemFactory();
-        assertEquals(new LightBook("Libro",150,1,2),lightBookFactory.createStrongItem("Libro"));
+        assertEquals(new LightBook("Strong LightBook",150,1,2),lightBookFactory.createStrongItem());
     }
 }
