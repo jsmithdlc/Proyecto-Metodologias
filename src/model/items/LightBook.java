@@ -27,20 +27,6 @@ public class LightBook extends AbstractBook{
         super(name, power, minRange, maxRange);
     }
 
-    @Override
-    public void equipArcher(Archer archer){}
-
-    @Override
-    public void equipCleric(Cleric cleric) {}
-
-    @Override
-    public void equipFighter(Fighter fighter){}
-
-    @Override
-    public void equipHero(Hero hero){}
-
-    @Override
-    public void equipSwordMaster(SwordMaster swordmaster){}
 
     @Override
     public void equipSorcerer(Sorcerer sorcerer){

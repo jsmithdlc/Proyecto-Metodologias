@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.*;
+
 /**
  * Abstract class that defines some common information and behaviour between all book items.
  *
@@ -43,4 +45,19 @@ public abstract class AbstractBook extends AbstractItem implements AttackingItem
     public void receiveBowAttack(Bow bow){
         this.getOwner().receiveStrongAttack(bow);
     };
+
+    @Override
+    public void equipArcher(Archer archer){}
+
+    @Override
+    public void equipCleric(Cleric cleric) {}
+
+    @Override
+    public void equipFighter(Fighter fighter){}
+
+    @Override
+    public void equipHero(Hero hero){}
+
+    @Override
+    public void equipSwordMaster(SwordMaster swordmaster){}
 }
