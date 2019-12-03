@@ -29,3 +29,7 @@ cada una de estas unidades, con **double dispatch** en los métodos para equipar
  al método de ataque para que no ataque y en el **clérigo** igualmente para que solo ocupe el método para sanar.
  
 # Tarea Alpaca Emblem: Entrega 2
+## Corrección Entrega 1
+Ahora los objetos que atacan implementan la interfaz **AttackingItem** mientras que los que no atacan implementan la interfaz **HarmlessItem**. Dentro de la primera de estas interfaces, se declara que los items que atacan deben tener el método "attackItem", el cual realiza un ataque sobre otro item. La segunda interfaz, en cambio, especifica que los items que no atacan hacen uso de un método **useItemOn** que hace efecto sobre otra unidad diréctamente, de acuerdo a las características del item que efectua dicha acción.
+
+No se corrigió el error de diseño de repetición de código debido a la falta de tiempo. Aun así, la manera de corregir estos errores es creando clases abstractas, o incluyendo código en clases abstractas, para poder reutilizar el código en las subclases. Un ejemplo de esto es aplicable en las clases de los items, donde se subieron los métodos de equipamento de items que desde las subclases libros a **AbstractBook**.
