@@ -1,4 +1,4 @@
-# Tarea1: Entrega 1 Alpaca Emblem
+# Tarea Alpaca Emblem: Entrega 1
 
 ## Items
 **IEquipableItem** es la interfaz que es implementada por las clases abstractas **AbstractItem**, la cual refiere a los items no mágicos, 
@@ -28,3 +28,4 @@ existen 7 unidades: **Alpaca**, **Archer**, **Cleric**, **Fighter**, **Hero**,  
 cada una de estas unidades, con **double dispatch** en los métodos para equipar cada item y adicionalmente, en **Alpaca** se hace un override
  al método de ataque para que no ataque y en el **clérigo** igualmente para que solo ocupe el método para sanar.
  
+# Tarea Alpaca Emblem: Entrega 2
