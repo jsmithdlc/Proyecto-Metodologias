@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import model.Tactician;
+import model.items.AttackingItem;
 import model.items.IEquipableItem;
 import model.items.Staff;
 import model.map.Location;
@@ -185,7 +186,7 @@ public abstract class AbstractUnit implements IUnit {
     if (this.checkAlive() && other.checkAlive() && !(this.equippedItem==null)) {
       if (this.inRange(other)) {
         if(!(other.getEquippedItem()==null)){
-          this.equippedItem.attackItem(other.getEquippedItem());
+          ((AttackingItem) this.equippedItem).attackItem(other.getEquippedItem());
         }
         else{
           other.receiveNormalAttack(this.getEquippedItem());

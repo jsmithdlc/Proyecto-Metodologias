@@ -10,7 +10,7 @@ import model.units.*;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Sword extends AbstractItem {
+public class Sword extends AbstractItem implements AttackingItem {
 
   /**
    * Creates a new Sword.

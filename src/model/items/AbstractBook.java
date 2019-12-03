@@ -6,7 +6,7 @@ package model.items;
  * @author Javier Smith
  * @since 1.0
  */
-public abstract class AbstractBook extends AbstractItem{
+public abstract class AbstractBook extends AbstractItem implements AttackingItem {
 
     /**
      * Constructor for a book item

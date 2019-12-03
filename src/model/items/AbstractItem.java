@@ -74,6 +74,7 @@ public abstract class AbstractItem implements IEquipableItem {
   public void receiveBowAttack(Bow bow){
     this.getOwner().receiveNormalAttack(bow);
   }
+
   @Override
   public void receiveDarkBookAttack(DarkBook darkBook){
     this.getOwner().receiveStrongAttack(darkBook);

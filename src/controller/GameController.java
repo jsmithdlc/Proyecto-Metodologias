@@ -284,14 +284,19 @@ public class GameController {
      *     the player to be removed
      */
     public void removeTactician(String tactician) {
-        if(currentTurnIdx+1==numberOfPlayers){
-            currentTurnIdx--;
-        }
-        numberOfPlayers--;
-        tacticians.remove(tactician);
-        turns.remove(tactician);
-        if(numberOfPlayers==1){
-            winners = new ArrayList<>(turns);
+        if(tacticians.containsKey(tactician)) {
+            if (currentTurnIdx + 1 == numberOfPlayers) {
+                currentTurnIdx--;
+            }
+            numberOfPlayers--;
+            tacticians.get(tactician).purgeUnits();
+            mapChanges.firePropertyChange(new PropertyChangeEvent(this, "Tactician Removed", this.map, tacticians.get(tactician).getMap()));
+            this.map = tacticians.get(tactician).getMap();
+            tacticians.remove(tactician);
+            turns.remove(tactician);
+            if (numberOfPlayers == 1) {
+                winners = new ArrayList<>(turns);
+            }
         }
     }
 
@@ -405,9 +410,11 @@ public class GameController {
     }
 
     /**
-     *
+     * places a unit in the (x,y) coordinates specified
      * @param x
+     *      horizontal coordinate of game map
      * @param y
+     *      vertical coordinate of game map
      */
     public void placeUnit(int x, int y){
         this.getTurnOwner().setMap(this.map);

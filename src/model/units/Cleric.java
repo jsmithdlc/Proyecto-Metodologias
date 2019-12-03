@@ -1,5 +1,6 @@
 package model.units;
 
+import model.items.HarmlessItem;
 import model.items.IEquipableItem;
 import model.items.Staff;
 import model.map.Location;
@@ -42,7 +43,7 @@ public class Cleric extends AbstractUnit {
   public void attack(IUnit other){
     if(this.checkAlive() && other.checkAlive() && !this.equippedItem.equals(null)){
       if(this.inRange(other)){
-        other.healUnit(this.getEquippedItem());
+        ((HarmlessItem) this.equippedItem).useItemOn(other);
       }
     }
   }

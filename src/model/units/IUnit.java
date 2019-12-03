@@ -173,8 +173,16 @@ public interface IUnit {
    */
   Tactician getTactician();
 
+  /**
+   * sets a boolean indicating if this unit has been used in the present turn
+   * @param used
+   *      indicator of state of unit's actions
+   */
   void setUnitUsed(boolean used);
 
+  /**
+   * @return indicator of state of unit's actions
+   */
   boolean getUnitUsed();
 
 }

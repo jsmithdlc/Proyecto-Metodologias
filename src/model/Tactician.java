@@ -39,6 +39,11 @@ public class Tactician {
         this.name = name;
     }
 
+    /**
+     * sets the GameController associated to this player
+     * @param controller
+     *      controller of the game in which this player participates
+     */
     public void setController(GameController controller){
         this.controller = controller;
         PlayerHandler playerHandler = new PlayerHandler(controller);
@@ -226,15 +231,24 @@ public class Tactician {
      */
     public void endPlayer(){
         controller.endTurn();
+        purgeUnits();
+        playerChanges.firePropertyChange(new PropertyChangeEvent(this,"Player out of game",null,this.name));
+    }
+
+    /**
+     * removes all units of this tactician from the game map
+     */
+    public void purgeUnits(){
         for(IUnit unit : units){
             if(unit.getLocation()!=null){
                 unit.getLocation().removeUnit();
             }
         }
         units.clear();
-        playerChanges.firePropertyChange(new PropertyChangeEvent(this,"Player out of game",null,this.name));
     }
-
+    /**
+     * reset the moves of each of the units of this player
+     */
     public void resetMoves(){
         for(IUnit unit: units){
             unit.setUnitUsed(false);

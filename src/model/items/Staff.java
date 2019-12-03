@@ -10,7 +10,7 @@ import model.units.*;
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Staff extends AbstractItem {
+public class Staff extends AbstractItem implements HarmlessItem {
 
   /**
    * Creates a new Staff item.
@@ -49,9 +49,6 @@ public class Staff extends AbstractItem {
   public void equipSorcerer(Sorcerer sorcerer){}
 
   @Override
-  public void attackItem(IEquipableItem item){}
-
-  @Override
   public void counterAttack(IEquipableItem item){}
 
   @Override
@@ -67,6 +64,11 @@ public class Staff extends AbstractItem {
   @Override
   public void receiveSwordAttack(Sword sword){
     this.getOwner().receiveNormalAttack(sword);
+  }
+
+  @Override
+  public void useItemOn(IUnit unit){
+    unit.healUnit(this);
   }
 
   @Override

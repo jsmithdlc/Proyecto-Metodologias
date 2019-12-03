@@ -6,7 +6,7 @@ import model.units.*;
  * @author Ignacio Slater Muñoz
  * @since
  */
-public class Bow extends AbstractItem {
+public class Bow extends AbstractItem implements AttackingItem {
 
   /**
    * Creates a new bow.
