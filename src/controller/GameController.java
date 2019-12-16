@@ -25,6 +25,7 @@ public class GameController {
 
     private int numberOfPlayers;
     private int initPlayers;
+    private int gameIteration;
     private int mapSize;
     private Field map;
     private Map<String,Tactician> tacticians = new HashMap<>();
@@ -59,6 +60,8 @@ public class GameController {
         this.mapSize = mapSize;
         this.numberOfPlayers = numberOfPlayers;
         this.initPlayers = numberOfPlayers;
+        this.gameIteration = 0;
+        this.roundNumber = -1;
         fieldFactory.setSeed(new Random().nextLong());
         map = fieldFactory.createMap(mapSize);
         currentTurnIdx = 0;
@@ -263,8 +266,13 @@ public class GameController {
             if(roundNumber==maxRounds && roundNumber!=0){
                 winners = this.produceWinners();
             }
+            else if(roundNumber==0){
+                this.currentTurnIdx = 0;
+                this.currentTactician = tacticians.get(turns.get(0));
+            }
             else {
                 this.currentTurnIdx = 0;
+                Collections.shuffle(turns, new Random());
                 while (currentTactician.equals(tacticians.get(turns.get(0)))) {
                     Collections.shuffle(turns, new Random());
                 }
@@ -308,6 +316,7 @@ public class GameController {
     public void initGame(final int maxTurns) {
         this.maxRounds = maxTurns;
         regenerateStart();
+
     }
 
     /**
@@ -327,15 +336,18 @@ public class GameController {
         numberOfPlayers = initPlayers;
         this.roundNumber = 0;
         this.winners = null;
-        map = fieldFactory.createMap(this.mapSize);
         currentTurnIdx = 0;
-        mapChanges = new PropertyChangeSupport(this);
-        turns.clear();
-        tacticians.clear();
-        generateTacticians();
-        setInitTurns();
-        mapChanges.firePropertyChange(new PropertyChangeEvent(this,"Map initialized",null,this.map));
-        resetUnits();
+        if(this.gameIteration!=0) {
+            map = fieldFactory.createMap(this.mapSize);
+            mapChanges = new PropertyChangeSupport(this);
+            turns.clear();
+            tacticians.clear();
+            generateTacticians();
+            setInitTurns();
+            mapChanges.firePropertyChange(new PropertyChangeEvent(this, "Map initialized", null, this.map));
+            resetUnits();
+        }
+        gameIteration+=1;
     }
 
     /**

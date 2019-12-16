@@ -61,7 +61,7 @@ class GameControllerTest {
         assertTrue(controller.getGameMap().isConnected());
         // Para testear funcionalidades que dependen de valores aleatorios se hacen 2 cosas:
         //  - Comprobar las invariantes de las estructuras que se crean (en este caso que el mapa tenga
-        //    las dimensiones definidas y que sea conexo.
+        //    las dimensiones definidas y que sea conexo)
         //  - Setear una semilla para el generador de números aleatorios. Hacer esto hace que la
         //    secuencia de números generada sea siempre la misma, así pueden predecir los
         //    resultados que van a obtener.
@@ -316,6 +316,47 @@ class GameControllerTest {
     }
 
     @Test
+    public void checkTurnOrders(){
+        String player1 = controller.getTurnOwner().getName();
+        controller.endTurn();
+        String player2 = controller.getTurnOwner().getName();
+        controller.endTurn();
+        String player3 = controller.getTurnOwner().getName();
+        controller.endTurn();
+        String player4 = controller.getTurnOwner().getName();
+        controller.endTurn();
+        controller.initGame(20);
+        assertEquals(player1,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player2,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player3,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player4,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertNotEquals(player4,controller.getTurnOwner().getName());
+        controller.initGame(50);
+        assertEquals(player1,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player2,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player3,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player4,controller.getTurnOwner().getName());
+        controller.endTurn();
+        controller.initEndlessGame();
+        assertEquals(player1, controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player2,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player3,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertEquals(player4,controller.getTurnOwner().getName());
+        controller.endTurn();
+        assertNotEquals(player4,controller.getTurnOwner().getName());
+    }
+
+    @Test
     public void defeatByHeroDeath(){
         Tactician playerDefeated = controller.getTurnOwner();
         Fighter fighter = fighterFactory.createStrongUnit(axeFactory.createStrongItem());
@@ -433,9 +474,11 @@ class GameControllerTest {
         controller.selectItem(0);
         assertTrue(controller.getItems().contains(spear2));
         controller.giveItemTo(1,0);
-        assertFalse(controller.getItems().contains(spear2));
-        controller.selectUnitIn(1,0);
-        assertTrue(controller.getItems().contains(spear2));
+        if(controller.getGameMap().getCell(1,1).isNeighbour(controller.getGameMap().getCell(1,0))){
+            assertFalse(controller.getItems().contains(spear2));
+            controller.selectUnitIn(1,0);
+            assertTrue(controller.getItems().contains(spear2));
+        }
         controller.selectUnitIn(1,0);
         controller.selectItem(0);
         controller.giveItemTo(1,1);
